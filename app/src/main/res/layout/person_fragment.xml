@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/appColorWhite">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+
+                android:background="@color/colorPrimary">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp">
+                <include
+                    layout="@layout/shop_item"/>
+                </RelativeLayout>
+                <TextView
+                    style="@style/Subtitle1"
+                    android:text="Имя Фамилия"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="200dp"
+                    android:textSize="25dp"
+                    android:id="@+id/accPageName"/>
+                <TextView
+                    style="@style/Subtitle1"
+                    android:text="Почта"
+                    android:id="@+id/accPageEmailText"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/accPageName"/>
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/Subtitle1"
+                android:text="Покупки"
+                android:layout_marginBottom="15dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Активные"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:id="@+id/personFragmentActiveOrdersBT"
+                android:background="@color/appColorWhite"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/colorPrimaryDark"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Купленные товары"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:id="@+id/personFragmentCompledOrdersBt"
+                android:background="@color/appColorWhite"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginBottom="15dp"/>
+            <TextView
+                style="@style/Subtitle1"
+                android:text="Профиль"
+                android:layout_marginBottom="15dp"
+                android:id="@+id/gggggg"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Избранные"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:background="@color/appColorWhite"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/colorPrimaryDark"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Отзывы"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:background="@color/appColorWhite"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/colorPrimaryDark"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Выход"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="20dp"
+                android:textSize="15dp"
+                android:background="@color/appColorWhite"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

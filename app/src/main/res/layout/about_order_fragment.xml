@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appColorWhite"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <include layout="@layout/flower_layout" />
+        </RelativeLayout>
+
+        <TextView
+            style="@style/Headline1"
+            android:text="@string/reciever" />
+
+        <TextView
+            android:id="@+id/aboutOrderFragmentRecieverText"
+            style="@style/Body1"
+            android:layout_margin="10dp"
+            tools:text="Анна" />
+
+        <TextView
+            style="@style/Headline1"
+            android:text="@string/timeAndDate" />
+
+        <TextView
+            android:id="@+id/aboutOrderFragmentTimeText"
+            style="@style/Body1"
+            android:layout_margin="10dp"
+            tools:text="21.2321.213" />
+
+        <TextView
+            style="@style/Headline1"
+            android:text="@string/state" />
+
+        <TextView
+            android:id="@+id/aboutOrderFragmentStateText"
+            style="@style/Body1"
+            android:layout_margin="10dp"
+            tools:text="одобрено" />
+
+        <TextView
+            style="@style/Headline1"
+            android:text="@string/pay" />
+
+        <TextView
+            style="@style/Body1"
+            android:layout_margin="10dp"
+            tools:text="2000 руб."
+            android:id="@+id/aboutOrderFragmentCostText"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/aboutOrderFragmentOkButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_styles"
+        android:fontFamily="@font/rubik"
+        android:text="@string/ok"
+        android:textColor="#fff"
+        android:textSize="20sp"/>
+
+
+</RelativeLayout>

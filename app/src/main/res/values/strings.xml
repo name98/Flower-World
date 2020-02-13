@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Flower world</string>
+    <string name="reciever">Получатель:</string>
+    <string name="timeAndDate">Когда:</string>
+    <string name="pay">Сумма:</string>
+    <string name="state">Статус:</string>
+    <string name="ok">ОК</string>
+    <string name="enterText">Введите текст...</string>
+    <string name="sendComment">Отправить</string>
+</resources>

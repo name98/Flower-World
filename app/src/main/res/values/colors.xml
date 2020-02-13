@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="headLine1">#000</color>
+    <color name="smallHeadline">#414141</color>
+    <color name="text">#000</color>
+    <color name="appColorWhite">#fff</color>
+    <color name="positiveState">#CDDC39</color>
+    <color name="waitState">#03A9F4</color>
+    <color name="sendState">#F09461</color>
+    <color name="grey">#474747</color>
+    <color name="lightGrey">#B8B8B8</color>
+    <color name="black">#000</color>
+    <color name="green">#7CB342</color>
+    <color name="lightGreen">#7AFFB3</color>
+    <color name="mLightGrey">#D6D6D6</color>
+</resources>

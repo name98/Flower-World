@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    android:layout_gravity="center"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+
+        android:layout_width="150dp"
+        android:layout_height="245dp"
+        app:cardCornerRadius="8dp"
+        app:cardMaxElevation="2dp"
+        app:cardElevation="6dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_centerInParent="true"
+        android:id="@+id/flowerCardView"
+        android:layout_margin="@dimen/cardview_default_elevation">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+
+                android:id="@+id/flowerPictureMini"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_launcher_background"
+                android:layout_centerHorizontal="true"
+                android:roundIcon="@mipmap/ic_launcher_round"
+                app:retryImageScaleType="fitXY"
+                />
+
+            <TextView
+
+                android:text="Розы"
+                android:id="@+id/flowerNameMini"
+                style="@style/Body1"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@id/flowerPictureMini"
+                android:layout_marginBottom="3dp"
+                android:autoSizeTextType="uniform"
+                android:maxHeight="40dp"
+                >
+            </TextView>
+            <TextView
+
+                android:text="3500 руб."
+                android:id="@+id/flowerPriceMini"
+
+                android:layout_below="@id/flowerNameMini"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="3dp"
+                style="@style/Subtitle1"
+                android:textSize="15dp"
+
+               >
+            </TextView>
+            <RatingBar
+                android:layout_width="wrap_content"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/flowerPriceMini"
+                android:scaleX=".8"
+                android:scaleY=".8"
+                android:transformPivotX="2dp"
+                android:transformPivotY="2dp"
+                android:numStars="5"
+                android:isIndicator="true"
+                android:max="5"
+                android:id="@+id/flowerRatingBarMini"
+                android:layout_marginLeft="5dp"
+                android:progressTint="#8BC34A">
+
+            </RatingBar>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

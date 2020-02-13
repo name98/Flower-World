@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColorWhite"
+
+
+    tools:context=".MainActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/flowerPageFrForScr"
+        android:layout_above="@+id/flowerPageFrmL">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/flowerPageScrL">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <androidx.viewpager2.widget.ViewPager2
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:id="@+id/flowerPageViewP"/>
+
+                <TextView
+                    android:id="@+id/flowerPageNameFlower"
+                    style="@style/Subtitle1"
+
+
+                    android:text="Название" />
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:columnCount="2"
+                    android:layout_marginTop="15dp"
+                    android:rowCount="2"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        style="@style/Subtitle1"
+                        android:text="Размер"
+                       />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/flowerPageSizeFlowerL"
+                            style="@style/Body1"
+                            android:layout_marginLeft="30dp"
+                            android:text="20"
+                            />
+                        <TextView
+                            android:id="@+id/flowerPageSizeFlowerH"
+                            style="@style/Body1"
+                            android:layout_marginLeft="30dp"
+                            android:text="20"
+                            />
+                    </LinearLayout>
+
+
+                    <TextView
+                        style="@style/Subtitle1"
+                        android:text="Состав"
+                        />
+
+                    <TextView
+                        android:id="@+id/flowerPageSostav"
+                        android:layout_marginLeft="30dp"
+                        style="@style/Body1"
+                        android:text="Text\nsdsd\nsdsd\n"/>
+                </GridLayout>
+                <TextView
+                    style="@style/Subtitle1"
+
+                    android:text="Описание"
+
+ />
+
+
+                <TextView
+                    android:id="@+id/flowerPageAnnotation"
+                    style="@style/Body1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+
+                    android:text="Благодаря своему крупному соцветию, роскошному виду, приятной на ощупь поверхности и уникальному аромату розы Ред Наоми пользуются большой популярностью среди ведущих цветочных дизайнеров.
+
+Прекрасный букет из 35 роз Ред Наоми станет замечательным подарком Вашему любимому человеку!
+
+Букет собран из самых свежих роз и упакован в нашу фирменную упаковку Blue от One million flowers." />
+
+                <TextView
+                        style="@style/Subtitle1"
+                        android:text="Магазин"
+                        android:layout_marginBottom="10dp"
+                         />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_margin="10dp"
+                    app:cardBackgroundColor="#fff"
+                    android:id="@+id/flowerPageGoToShop">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="25dp"
+                            android:src="@drawable/ic_launcher_background"
+                            android:layout_centerHorizontal="true"
+                            app:roundedCornerRadius="90dp"
+                            app:retryImageScaleType="fitXY"
+                            android:id="@+id/flowerPageShopPhoto"/>
+                        <TextView
+                            style="@style/Headline1"
+                            android:text="Букет Маркет"
+                            android:textSize="25dp"
+                            android:id="@+id/flowerPageShop"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="0dp"/>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+
+                    android:text="Отзывы"
+                    style="@style/Subtitle1"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="4,5"
+                                android:textSize="60dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="#000"
+                                android:layout_marginBottom="10dp"
+                                android:id="@+id/flowerPageTextForRatingB"
+                                android:fontFamily=""/>
+
+                            <RatingBar
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleX="1"
+                                android:scaleY="1"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp"
+                                android:numStars="5"
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:id="@+id/flowerPageRatingB"
+                                android:layout_marginLeft="20dp"
+                                android:progressTint="#8BC34A"
+                                android:layout_marginBottom="5dp"
+                                />
+                            <TextView
+                                android:id="@+id/flowerPageNumberRaters"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="100 000"
+                                android:layout_marginLeft="20dp"
+                                android:textAlignment="center"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="vertical"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content">
+                                <RatingBar
+                                    style="@style/Widget.AppCompat.RatingBar.Small"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:scaleX="1"
+                                    android:scaleY="1"
+                                    android:transformPivotX="0dp"
+                                    android:transformPivotY="0dp"
+                                    android:numStars="5"
+                                    android:isIndicator="true"
+                                    android:max="5"
+                                    android:progress="5"
+                                    android:layout_marginLeft="20dp"
+                                    android:progressTint="@color/colorPrimary"
+                                    android:layout_marginBottom="5dp"/>
+                                <ProgressBar
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/flowerPageProgressFor5"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="5dp"
+                                    android:max="100"
+                                    android:progress="45"
+                                    android:layout_gravity="center_vertical"
+                                    android:progressTint="@color/colorPrimary"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content"
+                                android:gravity="right">
+                                <RatingBar
+                                    style="@style/Widget.AppCompat.RatingBar.Small"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:scaleX="1"
+                                    android:scaleY="1"
+                                    android:transformPivotX="0dp"
+                                    android:transformPivotY="0dp"
+                                    android:numStars="4"
+                                    android:isIndicator="true"
+                                    android:max="4"
+                                    android:progress="4"
+
+                                    android:progressTint="@color/colorPrimary"
+                                    android:layout_marginBottom="5dp"/>
+                                <ProgressBar
+                                    android:id="@+id/flowerPageProgressFor4"
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:max="100"
+                                    android:progress="45"
+                                    android:layout_gravity="center_vertical"
+                                    android:progressTint="@color/colorPrimary"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content"
+                                android:gravity="right">
+                                <RatingBar
+                                    style="@style/Widget.AppCompat.RatingBar.Small"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:scaleX="1"
+                                    android:scaleY="1"
+                                    android:transformPivotX="0dp"
+                                    android:transformPivotY="0dp"
+                                    android:numStars="3"
+                                    android:isIndicator="true"
+                                    android:max="3"
+                                    android:progress="3"
+
+                                    android:progressTint="@color/colorPrimary"
+                                    android:layout_marginBottom="5dp"/>
+                                <ProgressBar
+
+                                    android:id="@+id/flowerPageProgressFor3"
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:max="100"
+                                    android:progress="45"
+                                    android:layout_gravity="center_vertical"
+                                    android:progressTint="@color/colorPrimary"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content"
+                                android:gravity="right">
+                                <RatingBar
+                                    style="@style/Widget.AppCompat.RatingBar.Small"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:scaleX="1"
+                                    android:scaleY="1"
+                                    android:transformPivotX="0dp"
+                                    android:transformPivotY="0dp"
+                                    android:numStars="2"
+                                    android:isIndicator="true"
+                                    android:max="2"
+                                    android:progress="2"
+
+                                    android:progressTint="@color/colorPrimary"
+                                    android:layout_marginBottom="5dp"
+                                    />
+                                <ProgressBar
+                                    android:layout_marginLeft="5dp"
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/flowerPageProgressFor2"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:max="100"
+                                    android:progress="45"
+                                    android:layout_gravity="center_vertical"
+                                    android:progressTint="@color/colorPrimary"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content"
+                                android:gravity="right">
+                                <RatingBar
+                                    style="@style/Widget.AppCompat.RatingBar.Small"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:scaleX="1"
+                                    android:scaleY="1"
+                                    android:transformPivotX="0dp"
+                                    android:transformPivotY="0dp"
+                                    android:numStars="1"
+                                    android:isIndicator="true"
+                                    android:max="1"
+                                    android:progress="1"
+
+                                    android:progressTint="@color/colorPrimary"
+                                    android:layout_marginBottom="5dp"/>
+                                <ProgressBar
+                                    android:layout_marginLeft="5dp"
+                                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/flowerPageProgressFor1"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:max="100"
+                                    android:progress="45"
+                                    android:progressTint="@color/colorPrimary"
+                                    android:layout_gravity="center_vertical"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </FrameLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Оставить отыз"
+                    android:textColor="@color/green"
+                    android:background="@drawable/border_colored"
+                    android:layout_marginHorizontal="10dp"
+                    android:id="@+id/flowerPageOpenChangeFragmentButton"
+                    android:layout_marginVertical="10dp"/>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/flowerPageRecView"/>
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/flowerPageFrmL"
+        android:background="@color/appColorWhite"
+        android:layout_gravity="bottom"
+        android:elevation="10dp"
+        android:layout_alignParentBottom="true"
+
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="3dp"
+            android:background="@color/appColorWhite"
+
+            >
+            <TextView
+                style="@style/Headline1"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="0dp"
+                android:text="3200 руб."
+                android:layout_centerVertical="true"
+                android:id="@+id/flowerPagePriceTextV"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center_vertical"
+                />
+            <Button
+                android:fontFamily="@font/rubik"
+                android:textSize="20dp"
+                android:background="@drawable/button_styles"
+                android:textColor="#fff"
+                android:layout_width="120dp"
+                android:bottomRightRadius="20dp"
+                android:layout_marginRight="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+
+                android:text="Купить"
+
+
+
+
+                android:layout_gravity="center_vertical"
+
+
+                android:id="@+id/flowerPageBuyBt"/>
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

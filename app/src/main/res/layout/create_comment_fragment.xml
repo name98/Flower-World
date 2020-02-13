@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColorWhite"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/createCommentEnterText"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_margin="10dp"
+            android:background="@color/mLightGrey"
+            android:elevation="2dp"
+            android:gravity="start"
+            android:hint="@string/enterText"
+            android:padding="8dp"
+            android:fontFamily="@font/roboto_light"/>
+
+        <RatingBar
+            android:id="@+id/createCommentRating"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="10dp"
+            android:isIndicator="false"
+            android:max="5"
+            android:numStars="5"
+            android:progress="5"
+            android:progressTint="#8BC34A" />
+
+        <TextView
+            android:id="@+id/createCommentResultRateTextView"
+            style="@style/MyHeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="10dp"
+            tools:text="Хорошо" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/createCommentSendCommentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button_styles"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/sendComment"
+        android:textColor="@color/appColorWhite"
+        android:textStyle="bold" />
+
+</RelativeLayout>

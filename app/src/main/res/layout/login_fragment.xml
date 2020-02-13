@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@color/appColorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        >
+        <TextView
+            style="@style/Headline1"
+            android:text="Авторизация"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="50dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:layout_marginVertical="20dp"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_marginHorizontal="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Пароль"
+            android:inputType="textPassword" />
+        <Button
+            android:id="@+id/loginFragmentEnterBt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginHorizontal="90dp"
+            android:text="войти"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/button_styles"/>
+    </LinearLayout>
+</RelativeLayout>
