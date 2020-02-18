@@ -1,5 +1,6 @@
 package com.flowerworld.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -25,12 +26,14 @@ public class GridFragmentUI {
 
     public GridFragmentUI(String ids, View view) {
         this.ids = ids;
-        this.view=view;
+        this.view = view;
         init();
         start();
     }
-    private void init(){
-        handler = new Handler(){
+
+    @SuppressLint("HandlerLeak")
+    private void init() {
+        handler = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 GridFragmentHelper helper = (GridFragmentHelper) msg.obj;
@@ -38,7 +41,8 @@ public class GridFragmentUI {
             }
         };
     }
-    private void start(){
+
+    private void start() {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -47,18 +51,18 @@ public class GridFragmentUI {
                     msg.obj = new GridFragmentHelper(ids);
                     msg.setTarget(handler);
                     handler.sendMessage(msg);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     Log.d("GFUI: ", e.toString());
                 }
             }
         });
         t.start();
     }
-    private void createUI(GridFragmentHelper helper){
+
+    private void createUI(GridFragmentHelper helper) {
         final RecyclerView recyclerView = view.findViewById(R.id.recVGrid);
         FlowerItemAdapter adapter = new FlowerItemAdapter(helper.getItems());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(),2));
+        recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
     }
 }

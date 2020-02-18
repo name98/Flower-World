@@ -5,6 +5,7 @@ public class FlowerItem {
     private String imageUrl;
     private String rating;
     private String price;
+    private int id;
 
     public FlowerItem(String name, String imageUrl, String rating, String price, int id) {
         this.name = name;
@@ -29,8 +30,6 @@ public class FlowerItem {
     public String getPrice() {
         return price;
     }
-
-    private int id;
 
     public String getName() {
         return name;

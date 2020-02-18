@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class GridFragmentHelper {
+
     private String ids;
     private ArrayList<FlowerItem> items = new ArrayList<>();
     public GridFragmentHelper(String ids){

@@ -26,8 +26,11 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 public class GridFragment extends Fragment {
+
     private String ids;
     private String title;
+    private static final String KEY_FOR_IDS = "keyIds";
+
     public GridFragment(String title, String ids) {
         this.title = title;
         this.ids = ids;
@@ -41,8 +44,17 @@ public class GridFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new GridFragmentUI(ids,view);
+        String ids = getArguments().getString(KEY_FOR_IDS);
+
     }
 
+    public static GridFragment newInstance(String ids) {
+
+        Bundle args = new Bundle();
+        args.putString();
+        GridFragment fragment = new GridFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 }
