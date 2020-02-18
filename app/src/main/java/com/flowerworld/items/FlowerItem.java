@@ -7,6 +7,9 @@ public class FlowerItem {
     private String price;
     private int id;
 
+    public FlowerItem() {
+    }
+
     public FlowerItem(String name, String imageUrl, String rating, String price, int id) {
         this.name = name;
         this.imageUrl = imageUrl;
