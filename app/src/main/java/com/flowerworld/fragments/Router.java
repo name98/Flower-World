@@ -40,7 +40,7 @@ public class Router {
                         .commit();
                 break;
             case "gridFragment":
-                GridFragment gridFragment = new GridFragment("",data);
+                GridFragment gridFragment = GridFragment.newInstance(data);
                 fragmentManager.beginTransaction()
                         .add(R.id.activity_fragment_contaner,gridFragment,tag)
                         .addToBackStack(null)

@@ -16,6 +16,7 @@ import com.flowerworld.R;
 import com.flowerworld.connections.HomeFragmentHelper;
 import com.flowerworld.connections.ShopFragmentHelper;
 import com.flowerworld.items.adapters.FlowerItemAdapter;
+import com.flowerworld.items.adapters.FlowerItemAdapterForGrid;
 
 public class ShopFragmentUI {
     private String id;
@@ -60,7 +61,7 @@ public class ShopFragmentUI {
         TextView annotat = view.findViewById(R.id.shopPageAnnotation);
         TextView uslD = view.findViewById(R.id.shopPageUslDost);
         SimpleDraweeView shopPhoto =view.findViewById(R.id.shopItemImg);
-        RecyclerView recyclerViewGrid = view.findViewById(R.id.recVGrid);
+        RecyclerView recyclerViewGrid = view.findViewById(R.id.gridItemsRecycleView);
 
         name.setText(helper.getId());
         address.setText(helper.getAddress());
@@ -68,7 +69,8 @@ public class ShopFragmentUI {
         uslD.setText(helper.getDelivery());
         shopPhoto.setImageURI(Uri.parse(helper.getLogo()));
         recyclerViewGrid.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
-        FlowerItemAdapter adapter = new FlowerItemAdapter(helper.getItems());
+        FlowerItemAdapterForGrid adapter = new FlowerItemAdapterForGrid();
+        adapter.setItems(helper.getItems());
         recyclerViewGrid.setAdapter(adapter);
 
     }

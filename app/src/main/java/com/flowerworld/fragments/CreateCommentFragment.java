@@ -164,7 +164,7 @@ public class CreateCommentFragment extends Fragment {
         t.start();
     }
     private void initRateBar(){
-        final RatingBar rated = getView().findViewById(R.id.createCommentRating);
+        final RatingBar rated = Objects.requireNonNull(getView()).findViewById(R.id.createCommentRating);
         final TextView resultRate= getView().findViewById(R.id.createCommentResultRateTextView);
         rated.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -215,7 +215,7 @@ public class CreateCommentFragment extends Fragment {
                 .setNegativeButton("Ок",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                ((MainActivity) getActivity())
+                                ((MainActivity) Objects.requireNonNull(getActivity()))
                                         .getApp().getRouter()
                                         .remove("createCommentFragment");
                                 ((MainActivity) getActivity())

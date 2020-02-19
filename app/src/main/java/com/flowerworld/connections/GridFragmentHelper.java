@@ -6,8 +6,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.facebook.common.logging.FLog;
-import com.flowerworld.fragments.GridFragment;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.methods.Methods;
 import com.flowerworld.models.scripts.Scripts;
@@ -20,47 +18,20 @@ import java.util.ArrayList;
 
 public class GridFragmentHelper {
 
-    private static String IDS;
-    private static Handler GRID_HANDLER;
-    boolean static boolean IS_EMPTY = false;
-
-    private String ids;
-    private ArrayList<FlowerItem> items = new ArrayList<>();
-
-    public GridFragmentHelper(String ids){
-        this.ids=ids;
-        start();
-    }
-    private void start(){
-        ArrayList<String> strings = Methods.strParser(ids, " ");
-        for (int i=0;i<strings.size();i++){
-            try {
-                items.add(new FlowerItemHelper(strings.get(i)).getFlowerItem());
-            }
-            catch (Exception e){
-                Log.d("GFH: ", e.toString());
-            }
-        }
-    }
-
-    public ArrayList<FlowerItem> getItems() {
-        return items;
-    }
+    public static boolean IS_EMPTY = false;
+    private static ArrayList<FlowerItem> ITEMS = new ArrayList<>();
 
     public static void bind(String ids){
-        IDS = ids;
-
+        ArrayList<String> itemIds = Methods.strParser(ids," ");
+        start(itemIds);
     }
 
-    private static void start(final ArrayList<String> itemsId) {
+    private static void start(final ArrayList<String> itemIds) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Message msg = Message.obtain();
-                    msg.obj = getFlowerItemsArray(itemsId);
-                    msg.setTarget(GRID_HANDLER);
-                    GRID_HANDLER.sendMessage(msg);
+                    initFlowerItemsArray(itemIds);
                 } catch (Exception e) {
                     Log.d("GFUI2: ", e.toString());
                 }
@@ -69,15 +40,16 @@ public class GridFragmentHelper {
         thread.start();
     }
 
-    private static ArrayList<FlowerItem> getFlowerItemsArray(ArrayList<String> itemsId) {
-        ArrayList<FlowerItem> resultItems = new ArrayList<>();
+    private static void initFlowerItemsArray(ArrayList<String> itemsId) {
+
         for(int i = 0; i<itemsId.size(); i++){
-            resultItems.add(getProduct(itemsId.get(i)));
+            ITEMS.add(setProduct(itemsId.get(i)));
         }
-        return resultItems;
+        if(itemsId.size() != 0)
+            IS_EMPTY = true;
     }
 
-    private static FlowerItem getProduct(String id){
+    private static FlowerItem setProduct(String id){
         JSONArray itemArray = new DataMethod().fromScript(Scripts.flowerItem(id));
         try {
             JSONObject itemObject = itemArray.getJSONObject(0);
@@ -96,12 +68,7 @@ public class GridFragmentHelper {
         }
     }
 
-    private void initGridHandler {
-        GRID_HANDLER = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-            }
-        }
+    public static ArrayList<FlowerItem> getITEMS() {
+        return ITEMS;
     }
 }
