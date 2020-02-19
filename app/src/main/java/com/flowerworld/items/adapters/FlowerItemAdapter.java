@@ -17,6 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.items.FlowerItem;
+import com.flowerworld.methods.Methods;
 
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
     public void onBindViewHolder(@NonNull final FlowerItemViewHolder holder, int position) {
         final FlowerItem flowerItem = flowerItemArrayList.get(position);
         holder.flowerTitle.setText(flowerItem.getName());
-        holder.flowerPrice.setText(flowerItem.getPrice()+" руб.");
+        holder.flowerPrice.setText(Methods.formatRuble(flowerItem.getPrice()));
         float rating=Float.valueOf(flowerItem.getRating());
         holder.flowerRating.setRating(rating);
         System.out.println(flowerItem.getImageUrl());
@@ -54,8 +55,6 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
                         .getRouter()
                         .addFrament("flowerPage",
                                 String.valueOf(flowerItem.getId()));
-
-
 
             }
         });

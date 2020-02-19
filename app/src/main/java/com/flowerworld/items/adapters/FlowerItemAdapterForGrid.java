@@ -1,5 +1,6 @@
 package com.flowerworld.items.adapters;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,18 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 import com.flowerworld.items.FlowerItem;
+import com.flowerworld.methods.Methods;
 
+import java.io.UnsupportedEncodingException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
 
 public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAdapterForGrid.FlowerItemHolder> {
 
@@ -56,6 +65,7 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
             setRatingProduct(Float.valueOf(flowerItem.getRating()));
             setPaneListener(flowerItem.getId());
             setBuyButtonListener(flowerItem.getId());
+            setProductImage(flowerItem.getImageUrl());
         }
 
         private void setNameProduct(String nameProduct) {
@@ -65,7 +75,7 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
 
         private void setPriceProduct(String priceProduct) {
             TextView priceProductPriceTextView = itemView.findViewById(R.id.flowerItemProductPriceTextView);
-            priceProductPriceTextView.setText(priceProduct);
+            priceProductPriceTextView.setText(Methods.formatRuble(priceProduct));
         }
 
         private void setRatingProduct(float ratingProduct) {
@@ -73,12 +83,12 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
             ratingProductRatingBar.setRating(ratingProduct);
         }
 
-        private void setPaneListener(int idProduct) {
+        private void setPaneListener(final int idProduct) {
             ConstraintLayout mainPaneConstraintLayout = itemView.findViewById(R.id.flowerItemConstraintLayout);
             mainPaneConstraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //открыть страницу с цветами
+                    addAboutProductFragment(idProduct);
                 }
             });
         }
@@ -91,6 +101,15 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
                     //открыть фрагмент покупки
                 }
             });
+        }
+
+        private void setProductImage(String urlImage){
+            SimpleDraweeView productImageSimpleDraweeView = itemView.findViewById(R.id.flowerItemSimpleDraweeView);
+            productImageSimpleDraweeView.setImageURI(Uri.parse(urlImage));
+        }
+
+        private void addAboutProductFragment(int idProduct) {
+            ((MainActivity) itemView.getContext()).getApp().getRouter().addFrament("flowerPage",String.valueOf(idProduct));
         }
     }
 }

@@ -29,6 +29,7 @@ import com.flowerworld.items.CommentItem;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.adapters.CommentItemAdapter;
 import com.flowerworld.items.adapters.FlowerImageItemAdapter;
+import com.flowerworld.methods.Methods;
 
 import java.util.ArrayList;
 
@@ -110,7 +111,7 @@ public class FlowerFragmentUI {
         name.setText(helper.getName());
         compound.setText(helper.getCompound());
         annotan.setText(helper.getAnnotation());
-        price.setText(helper.getPrices());
+        price.setText(Methods.formatRuble(helper.getPrices()));
         rate.setText(helper.getSumRate().toString());
         FlowerImageItemAdapter adapter = new FlowerImageItemAdapter(helper.getItems());
         imagePager.setAdapter(adapter);
