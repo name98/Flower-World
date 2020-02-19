@@ -51,7 +51,7 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
                     ((MainActivity) shopPhoto.getContext())
                             .getApp()
                             .getRouter()
-                            .addFrament("shopPage",name);
+                            .addFragment("shopPage",name);
 
                     Log.d("shop ", name);
                 }

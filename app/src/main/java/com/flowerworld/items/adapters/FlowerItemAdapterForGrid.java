@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -16,15 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
-import com.flowerworld.fragments.Router;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.methods.Methods;
 
-import java.io.UnsupportedEncodingException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
 
 public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAdapterForGrid.FlowerItemHolder> {
 
@@ -109,7 +103,9 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
         }
 
         private void addAboutProductFragment(int idProduct) {
-            ((MainActivity) itemView.getContext()).getApp().getRouter().addFrament("flowerPage",String.valueOf(idProduct));
+            ((MainActivity) itemView.getContext()).getApp().getRouter().addFragment("flowerPage",String.valueOf(idProduct));
         }
+
+
     }
 }

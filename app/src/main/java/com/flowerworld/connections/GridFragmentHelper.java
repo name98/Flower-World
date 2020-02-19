@@ -1,10 +1,9 @@
 package com.flowerworld.connections;
 
-import android.os.Handler;
-import android.os.Message;
+
 import android.util.Log;
 
-import androidx.annotation.NonNull;
+
 
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.methods.Methods;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 
 public class GridFragmentHelper {
 
-    public static boolean IS_EMPTY = false;
     private static ArrayList<FlowerItem> ITEMS = new ArrayList<>();
 
     public static void bind(String ids){
@@ -45,8 +43,6 @@ public class GridFragmentHelper {
         for(int i = 0; i<itemsId.size(); i++){
             ITEMS.add(setProduct(itemsId.get(i)));
         }
-        if(itemsId.size() != 0)
-            IS_EMPTY = true;
     }
 
     private static FlowerItem setProduct(String id){

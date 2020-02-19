@@ -18,14 +18,14 @@ public class PersonFragmentUI {
         activeOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) view.getContext()).getApp().getRouter().addFrament("ordersFragment",false);
+                ((MainActivity) view.getContext()).getApp().getRouter().addFragment("ordersFragment",false);
             }
         });
         Button compledOrders = view.findViewById(R.id.personFragmentCompledOrdersBt);
         compledOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) view.getContext()).getApp().getRouter().addFrament("ordersFragment",true);
+                ((MainActivity) view.getContext()).getApp().getRouter().addFragment("ordersFragment",true);
             }
         });
     }

@@ -96,7 +96,7 @@ public class AboutOrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity) Objects.requireNonNull(getActivity())).getApp()
-                        .getRouter().addFrament("flowerPage", String.valueOf(item.getId()));
+                        .getRouter().addFragment("flowerPage", String.valueOf(item.getId()));
             }
         });
     }

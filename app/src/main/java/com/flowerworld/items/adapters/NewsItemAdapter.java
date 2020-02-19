@@ -43,7 +43,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsIt
                 ((MainActivity)holder.newImage.getContext())
                         .getApp()
                         .getRouter()
-                        .addFrament("gridFragment",newsItems.get(position).getIds());
+                        .addFragment("gridFragment",newsItems.get(position).getIds());
             }
         });
     }

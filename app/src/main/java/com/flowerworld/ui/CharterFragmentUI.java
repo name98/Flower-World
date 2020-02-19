@@ -42,11 +42,12 @@ import java.util.Date;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CharterFragmentUI {
     private View view;
-    private FlowerFragmentHalper FHelper;
+
     private Handler handler;
-    public CharterFragmentUI(View view, FlowerFragmentHalper helper)  {
+    private FlowerItem item;
+    public CharterFragmentUI(View view, FlowerItem item)  {
         this.view = view;
-        this.FHelper=helper;
+        this.item = item;
         start();
     }
     private void start(){
@@ -54,8 +55,8 @@ public class CharterFragmentUI {
         final TextView time = view.findViewById(R.id.orderTime);
         SimpleDraweeView simpleDraweeView = view.findViewById(R.id.flowerIconImage);
         TextView textView = view.findViewById(R.id.flowerIconName);
-        simpleDraweeView.setImageURI(Uri.parse(FHelper.getItems().get(0).getImageUrl()));
-        textView.setText(FHelper.getName());
+        simpleDraweeView.setImageURI(Uri.parse(item.getImageUrl()));
+        textView.setText(item.getName());
         Date now = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(now);
@@ -112,13 +113,13 @@ public class CharterFragmentUI {
                 String userID = helper.getKey();
 
 
-                CharterItem item = new CharterItem(address.getText().toString(),
+                CharterItem itemCh = new CharterItem(address.getText().toString(),
                         receiver.getText().toString(),
-                        FHelper.getId(), userID,
+                        String.valueOf(item.getId()), userID,
                         date.getText().toString(),
-                        time.getText().toString(),FHelper.getItems().get(0).getImageUrl(),"ожидание");
+                        time.getText().toString(),item.getImageUrl(),"ожидание");
                 initHandler();
-                startHandler(item);
+                startHandler(itemCh);
 
 
 
@@ -153,7 +154,7 @@ public class CharterFragmentUI {
             @Override
             public void run() {
                 try {
-                    new CharterFragmentHelper(item);
+                    //new CharterFragmentHelper(item);
                     Message msg = Message.obtain();
                     msg.obj = true;
                     msg.setTarget(handler);

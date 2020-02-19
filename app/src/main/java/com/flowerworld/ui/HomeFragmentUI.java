@@ -4,6 +4,7 @@ import android.os.Message;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,8 @@ public class HomeFragmentUI {
     Handler handler;
 
     public HomeFragmentUI(View view) {
+
+
         this.view = view;
         initHandler();
         start();
@@ -28,6 +31,8 @@ public class HomeFragmentUI {
         handler  = new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {
+                ProgressBar progressBar = view.findViewById(R.id.homeFragmentProgressBar);
+                progressBar.setVisibility(View.INVISIBLE);
                 HomeFragmentObjects objects = (HomeFragmentObjects) msg.obj;
                 RecyclerView recyclerView = view.findViewById(R.id.recycleViewForRecycleViews);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());

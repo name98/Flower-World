@@ -109,7 +109,7 @@ public class LoginFragmentUI {
         ((MainActivity) view.getContext())
                 .getApp()
                 .getRouter()
-                .addFrament("mainFragment");
+                .addFragment("mainFragment");
 
 
     }

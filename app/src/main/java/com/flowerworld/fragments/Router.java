@@ -1,8 +1,14 @@
 package com.flowerworld.fragments;
 
 
+import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.connections.FlowerFragmentHalper;
 import com.flowerworld.items.FlowerItem;
@@ -15,7 +21,8 @@ public class Router {
     }
 
 
-    public void addFrament(String tag, String data){
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void addFragment(String tag, String data){
         switch (tag){
             case "test":
                 TestFragment testFragment = new TestFragment();
@@ -63,7 +70,7 @@ public class Router {
 
         }
     }
-    public void addFrament(String tag){
+    public void addFragment(String tag){
         switch (tag){
             case "mainFragment":
                 MainFragment mainFragment = new MainFragment();
@@ -80,17 +87,13 @@ public class Router {
 
         }
     }
-    public void addFrament(String tag, FlowerFragmentHalper helper){
-        switch (tag) {
-            case "charterFragment":
-                CharterFragment charterFragment= new CharterFragment(helper);
-                fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,charterFragment,tag)
-                        .addToBackStack(null)
-                        .commit();
-                break;
-
-        }
+    public static void addCharterFragment (Context context, int id){
+        FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
+        CharterFragment charterFragment = CharterFragment.newInstance(id);
+        fragmentManager.beginTransaction()
+                .add(R.id.activity_fragment_contaner,charterFragment,"charterFragment")
+                .addToBackStack(null)
+                .commit();
     }
     public void remove(String tag){
         if(isAdded(tag)){
@@ -108,7 +111,7 @@ public class Router {
 
     }
 
-    public void addFrament(String tag, boolean flag){
+    public void addFragment(String tag, boolean flag){
         switch (tag){
             case "ordersFragment":
                 OrdersFragment ordersFragment = new OrdersFragment(flag);

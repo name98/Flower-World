@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -58,7 +57,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
             @Override
             public void onClick(View v) {
                 ((MainActivity)holder.nameProduct.getContext()).getApp().getRouter()
-                        .addFrament("aboutOrderFragment",item.getId());
+                        .addFragment("aboutOrderFragment",item.getId());
             }
         });
     }

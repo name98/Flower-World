@@ -24,9 +24,9 @@ public class Application {
     }
     private void start(){
         if(Methods.isAuth(dbHelper))
-            router.addFrament("mainFragment");
+            router.addFragment("mainFragment");
         else {
-            router.addFrament("loginFragment");
+            router.addFragment("loginFragment");
         }
     }
 
@@ -34,6 +34,6 @@ public class Application {
         return router;
     }
     private void testStart(){
-        router.addFrament("test");
+        router.addFragment("test");
     }
 }

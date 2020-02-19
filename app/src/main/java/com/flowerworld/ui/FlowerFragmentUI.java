@@ -26,7 +26,6 @@ import com.flowerworld.connections.FlowerFragmentHalper;
 
 import com.flowerworld.fragments.Router;
 import com.flowerworld.items.CommentItem;
-import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.adapters.CommentItemAdapter;
 import com.flowerworld.items.adapters.FlowerImageItemAdapter;
 import com.flowerworld.methods.Methods;
@@ -67,9 +66,7 @@ public class FlowerFragmentUI {
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) view.getContext()).getApp()
-                        .getRouter()
-                        .addFrament("charterFragment", helper);
+                Router.addCharterFragment(view.getContext(), Integer.valueOf(helper.getId()));
             }
         });
     }
@@ -126,7 +123,7 @@ public class FlowerFragmentUI {
                 ((MainActivity) view.getContext())
                         .getApp()
                         .getRouter()
-                        .addFrament("shopPage", helper.getShopName());
+                        .addFragment("shopPage", helper.getShopName());
 
             }
         });
@@ -207,7 +204,7 @@ public class FlowerFragmentUI {
         reteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) view.getContext()).getApp().getRouter().addFrament("createCommentFragment",idProduct);
+                ((MainActivity) view.getContext()).getApp().getRouter().addFragment("createCommentFragment",idProduct);
             }
         });
     }

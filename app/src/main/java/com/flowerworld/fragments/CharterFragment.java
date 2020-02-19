@@ -12,16 +12,15 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.flowerworld.R;
+import com.flowerworld.connections.CharterFragmentHelper;
 import com.flowerworld.connections.FlowerFragmentHalper;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.ui.CharterFragmentUI;
 
 public class CharterFragment extends Fragment {
-    private FlowerFragmentHalper helper;
+    private static final String KEY_FOR_ID_PRODUCT = "productId";
 
-    public CharterFragment(FlowerFragmentHalper helper) {
-        this.helper = helper;
-    }
+
 
     @Nullable
     @Override
@@ -33,6 +32,18 @@ public class CharterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new CharterFragmentUI(view,helper);
+        int id = getArguments().getInt(KEY_FOR_ID_PRODUCT);
+        CharterFragmentHelper.bind(id);
+        new CharterFragmentUI(view, CharterFragmentHelper.getPRODUCT());
+    }
+
+    static CharterFragment newInstance(int id) {
+
+        Bundle args = new Bundle();
+        args.putInt(KEY_FOR_ID_PRODUCT,id);
+
+        CharterFragment fragment = new CharterFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 }

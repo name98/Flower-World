@@ -1,7 +1,6 @@
 package com.flowerworld.items.adapters;
 
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +52,7 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
                 ((MainActivity) holder.getFlowerTitle().getContext())
                         .getApp()
                         .getRouter()
-                        .addFrament("flowerPage",
+                        .addFragment("flowerPage",
                                 String.valueOf(flowerItem.getId()));
 
             }
