@@ -11,10 +11,11 @@ import org.json.JSONObject;
 
 public class CharterFragmentHelper {
 
-    private static FlowerItem PRODUCT;
+    private static FlowerItem PRODUCT = new FlowerItem();
 
     public static void bind(int id) {
-        start(id);
+        init(id);
+
     }
 
     private static void init(int id) {
@@ -33,15 +34,7 @@ public class CharterFragmentHelper {
         }
     }
 
-    private static void start(final int id) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                init(id);
-            }
-        });
-        t.start();
-    }
+
 
     public static FlowerItem getPRODUCT() {
         return PRODUCT;

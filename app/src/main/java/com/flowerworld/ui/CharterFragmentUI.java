@@ -128,7 +128,7 @@ public class CharterFragmentUI {
     }
     @SuppressLint("HandlerLeak")
     private void initHandler(){
-        handler= new Handler(){
+        handler = new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -156,7 +156,7 @@ public class CharterFragmentUI {
                 try {
                     //new CharterFragmentHelper(item);
                     Message msg = Message.obtain();
-                    msg.obj = true;
+                    msg.obj = true; //
                     msg.setTarget(handler);
                     handler.sendMessage(msg);
                 }

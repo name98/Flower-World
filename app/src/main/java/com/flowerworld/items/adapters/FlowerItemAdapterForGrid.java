@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.methods.Methods;
 
@@ -87,12 +88,12 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
             });
         }
 
-        private void setBuyButtonListener(int idProduct) {
+        private void setBuyButtonListener(final int idProduct) {
             Button buyButton = itemView.findViewById(R.id.flowerItemBuyButton);
             buyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //открыть фрагмент покупки
+                    Router.addCharterFragment(itemView.getContext(), idProduct);
                 }
             });
         }
@@ -105,7 +106,5 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
         private void addAboutProductFragment(int idProduct) {
             ((MainActivity) itemView.getContext()).getApp().getRouter().addFragment("flowerPage",String.valueOf(idProduct));
         }
-
-
     }
 }

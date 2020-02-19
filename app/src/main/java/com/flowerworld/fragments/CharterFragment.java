@@ -1,10 +1,15 @@
 package com.flowerworld.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +24,7 @@ import com.flowerworld.ui.CharterFragmentUI;
 
 public class CharterFragment extends Fragment {
     private static final String KEY_FOR_ID_PRODUCT = "productId";
-
+    private Handler handler;
 
 
     @Nullable
@@ -28,13 +33,41 @@ public class CharterFragment extends Fragment {
         return inflater.inflate(R.layout.charter_fragmnet,container,false);
     }
 
+    @SuppressLint("HandlerLeak")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         int id = getArguments().getInt(KEY_FOR_ID_PRODUCT);
-        CharterFragmentHelper.bind(id);
-        new CharterFragmentUI(view, CharterFragmentHelper.getPRODUCT());
+
+        handler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                ProgressBar progressBar = getView().findViewById(R.id.charterFragmentProgressbar);
+                progressBar.setVisibility(View.INVISIBLE);
+                LinearLayout linearLayout = getView().findViewById(R.id.charterFragmentLinLay);
+                linearLayout.setVisibility(View.VISIBLE);
+                new CharterFragmentUI(getView(), CharterFragmentHelper.getPRODUCT());
+            }
+        };
+
+        initValues(id);
+
+
+
+    }
+
+    private void initValues(final int id){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CharterFragmentHelper.bind(id);
+                Message msg = new Message();
+                msg.setTarget(handler);
+                handler.sendMessage(msg);
+            }
+        });
+        t.start();
     }
 
     static CharterFragment newInstance(int id) {
