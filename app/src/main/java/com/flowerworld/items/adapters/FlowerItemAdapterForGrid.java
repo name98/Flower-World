@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flowerworld.R;
@@ -73,9 +74,8 @@ public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAda
         }
 
         private void setPaneListener(int idProduct) {
-            LinearLayout mainPaneLinerLayout = itemView.findViewById(R.id.flowerItemMainPaneLinerLayout);
-            mainPaneLinerLayout.setBackgroundColor(itemView.getResources().getColor(R.color.appColorWhite));
-            mainPaneLinerLayout.setOnClickListener(new View.OnClickListener() {
+            ConstraintLayout mainPaneConstraintLayout = itemView.findViewById(R.id.flowerItemConstraintLayout);
+            mainPaneConstraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //открыть страницу с цветами

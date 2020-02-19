@@ -1,71 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/grey">
 
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
+        android:layout_height="567dp"
+        android:layout_margin="5dp"
         android:background="@color/appColorWhite"
-        android:orientation="vertical"
-        android:id="@+id/flowerItemMainPaneLinerLayout">
+        android:id="@+id/flowerItemConstraintLayout">
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:layout_margin="5dp"
-            android:background="@color/grey"
-            android:id="@+id/flowerItemSimpleDraweeView"/>
+            android:id="@+id/flowerItemSimpleDraweeView"
+            android:layout_width="367dp"
+            android:layout_height="356dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.060000002" />
 
         <TextView
+            android:id="@+id/flowerItemProductPriceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="20sp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textColor="@color/black"
             android:textSize="30sp"
-            tool:text="85 000 руб"
-            android:id="@+id/flowerItemProductPriceTextView"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/flowerItemSimpleDraweeView"
+            app:layout_constraintTop_toBottomOf="@+id/flowerItemSimpleDraweeView"
+            app:layout_constraintVertical_bias="0.060000002"
+            tool:text="85 000 руб" />
 
         <TextView
+            android:id="@+id/flowerItemProductNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20sp"
             android:fontFamily="sans-serif-light"
             android:textColor="@color/black"
             android:textSize="25sp"
-            tool:text="Розы"
-            android:id="@+id/flowerItemProductNameTextView"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/flowerItemSimpleDraweeView"
+            app:layout_constraintTop_toBottomOf="@+id/flowerItemProductPriceTextView"
+            app:layout_constraintVertical_bias="0.060000002"
+            tool:text="Розы" />
 
         <RatingBar
+            android:id="@+id/flowerItemRatingBar"
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:isIndicator="true"
             android:max="5"
             android:numStars="5"
             android:progress="4"
             android:progressTint="@color/goldForRatingBar"
-            android:id="@+id/flowerItemRatingBar"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/flowerItemSimpleDraweeView"
+            app:layout_constraintTop_toBottomOf="@+id/flowerItemProductNameTextView"
+            app:layout_constraintVertical_bias="0.095" />
 
         <Button
-            android:layout_width="270dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="20dp"
+            android:id="@+id/flowerItemBuyButton"
+            android:layout_width="160dp"
+            android:layout_height="51dp"
             android:background="@drawable/button_styles"
             android:fontFamily="sans-serif-condensed-medium"
             android:textColor="@color/appColorWhite"
             android:textSize="20sp"
-            android:id="@+id/flowerItemBuyButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/flowerItemSimpleDraweeView"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flowerItemRatingBar"
+            app:layout_constraintVertical_bias="0.138"
             tool:text="Купить" />
-    </LinearLayout>
 
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
