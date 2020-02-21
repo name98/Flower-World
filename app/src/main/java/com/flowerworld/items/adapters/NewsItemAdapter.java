@@ -18,7 +18,7 @@ import com.flowerworld.items.NewsItem;
 import java.util.ArrayList;
 
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsItemHolder> {
-    private ArrayList<NewsItem> newsItems;
+    private ArrayList<NewsItem> newsItems = new ArrayList<>();
 
     public void setNewsItems(ArrayList<NewsItem> newsItems) {
         this.newsItems = newsItems;

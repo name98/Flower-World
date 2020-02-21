@@ -31,13 +31,7 @@ public class Router {
                         .addToBackStack(null)
                         .commit();
                 break;
-            case "flowerPage":
-                FlowerFragment flowerFragment = new FlowerFragment(Integer.valueOf(data));
-                fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,flowerFragment,tag)
-                        .addToBackStack(null)
-                        .commit();
-                break;
+
             case "shopPage":
                 ShopFragment shopFragment = new ShopFragment(data);
 
@@ -135,6 +129,16 @@ public class Router {
         MainFragment mainFragment = MainFragment.newInstance();
         manager.beginTransaction()
                 .add(CONTAINER, mainFragment, MAIN_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void addFlowerFragment(Context context, int id) {
+        System.out.println("id is:" + id);
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        FlowerFragment flowerFragment = FlowerFragment.newInstance(id);
+        manager.beginTransaction()
+                .add(CONTAINER, flowerFragment, MAIN_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }

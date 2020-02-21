@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.Holder> {
     private ArrayList<CommentItem> comments;
-    private int myCommentIndex;
     public boolean haveMy = false;
 
     public void setComments(ArrayList<CommentItem> comments) {
@@ -36,14 +35,7 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         CommentItem commentItem = comments.get(position);
-        holder.setAuthor(commentItem.getAuthor());
-        holder.setComment(commentItem.getComment());
-        holder.setDate(commentItem.getDate());
-        holder.setRate(commentItem.getRate());
-        holder.setRateText(createItemHeadline(commentItem.getRate()));
-        if (commentItem.isMy()) {
-            holder.setLightGreenColorPane();
-        }
+        holder.bind(commentItem);
     }
 
     @Override
@@ -51,76 +43,75 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
         return comments.size();
     }
 
-    private String createItemHeadline(int rate) {
-        switch (rate) {
-            case 1:
-                return "Плохо";
-            case 2:
-                return "Не очень";
-            case 3:
-                return "Нормально";
-            case 4:
-                return "Хорошо";
-            case 5:
-                return "Отлично";
-            default:
-                return "";
-        }
-    }
 
     class Holder extends RecyclerView.ViewHolder {
-        private TextView comment;
-        private TextView author;
-        private TextView date;
-        private TextView rateText;
-        private RatingBar rate;
-        private RelativeLayout pane;
 
         Holder(@NonNull View itemView) {
             super(itemView);
-            comment = itemView.findViewById(R.id.commentItemCommentTextView);
-            author = itemView.findViewById(R.id.commentItemAuthorTextView);
-            date = itemView.findViewById(R.id.commentItemDateTextView);
-            rate = itemView.findViewById(R.id.commentItemRatingBar);
-            rateText = itemView.findViewById(R.id.commentItemCommentHeadline);
-            pane = itemView.findViewById(R.id.commentItemRL);
+        }
+
+        void bind(CommentItem comment) {
+            setRateText(createItemHeadline(comment.getRate()));
+            setRate(comment.getRate());
+            setDate(comment.getDate());
+            setAuthor(comment.getAuthor());
+            setComment(comment.getComment());
+            if (comment.isMy())
+                setLightGreenColorPane();
         }
 
         void setComment(String comment) {
-            this.comment.setText(comment);
+            TextView commentTextView = itemView.findViewById(R.id.commentItemCommentTextView);
+            commentTextView.setText(comment);
         }
 
         void setAuthor(String author) {
-            this.author.setText(author);
+            TextView authorTextView = itemView.findViewById(R.id.commentItemAuthorTextView);
+            authorTextView.setText(author);
         }
 
         void setDate(String date) {
-            this.date.setText(date);
+            TextView dateTextView = itemView.findViewById(R.id.commentItemDateTextView);
+            dateTextView.setText(date);
         }
 
         void setRateText(String rateText) {
-            this.rateText.setText(rateText);
+            TextView rateTextView = itemView.findViewById(R.id.commentItemCommentHeadline);
+            rateTextView.setText(rateText);
         }
 
         void setRate(int rate) {
-            this.rate.setRating(rate);
+            RatingBar rateRatingBar = itemView.findViewById(R.id.commentItemRatingBar);
+            rateRatingBar.setRating(rate);
         }
-
 
         void setLightGreenColorPane() {
-            pane.setBackgroundColor(Color.parseColor("#7AFFB3"));
+            RelativeLayout paneRelativeLayout = itemView.findViewById(R.id.commentItemRL);
+            paneRelativeLayout.setBackgroundColor(Color.parseColor("#7AFFB3"));
         }
-    }
 
-    public CommentItem getMyComment() {
-        return comments.get(myCommentIndex);
+        private String createItemHeadline(int rate) {
+            switch (rate) {
+                case 1:
+                    return "Плохо";
+                case 2:
+                    return "Не очень";
+                case 3:
+                    return "Нормально";
+                case 4:
+                    return "Хорошо";
+                case 5:
+                    return "Отлично";
+                default:
+                    return "";
+            }
+        }
     }
 
     public void checkMyComment() {
         for (int i = 0; i < comments.size(); i++)
             if (comments.get(i).isMy()) {
                 haveMy = true;
-                myCommentIndex = i;
             }
     }
 }

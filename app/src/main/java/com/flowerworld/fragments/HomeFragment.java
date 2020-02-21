@@ -7,6 +7,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.flowerworld.R;
 import com.flowerworld.connections.HomeConnection;
@@ -46,6 +48,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void bind() {
+        refreshFragment();
+        switchProgress(true);
         categoriesAdapter = new ItemAdapter();
         setHandler();
         HomeConnection connection = new HomeConnection(this);
@@ -84,6 +88,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setItemsRecycleView() {
+        switchProgress(false);
         RecyclerView itemRecycleView = Objects.requireNonNull(getView()).findViewById(R.id.recycleViewForRecycleViews);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         itemRecycleView.setAdapter(categoriesAdapter);
@@ -114,4 +119,31 @@ public class HomeFragment extends Fragment {
         categoriesAdapter.setShopItems(shops);
         setItemsRecycleView();
     }
+
+    private void switchProgress(boolean isOn) {
+        ProgressBar progressBar = getView().findViewById(R.id.homeFragmentProgressBar);
+        SwipeRefreshLayout refreshLayout = getView().findViewById(R.id.home_fragment_swipe_refresh_layout);
+        if(isOn){
+            refreshLayout.setRefreshing(false);
+            refreshLayout.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        else {
+            progressBar.setVisibility(View.INVISIBLE);
+            refreshLayout.setEnabled(true);
+        }
+    }
+
+    private void refreshFragment() {
+        SwipeRefreshLayout refreshLayout = getView().findViewById(R.id.home_fragment_swipe_refresh_layout);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                bind();
+                switchProgress(true);
+            }
+        });
+
+    }
+
 }

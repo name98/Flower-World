@@ -12,10 +12,8 @@ import com.flowerworld.ui.FlowerFragmentUI;
 
 public class    FlowerFragment extends Fragment {
     private int id;
+    private final static String PRODUCT_ID_KEY = "product_id";
 
-    public FlowerFragment(int id) {
-        this.id = id;
-    }
 
     @Nullable
     @Override
@@ -26,6 +24,15 @@ public class    FlowerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new FlowerFragmentUI(String.valueOf(id), view);
+        new FlowerFragmentUI(String.valueOf(getArguments().getInt(PRODUCT_ID_KEY)), view);
+    }
+
+    public static FlowerFragment newInstance(int id) {
+
+        Bundle args = new Bundle();
+        args.putInt(PRODUCT_ID_KEY,id);
+        FlowerFragment fragment = new FlowerFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 }

@@ -25,12 +25,13 @@ import java.util.ArrayList;
 import java.util.logging.LogRecord;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<Item> itemArrayList;
-    private ArrayList<NewsItem> newsItemArrayList;
-    private ArrayList<ShopItem> shopItems;
+    private ArrayList<Item> itemArrayList = new ArrayList<>();
+    private ArrayList<NewsItem> newsItemArrayList = new ArrayList<>();
+    private ArrayList<ShopItem> shopItems = new ArrayList<>();
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 
     private int posForItemArrayList = 0;
+
 
 
     public void setItemArrayList(ArrayList<Item> itemArrayList) {
@@ -78,7 +79,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             default:
                 ItemHolder itemHolder = (ItemHolder) holder;
-
+                System.out.println(posForItemArrayList);
                 Item category = itemArrayList.get(posForItemArrayList);
                 itemHolder.bind(category);
                 posForItemArrayList++;
@@ -111,6 +112,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         void bind(Item categories) {
             initHandler();
+            setItemCount();
             setItemsTitle(categories.getFlowerItemTitle());
             getData(categories.getProducts());
         }
@@ -129,6 +131,17 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             RecyclerView productsRecycleView = itemView.findViewById(R.id.flower_shelf_recycle_view);
             FlowerItemAdapter adapter = new FlowerItemAdapter();
             adapter.setFlowerItemArrayList(products);
+            productsRecycleView.setAdapter(adapter);
+            LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext(),
+                    LinearLayoutManager.HORIZONTAL, false);
+            productsRecycleView.setLayoutManager(manager);
+            productsRecycleView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+        }
+
+        private void setItemCount() {
+            RecyclerView productsRecycleView = itemView.findViewById(R.id.flower_shelf_recycle_view);
+            FlowerItemAdapter adapter = new FlowerItemAdapter();
+            adapter.setItemCount(4);
             productsRecycleView.setAdapter(adapter);
             LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext(),
                     LinearLayoutManager.HORIZONTAL, false);

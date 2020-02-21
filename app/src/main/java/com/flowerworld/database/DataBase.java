@@ -55,7 +55,7 @@ public class DataBase {
             product.setRating(object.getString("рейтинг"));
             product.setImageUrl(Methods.strParser(object.getString("картинки")," ").get(0));
             product.setPrice(object.getString("цена"));
-            product.setId(object.getInt("id"));
+            product.setId(Integer.valueOf(id));
         } catch (JSONException e) {
             e.printStackTrace();
         }

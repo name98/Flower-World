@@ -17,6 +17,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.methods.Methods;
 
@@ -86,8 +87,8 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
         }
 
         private void setProductPrice(String price) {
-            TextView productName = itemView.findViewById(R.id.flowerPriceMini);
-            productName.setText(price);
+            TextView productPrice = itemView.findViewById(R.id.flowerPriceMini);
+            productPrice.setText(Methods.formatRuble(price));
         }
 
         private void setProductRating(float f) {
@@ -95,12 +96,12 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
             productRatingBar.setRating(f);
         }
 
-        private void setClickListener(int id) {
+        private void setClickListener(final int id) {
             CardView productPane = itemView.findViewById(R.id.flowerCardView);
             productPane.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ////Router.
+                    Router.addFlowerFragment(itemView.getContext(),id);
                 }
             });
         }
