@@ -26,13 +26,13 @@ public class HomeFragmentHelper {
         ArrayList<FlowerItem> flowerItems = new ArrayList<>();
         try {
             for(int i=0;i<categ.length();i++){
-                JSONObject jsonObject=categ.getJSONObject(i);
+                JSONObject jsonObject = categ.getJSONObject(i);
                 String s = jsonObject.getString("goods");
                 ArrayList<String> ids = Methods.strParser(s," ");
                 for(int j=0;j<ids.size();j++){
                     flowerItems.add(new FlowerItemHelper(ids.get(j)).getFlowerItem());
                 }
-                resultArrayList.add(new Item(categ.getJSONObject(i).getString("categories"),new ArrayList<FlowerItem>(flowerItems)));
+                //resultArrayList.add(new Item(categ.getJSONObject(i).getString("categories"),new ArrayList<FlowerItem>(flowerItems)));
                 flowerItems.clear();
 
 

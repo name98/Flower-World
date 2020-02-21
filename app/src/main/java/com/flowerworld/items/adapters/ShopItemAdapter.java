@@ -18,8 +18,10 @@ import java.util.ArrayList;
 
 public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopItemHolder> {
     private ArrayList<ShopItem> shopItems = new ArrayList<>();
-    public ShopItemAdapter(ArrayList<ShopItem> shopItems) {
+
+    public void setShopItems(ArrayList<ShopItem> shopItems) {
         this.shopItems = shopItems;
+        notifyDataSetChanged();
     }
 
     @NonNull

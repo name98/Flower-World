@@ -17,7 +17,7 @@ public class FlowerItemHelper {
             String imageUrl;
             String rating;
             String price;
-            JSONObject js = new DataMethod().fromScript(Scripts.flowerItem(id)).getJSONObject(0);
+            JSONObject js = new DataMethod().fromScript(Scripts.getProductByIdScript(id)).getJSONObject(0);
             name= js.getString("название");
             imageUrl = Methods.strParser(js.getString("картинки")," ").get(0);
             rating = js.getString("рейтинг");

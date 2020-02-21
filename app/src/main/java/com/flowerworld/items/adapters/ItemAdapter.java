@@ -1,5 +1,8 @@
 package com.flowerworld.items.adapters;
 
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,137 +15,183 @@ import androidx.viewpager2.widget.ViewPager2;
 
 
 import com.flowerworld.R;
+import com.flowerworld.connections.ItemAdapterConnection;
+import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.Item;
 import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.ShopItem;
 
 import java.util.ArrayList;
+import java.util.logging.LogRecord;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Item> itemArrayList;
     private ArrayList<NewsItem> newsItemArrayList;
     private ArrayList<ShopItem> shopItems;
-    private RecyclerView.RecycledViewPool viewPool= new RecyclerView.RecycledViewPool();
+    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
 
     private int posForItemArrayList = 0;
 
 
-    public ItemAdapter(ArrayList<Item> itemArrayList, ArrayList<NewsItem> newsItemArrayList, ArrayList<ShopItem> shopItems) {
+    public void setItemArrayList(ArrayList<Item> itemArrayList) {
         this.itemArrayList = itemArrayList;
-        this.newsItemArrayList = newsItemArrayList;
-        this.shopItems = shopItems;
+        notifyDataSetChanged();
     }
+
+    public void setNewsItemArrayList(ArrayList<NewsItem> newsItemArrayList) {
+        this.newsItemArrayList = newsItemArrayList;
+        notifyDataSetChanged();
+    }
+
+    public void setShopItems(ArrayList<ShopItem> shopItems) {
+        this.shopItems = shopItems;
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        switch (viewType){
+        switch (viewType) {
             case 1:
-                View view2= LayoutInflater.from(parent.getContext()).inflate(R.layout.view_pager_news,parent,false);
-                return new ItemHolder2(view2);
+                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_pager_news, parent, false);
+                return new NewsHolder(view2);
             case 2:
-                View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.shops_recycle_view,parent,false);
-                return new ItemHolder3(view3);
+                View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.shops_recycle_view, parent, false);
+                return new ShopsHolder(view3);
             default:
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mini_flowers_layout,parent,false);
-
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flower_shelf, parent, false);
                 return new ItemHolder(view);
-
-
-
         }
-
-
-
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        switch (holder.getItemViewType()){
+        switch (holder.getItemViewType()) {
             case 1:
-                ItemHolder2 itemHolder2=(ItemHolder2) holder;
-
-                NewsItemAdapter adapter=new NewsItemAdapter(this.newsItemArrayList,itemHolder2.viewPager2);
-                itemHolder2.viewPager2.setAdapter(adapter);
+                NewsHolder newsHolder = (NewsHolder) holder;
+                newsHolder.bind(newsItemArrayList);
                 break;
             case 2:
-                ItemHolder3 itemHolder3 = (ItemHolder3) holder;
-                LinearLayoutManager layoutManager = new LinearLayoutManager(itemHolder3.recyclerView.getContext(),
-                        LinearLayoutManager.HORIZONTAL,false);
-                layoutManager.setInitialPrefetchItemCount(shopItems.size());
-                ShopItemAdapter adapter1 = new ShopItemAdapter(this.shopItems);
-                itemHolder3.recyclerView.setLayoutManager(layoutManager);
-                itemHolder3.recyclerView.setAdapter(adapter1);
-                itemHolder3.recyclerView.setRecycledViewPool(viewPool);
+                ShopsHolder shopsHolder = (ShopsHolder) holder;
+                shopsHolder.bind(shopItems);
                 break;
             default:
-                ItemHolder itemHolder=(ItemHolder) holder;
-                Item item = itemArrayList.get(posForItemArrayList);
-                itemHolder.itemTags.setText(item.getFlowerItemTitle());
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(itemHolder.itemTags.getContext(), LinearLayoutManager.HORIZONTAL,false);
-                linearLayoutManager.setInitialPrefetchItemCount(itemArrayList.size());
-                FlowerItemAdapter flowerItemAdapter = new FlowerItemAdapter(item.getFlowerItemArrayList());
-                itemHolder.rvFlowerItem.setLayoutManager(linearLayoutManager);
-                itemHolder.rvFlowerItem.setAdapter(flowerItemAdapter);
-                itemHolder.rvFlowerItem.setRecycledViewPool(viewPool);
+                ItemHolder itemHolder = (ItemHolder) holder;
+
+                Item category = itemArrayList.get(posForItemArrayList);
+                itemHolder.bind(category);
                 posForItemArrayList++;
                 break;
-
-
-
         }
-
     }
-
-
 
 
     @Override
     public int getItemCount() {
-        return itemArrayList.size()+2;
+        return itemArrayList.size() + 2;
     }
+
     @Override
-    public int getItemViewType(int position){
-        if(position  == 0)
+    public int getItemViewType(int position) {
+        if (position == 0)
             return 1;
-        if(position == 3)
+        if (position == 3)
             return 2;
         else return 3;
     }
-    class ItemHolder extends RecyclerView.ViewHolder{
-        TextView itemTags;
-        RecyclerView rvFlowerItem;
+
+    public class ItemHolder extends RecyclerView.ViewHolder {
+
+        Handler categoryHandler;
 
         ItemHolder(@NonNull View itemView) {
             super(itemView);
-            itemTags = itemView.findViewById(R.id.tagForMiniFlowers);
-            rvFlowerItem = itemView.findViewById(R.id.miniFlowersRecycleView);
-
-
         }
+
+        void bind(Item categories) {
+            initHandler();
+            setItemsTitle(categories.getFlowerItemTitle());
+            getData(categories.getProducts());
+        }
+
+        private void setItemsTitle(String title) {
+            TextView titleTextView = itemView.findViewById(R.id.title_for_product_categoues);
+            titleTextView.setText(title);
+        }
+
+        private void getData(ArrayList<String> ids) {
+            ItemAdapterConnection connection = new ItemAdapterConnection(this);
+            connection.bind(ids);
+        }
+
+        private void setProducts(ArrayList<FlowerItem> products) {
+            RecyclerView productsRecycleView = itemView.findViewById(R.id.flower_shelf_recycle_view);
+            FlowerItemAdapter adapter = new FlowerItemAdapter();
+            adapter.setFlowerItemArrayList(products);
+            productsRecycleView.setAdapter(adapter);
+            LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext(),
+                    LinearLayoutManager.HORIZONTAL, false);
+            productsRecycleView.setLayoutManager(manager);
+            productsRecycleView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+        }
+
+        @SuppressLint("HandlerLeak")
+        private void initHandler() {
+            categoryHandler = new Handler() {
+                @Override
+                public void handleMessage(@NonNull Message msg) {
+                    ArrayList<FlowerItem> products = (ArrayList<FlowerItem>) msg.obj;
+                    setProducts(products);
+                }
+            };
+        }
+
+        public void sendProductsMessage(Message msg) {
+            categoryHandler.sendMessage(msg);
+        }
+
 
     }
-    class ItemHolder2 extends RecyclerView.ViewHolder{
-        ViewPager2 viewPager2;
 
-        ItemHolder2(@NonNull View itemView) {
+    class NewsHolder extends RecyclerView.ViewHolder {
+
+        NewsHolder(@NonNull View itemView) {
             super(itemView);
-            viewPager2 = itemView.findViewById(R.id.newsViewPager2);
+        }
+
+        void bind(ArrayList<NewsItem> news){
+            setNewsItems(news);
+        }
+
+        private void setNewsItems(ArrayList<NewsItem> news) {
+            ViewPager2 newsItemsViewPager2 = itemView.findViewById(R.id.newsViewPager2);
+            NewsItemAdapter adapter = new NewsItemAdapter();
+            adapter.setNewsItems(news);
+            newsItemsViewPager2.setAdapter(adapter);
         }
     }
-    class ItemHolder3 extends RecyclerView.ViewHolder {
-        RecyclerView recyclerView;
-        TextView shops;
-        ItemHolder3(@NonNull View itemView) {
+
+    class ShopsHolder extends RecyclerView.ViewHolder {
+
+        ShopsHolder(@NonNull View itemView) {
             super(itemView);
-            recyclerView = itemView.findViewById(R.id.shopsRecV);
-            shops = itemView.findViewById(R.id.shopsText);
         }
 
+        void bind(ArrayList<ShopItem> shops) {
+            setShopsItems(shops);
+        }
 
-
+        private void setShopsItems(ArrayList<ShopItem> shops) {
+            RecyclerView shopsItems = itemView.findViewById(R.id.shops_items_recycle_view);
+            ShopItemAdapter adapter = new ShopItemAdapter();
+            adapter.setShopItems(shops);
+            LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext(),
+                    LinearLayoutManager.HORIZONTAL, false);
+            shopsItems.setLayoutManager(manager);
+            shopsItems.setAdapter(adapter);
+            shopsItems.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+        }
     }
 
 }

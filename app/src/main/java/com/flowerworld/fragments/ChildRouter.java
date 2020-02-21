@@ -1,68 +1,60 @@
 package com.flowerworld.fragments;
 
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.flowerworld.R;
 
-public class ChildRouter {
-    private FragmentManager manager;
-    private Fragment active;
+class ChildRouter {
 
-    public ChildRouter(FragmentManager manager) {
-        this.manager = manager;
-    }
-    public void addFragment(String tag, String data){
-        if(isAdded(tag))
-            manager.beginTransaction()
-            .show(manager.findFragmentByTag(tag))
-            .commit();
-        else
-            adding(tag,data);
-    }
-    private void adding(String tag, String data){
-        switch (tag){
-            case "homeFragment":
-                HomeFragment homeFragment = new HomeFragment();
-                manager.beginTransaction()
-                        .add(R.id.main_fragment_contaner, homeFragment,tag)
-                        .commit();
-                active = homeFragment;
-                break;
-            case "searchFragment":
-                SearchFragment searchFragment = new SearchFragment();
-                manager.beginTransaction()
-                        .add(R.id.main_fragment_contaner, searchFragment,tag)
-                        .addToBackStack(null)
-                        .hide(searchFragment)
-                        .commit();
-                break;
-            case "personFragment":
-                PersonFragment personFragment = new PersonFragment();
-                manager.beginTransaction()
-                        .add(R.id.main_fragment_contaner, personFragment,tag)
-                        .addToBackStack(null)
-                        .hide(personFragment)
-                        .commit();
-                break;
+    final static String HOME_FRAGMENT_TAG = "home_fragment";
+    final static String SEARCH_FRAGMENT_TAG = "search_fragment";
+    final static String PERSON_FRAGMENT_TAG = "person_fragment";
+    private final static int FRAGMENT_CONTAINER = R.id.main_fragment_contaner;
 
+
+
+    static void addHomeFragment(Fragment fragment) {
+        FragmentManager childManager = fragment.getChildFragmentManager();
+        HomeFragment homeFragment = HomeFragment.newInstance();
+        childManager.beginTransaction()
+                .add(FRAGMENT_CONTAINER, homeFragment,HOME_FRAGMENT_TAG)
+                .commit();
+    }
+
+    static void showFragment(Fragment fragment, String tag) {
+        FragmentManager childManager = fragment.getChildFragmentManager();
+        Fragment fragmentByTag = childManager.findFragmentByTag(tag);
+        if(fragmentByTag != null){
+            childManager.beginTransaction()
+                    .show(fragmentByTag)
+                    .commit();
         }
     }
-    private boolean isAdded(String tag){
-        if(manager.findFragmentByTag(tag) != null)
-            return true;
-        else
-            return false;
+
+    static void hideFragment(Fragment fragment, String tag) {
+        FragmentManager childManager = fragment.getChildFragmentManager();
+        Fragment fragmentByTag = childManager.findFragmentByTag(tag);
+        if(fragmentByTag != null) {
+            childManager.beginTransaction()
+                    .hide(fragmentByTag)
+                    .commit();
+        }
     }
-    public void setActive(String tag){
-        if(isAdded(tag))
-            if (active != null){
-                manager.beginTransaction()
-                        .hide(active)
-                        .show(manager.findFragmentByTag(tag))
-                        .commit();
-                active = manager.findFragmentByTag(tag);
-            }
+
+    static void addSearchFragment(Fragment fragment) {
+        FragmentManager childManager = fragment.getChildFragmentManager();
+        SearchFragment searchFragment = SearchFragment.newInstance();
+        childManager.beginTransaction()
+                .add(FRAGMENT_CONTAINER, searchFragment, SEARCH_FRAGMENT_TAG)
+                .commit();
+    }
+
+    static void addPersonFragment(Fragment fragment) {
+        FragmentManager childManager = fragment.getChildFragmentManager();
+        PersonFragment personFragment = PersonFragment.newInstance();
+        childManager.beginTransaction()
+                .add(FRAGMENT_CONTAINER, personFragment, PERSON_FRAGMENT_TAG)
+                .commit();
     }
 }

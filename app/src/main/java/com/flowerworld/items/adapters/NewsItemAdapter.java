@@ -19,11 +19,10 @@ import java.util.ArrayList;
 
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsItemHolder> {
     private ArrayList<NewsItem> newsItems;
-    private ViewPager2 viewPager2;
 
-    public NewsItemAdapter(ArrayList<NewsItem> newsItems, ViewPager2 viewPager2) {
+    public void setNewsItems(ArrayList<NewsItem> newsItems) {
         this.newsItems = newsItems;
-        this.viewPager2 = viewPager2;
+        notifyDataSetChanged();
     }
 
     @NonNull

@@ -5,7 +5,7 @@ import com.flowerworld.items.CharterItem;
 public class Scripts {
     public static final String ALL_MINI_SHOPS = "SELECT название, логотип FROM `магазины`";
 
-    public static String flowerItem(String id) {
+    public static String getProductByIdScript(String id) {
         return "SELECT\n" +
                 "    a2.рейтинг, картинки, g.название, цена\n" +
                 "FROM\n" +

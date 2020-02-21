@@ -4,6 +4,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.flowerworld.connections.DataBaseHelper;
+import com.flowerworld.connections.DataMethod;
+import com.flowerworld.items.FlowerItem;
+import com.flowerworld.models.scripts.Scripts;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -47,7 +54,11 @@ public class Methods {
             builder1.append(chars1[i]);
         }
         return builder1.toString()+"\u20BD";
-
-
     }
+
+    static FlowerItem getFlowerItemfromId(String id) {
+
+        return null;
+    }
+
 }

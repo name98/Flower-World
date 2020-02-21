@@ -46,7 +46,7 @@ public class GridFragmentHelper {
     }
 
     private static FlowerItem setProduct(String id){
-        JSONArray itemArray = new DataMethod().fromScript(Scripts.flowerItem(id));
+        JSONArray itemArray = new DataMethod().fromScript(Scripts.getProductByIdScript(id));
         try {
             JSONObject itemObject = itemArray.getJSONObject(0);
             FlowerItem item = new FlowerItem();

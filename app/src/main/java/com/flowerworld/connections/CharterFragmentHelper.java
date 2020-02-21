@@ -1,6 +1,5 @@
 package com.flowerworld.connections;
 
-import com.flowerworld.items.CharterItem;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.methods.Methods;
 import com.flowerworld.models.scripts.Scripts;
@@ -19,7 +18,7 @@ public class CharterFragmentHelper {
     }
 
     private static void init(int id) {
-        JSONArray array = new DataMethod().fromScript(Scripts.flowerItem(String.valueOf(id)));
+        JSONArray array = new DataMethod().fromScript(Scripts.getProductByIdScript(String.valueOf(id)));
         try {
             JSONObject flowerObject = array.getJSONObject(0);
             PRODUCT.setName(flowerObject.getString("название"));

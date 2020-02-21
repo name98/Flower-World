@@ -10,15 +10,15 @@ import androidx.fragment.app.FragmentManager;
 
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
-import com.flowerworld.connections.FlowerFragmentHalper;
-import com.flowerworld.items.FlowerItem;
-
 
 public class Router {
     private FragmentManager fragmentManager;
     public Router(final FragmentManager fragmentManager) {
         this.fragmentManager=fragmentManager;
     }
+    private final static String MAIN_FRAGMENT_TAG = "main_fragment";
+    private final static int CONTAINER = R.id.activity_fragment_contaner;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -127,6 +127,15 @@ public class Router {
         fragmentManager.beginTransaction()
                 .detach(fragment)
                 .attach(fragment)
+                .commit();
+    }
+
+    public static void addMainFragment(Context context){
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        MainFragment mainFragment = MainFragment.newInstance();
+        manager.beginTransaction()
+                .add(CONTAINER, mainFragment, MAIN_FRAGMENT_TAG)
+                .addToBackStack(null)
                 .commit();
     }
 

@@ -44,4 +44,8 @@ public class PersonFragment extends Fragment {
         new PersonFragmentUI(view);
 
     }
+
+    public static PersonFragment newInstance() {
+        return new PersonFragment();
+    }
 }

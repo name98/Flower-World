@@ -21,36 +21,6 @@ import java.util.ArrayList;
 
 public class DataMethod {
 
-    public ArrayList<Item> buildDataForHomeFragment() throws JSONException {
-        ArrayList<Item> resultArrayList=new ArrayList<>();
-        ArrayList<FlowerItem> flowerItems = new ArrayList<>();
-        JSONArray categoriesData = fromLinkAllData(UrlLinks.CATIGORIES);
-        for (int i=0;i<categoriesData.length();i++){
-            JSONObject jsonObject=categoriesData.getJSONObject(i);
-            String s=jsonObject.getString("goods");
-            ArrayList<String> ids=strParser(s," ");
-            for (int j=0;j<ids.size();j++){
-                JSONObject flowerByID=flowerFromID(ids.get(j));
-                String name = flowerByID.getString("Название");
-
-                String imageUrl = flowerByID.getString("Картинки");
-                String rating = flowerByID.getString("Рейтинг");
-                String price = flowerByID.getString("Цена");
-                ArrayList<String> images = strParser(imageUrl," ");
-                imageUrl=images.get(0);
-                int id = flowerByID.getInt("ID");
-                flowerItems.add(new FlowerItem(name,imageUrl,rating,price,id));
-
-
-            }
-            resultArrayList.add(new Item(categoriesData.getJSONObject(i).getString("categories"),new ArrayList<FlowerItem>(flowerItems)));
-
-            flowerItems.clear();
-
-        }
-        return resultArrayList;
-    }
-
     public JSONArray fromLinkAllData(String link) throws JSONException {
         try {
             String data = URLEncoder.encode("id", "UTF-8") + "=" + "";
@@ -92,13 +62,11 @@ public class DataMethod {
 
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 
-
             wr.write(data);
             wr.flush();
 
             BufferedReader reader = new BufferedReader(new
                     InputStreamReader(conn.getInputStream()));
-
             StringBuilder sb = new StringBuilder();
             String line = null;
 
@@ -324,5 +292,40 @@ public class DataMethod {
 
             System.out.println("insert " +e.toString());
         }
+    }
+
+    public static JSONArray fromScript1(String script){
+
+        try {
+
+            String data = URLEncoder.encode("script", "UTF-8") + "=" + URLEncoder.encode(script, "UTF-8");
+            URL url = new URL(UrlLinks.FROM_SCRIPT);
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+
+
+            wr.write(data);
+            wr.flush();
+
+            BufferedReader reader = new BufferedReader(new
+                    InputStreamReader(conn.getInputStream()));
+
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+
+                break;
+            }
+            JSONArray jsonArray = new JSONArray(sb.toString());
+            return jsonArray;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return null;
+        }
+
     }
 }

@@ -4,7 +4,9 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,11 +23,20 @@ import com.flowerworld.methods.Methods;
 
 import java.util.ArrayList;
 
-public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.FlowerItemViewHolder>{
-    private ArrayList<FlowerItem> flowerItemArrayList=new ArrayList<FlowerItem>();
+public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.FlowerItemViewHolder> {
 
-    public FlowerItemAdapter(ArrayList<FlowerItem> flowerItemArrayList) {
+    private ArrayList<FlowerItem> flowerItemArrayList;
+    private int itemCount = 0;
+
+    public void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
+        notifyDataSetChanged();
+    }
+
+    public void setFlowerItemArrayList(ArrayList<FlowerItem> flowerItemArrayList) {
         this.flowerItemArrayList = flowerItemArrayList;
+        itemCount = this.flowerItemArrayList.size();
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -38,51 +49,65 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
 
     @Override
     public void onBindViewHolder(@NonNull final FlowerItemViewHolder holder, int position) {
-        final FlowerItem flowerItem = flowerItemArrayList.get(position);
-        holder.flowerTitle.setText(flowerItem.getName());
-        holder.flowerPrice.setText(Methods.formatRuble(flowerItem.getPrice()));
-        float rating=Float.valueOf(flowerItem.getRating());
-        holder.flowerRating.setRating(rating);
-        System.out.println(flowerItem.getImageUrl());
-        Uri uri= Uri.parse(flowerItem.getImageUrl());
-        holder.flowerImage.setImageURI(uri);
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) holder.getFlowerTitle().getContext())
-                        .getApp()
-                        .getRouter()
-                        .addFragment("flowerPage",
-                                String.valueOf(flowerItem.getId()));
+        if(flowerItemArrayList != null){
+            holder.bind(flowerItemArrayList.get(position));
+        }
 
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return flowerItemArrayList.size();
+        return itemCount;
     }
 
     class FlowerItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView flowerTitle;
-        SimpleDraweeView flowerImage;
-        TextView flowerPrice;
-        RatingBar flowerRating;
-        CardView cardView;
-        public FlowerItemViewHolder(@NonNull View itemView) {
-            super(itemView);
-            Fresco.initialize(itemView.getContext());
-            flowerImage=itemView.findViewById(R.id.flowerPictureMini);
-            flowerTitle=itemView.findViewById(R.id.flowerNameMini);
-            flowerPrice=itemView.findViewById(R.id.flowerPriceMini);
-            flowerRating=itemView.findViewById(R.id.flowerRatingBarMini);
-            cardView=itemView.findViewById(R.id.flowerCardView);
 
+        FlowerItemViewHolder(@NonNull View itemView) {
+            super(itemView);
         }
 
-        public TextView getFlowerTitle() {
-            return flowerTitle;
+        void bind (FlowerItem item) {
+            setClickListener(item.getId());
+            setProductImage(item.getImageUrl());
+            setProductName(item.getName());
+            setProductPrice(item.getPrice());
+            setProductRating(Float.valueOf(item.getPrice()));
+            offProgress();
+        }
+
+        private void setProductImage(String url) {
+            SimpleDraweeView productImage = itemView.findViewById(R.id.flowerPictureMini);
+            productImage.setImageURI(Uri.parse(url));
+        }
+
+        private void setProductName(String name) {
+            TextView productName = itemView.findViewById(R.id.flowerNameMini);
+            productName.setText(name);
+        }
+
+        private void setProductPrice(String price) {
+            TextView productName = itemView.findViewById(R.id.flowerPriceMini);
+            productName.setText(price);
+        }
+
+        private void setProductRating(float f) {
+            RatingBar productRatingBar = itemView.findViewById(R.id.flowerRatingBarMini);
+            productRatingBar.setRating(f);
+        }
+
+        private void setClickListener(int id) {
+            CardView productPane = itemView.findViewById(R.id.flowerCardView);
+            productPane.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ////Router.
+                }
+            });
+        }
+
+        private void offProgress() {
+            RelativeLayout progressPane = itemView.findViewById(R.id.flower_layout_progress_pane);
+            progressPane.setVisibility(View.INVISIBLE);
         }
     }
 }

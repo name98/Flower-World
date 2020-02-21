@@ -5,26 +5,27 @@ import java.util.ArrayList;
 
 public class Item {
     private String flowerItemTitle;
-    private ArrayList<FlowerItem> flowerItemArrayList;
+    private ArrayList<String> products;
+
 
     public void setFlowerItemTitle(String flowerItemTitle) {
         this.flowerItemTitle = flowerItemTitle;
     }
 
-    public void setFlowerItemArrayList(ArrayList<FlowerItem> flowerItemArrayList) {
-        this.flowerItemArrayList = flowerItemArrayList;
+    public void setProducts(ArrayList<String> products) {
+        this.products = products;
     }
 
     public String getFlowerItemTitle() {
         return flowerItemTitle;
     }
 
-    public ArrayList<FlowerItem> getFlowerItemArrayList() {
-        return flowerItemArrayList;
+    public ArrayList<String> getProducts() {
+        return products;
     }
 
-    public Item(String flowerItemTitle, ArrayList<FlowerItem> flowerItemArrayList) {
+    public Item(String flowerItemTitle, ArrayList<String> products) {
         this.flowerItemTitle = flowerItemTitle;
-        this.flowerItemArrayList = flowerItemArrayList;
+        this.products = products;
     }
 }
