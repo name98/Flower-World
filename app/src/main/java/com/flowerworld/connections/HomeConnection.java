@@ -65,7 +65,6 @@ public class HomeConnection {
 
     }
 
-
     private ArrayList<ShopItem> getShopData() {
         return DataBase.getShopsArray();
     }

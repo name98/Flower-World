@@ -21,7 +21,7 @@ import com.flowerworld.methods.Methods;
 
 import java.util.ArrayList;
 
-public class FlowerItemAdapterForGrid extends RecyclerView.Adapter<FlowerItemAdapterForGrid.FlowerItemHolder> {
+public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapter.FlowerItemHolder> {
 
     private ArrayList<FlowerItem> items = new ArrayList<>();
 

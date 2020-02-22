@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.R;
-import com.flowerworld.connections.HomeFragmentHelper;
 import com.flowerworld.connections.ShopFragmentHelper;
-import com.flowerworld.items.adapters.FlowerItemAdapter;
-import com.flowerworld.items.adapters.FlowerItemAdapterForGrid;
+import com.flowerworld.items.adapters.ProductsGridAdapter;
 
 public class ShopFragmentUI {
     private String id;
@@ -69,7 +67,7 @@ public class ShopFragmentUI {
         uslD.setText(helper.getDelivery());
         shopPhoto.setImageURI(Uri.parse(helper.getLogo()));
         recyclerViewGrid.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
-        FlowerItemAdapterForGrid adapter = new FlowerItemAdapterForGrid();
+        ProductsGridAdapter adapter = new ProductsGridAdapter();
         adapter.setItems(helper.getItems());
         recyclerViewGrid.setAdapter(adapter);
 
