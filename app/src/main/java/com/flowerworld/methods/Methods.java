@@ -41,7 +41,6 @@ public class Methods {
         char[] chars = str.toCharArray();
         StringBuilder builder = new StringBuilder();
         for (int i = chars.length - 1; i >= 0; i--) {
-            System.out.println(chars.length);
             builder.append(chars[i]);
             if (i != (chars.length - 1) && i % 3 == 1) {
                 builder.append(",");

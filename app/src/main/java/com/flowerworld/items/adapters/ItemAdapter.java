@@ -22,33 +22,34 @@ import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.ShopItem;
 
 import java.util.ArrayList;
-import java.util.logging.LogRecord;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Item> itemArrayList = new ArrayList<>();
-    private ArrayList<NewsItem> newsItemArrayList = new ArrayList<>();
+    private ArrayList<NewsItem> newsItems = new ArrayList<>();
     private ArrayList<ShopItem> shopItems = new ArrayList<>();
-    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-
     private int posForItemArrayList = 0;
-
-
 
     public void setItemArrayList(ArrayList<Item> itemArrayList) {
         this.itemArrayList = itemArrayList;
-        notifyDataSetChanged();
     }
 
-    public void setNewsItemArrayList(ArrayList<NewsItem> newsItemArrayList) {
-        this.newsItemArrayList = newsItemArrayList;
-        notifyDataSetChanged();
+    public void setNewsItems(ArrayList<NewsItem> newsItems) {
+        this.newsItems = newsItems;
     }
 
     public void setShopItems(ArrayList<ShopItem> shopItems) {
         this.shopItems = shopItems;
+    }
+
+
+    public void reloadAdapter() {
+        posForItemArrayList = 0;
         notifyDataSetChanged();
     }
 
+    public boolean isLoad() {
+        return newsItems.size() != 0 && shopItems.size() != 0 && posForItemArrayList != 0;
+    }
 
     @NonNull
     @Override
@@ -71,15 +72,14 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (holder.getItemViewType()) {
             case 1:
                 NewsHolder newsHolder = (NewsHolder) holder;
-                newsHolder.bind(newsItemArrayList);
+                newsHolder.bind(newsItems);
                 break;
             case 2:
                 ShopsHolder shopsHolder = (ShopsHolder) holder;
                 shopsHolder.bind(shopItems);
                 break;
-            default:
+            case 3:
                 ItemHolder itemHolder = (ItemHolder) holder;
-                System.out.println(posForItemArrayList);
                 Item category = itemArrayList.get(posForItemArrayList);
                 itemHolder.bind(category);
                 posForItemArrayList++;
@@ -90,16 +90,31 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return itemArrayList.size() + 2;
+        int count = itemArrayList.size();
+        if (isShopsLoad())
+            count++;
+        if (isNewsLoad())
+            count++;
+        return count;
+    }
+
+    private boolean isShopsLoad() {
+        return shopItems.size() != 0;
+    }
+
+    private boolean isNewsLoad() {
+        return newsItems.size() != 0;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0)
+        if (position == 0 && isNewsLoad())
             return 1;
-        if (position == 3)
+        if (position == 3 && isShopsLoad())
             return 2;
-        else return 3;
+        else if(itemArrayList.size() != 0)
+            return 3;
+        return -1;
     }
 
     public class ItemHolder extends RecyclerView.ViewHolder {
@@ -163,8 +178,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void sendProductsMessage(Message msg) {
             categoryHandler.sendMessage(msg);
         }
-
-
     }
 
     class NewsHolder extends RecyclerView.ViewHolder {
@@ -173,7 +186,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(itemView);
         }
 
-        void bind(ArrayList<NewsItem> news){
+        void bind(ArrayList<NewsItem> news) {
             setNewsItems(news);
         }
 
@@ -206,5 +219,4 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             shopsItems.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         }
     }
-
 }

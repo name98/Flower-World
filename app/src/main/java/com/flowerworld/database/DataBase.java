@@ -40,7 +40,7 @@ public class DataBase {
             sb.append(line);
             return new JSONArray(sb.toString());
         } catch (Exception e) {
-            System.out.println(e.toString());
+
             return null;
         }
     }

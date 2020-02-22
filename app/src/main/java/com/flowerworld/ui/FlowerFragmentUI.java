@@ -184,7 +184,7 @@ public class FlowerFragmentUI {
     private void initRecycleView(ArrayList<CommentItem> commentItems) {
         RecyclerView commentsRecycleView = this.view.findViewById(R.id.flowerPageRecView);
         CommentItemAdapter adapter = new CommentItemAdapter();
-        System.out.println(adapter.haveMy);
+
         adapter.setComments(commentItems);
         adapter.checkMyComment();
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);

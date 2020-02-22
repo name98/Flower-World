@@ -134,7 +134,7 @@ public class Router {
     }
 
     public static void addFlowerFragment(Context context, int id) {
-        System.out.println("id is:" + id);
+
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
         FlowerFragment flowerFragment = FlowerFragment.newInstance(id);
         manager.beginTransaction()

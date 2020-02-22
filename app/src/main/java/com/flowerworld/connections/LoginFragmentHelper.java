@@ -20,7 +20,7 @@ public class LoginFragmentHelper {
     private void start(){
         try{
             JSONArray array = new DataMethod().fromScript(Scripts.auth(email,pass));
-            System.out.println(email+pass);
+
             if (array.length()==0)
                 auth = false;
             else {
@@ -28,7 +28,7 @@ public class LoginFragmentHelper {
                 key = array.getJSONObject(0).getInt("ID");
             }
 
-            System.out.println("auth is " + auth);
+
 
         }
         catch (Exception e){

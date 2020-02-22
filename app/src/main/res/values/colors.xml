@@ -17,4 +17,5 @@
     <color name="lightGreen">#7AFFB3</color>
     <color name="mLightGrey">#D6D6D6</color>
     <color name="goldForRatingBar">#FFD600</color>
+    <color name="greenForMyComment">#7AFFB3</color>
 </resources>

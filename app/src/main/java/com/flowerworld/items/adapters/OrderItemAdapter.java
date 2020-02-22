@@ -44,7 +44,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
         holder.date.setText("Заказ от "+item.getDate());
 
         if (items.get(position).getState().equals("доставлено")){
-            System.out.println("sell");
+
             holder.layout.setBackgroundResource(R.color.positiveState);
         }
         if(items.get(position).getState().equals("ожидание")){

@@ -91,6 +91,7 @@ public class HomeFragment extends Fragment {
         switchProgress(false);
         RecyclerView itemRecycleView = Objects.requireNonNull(getView()).findViewById(R.id.recycleViewForRecycleViews);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+        categoriesAdapter.reloadAdapter();
         itemRecycleView.setAdapter(categoriesAdapter);
         itemRecycleView.setLayoutManager(manager);
     }
@@ -108,16 +109,21 @@ public class HomeFragment extends Fragment {
     }
 
     private void setCategories(ArrayList<Item> categories) {
+        System.out.println("catLoad");
         categoriesAdapter.setItemArrayList(categories);
+        reloadAdapter();
     }
 
     private void setNews(ArrayList<NewsItem> news) {
-        categoriesAdapter.setNewsItemArrayList(news);
+        System.out.println("newsLoad");
+        categoriesAdapter.setNewsItems(news);
+        reloadAdapter();
     }
 
     private void setShops(ArrayList<ShopItem> shops) {
+        System.out.println("shopsLoad");
         categoriesAdapter.setShopItems(shops);
-        setItemsRecycleView();
+        reloadAdapter();
     }
 
     private void switchProgress(boolean isOn) {
@@ -143,7 +149,10 @@ public class HomeFragment extends Fragment {
                 switchProgress(true);
             }
         });
+    }
 
+    private void reloadAdapter() {
+        setItemsRecycleView();
     }
 
 }

@@ -266,7 +266,7 @@ public class DataMethod {
             JSONArray jsonArray = new JSONArray(sb.toString());
             return jsonArray;
         } catch (Exception e) {
-            System.out.println(e.toString());
+
             return null;
         }
 
@@ -290,7 +290,7 @@ public class DataMethod {
 
         } catch (Exception e) {
 
-            System.out.println("insert " +e.toString());
+
         }
     }
 
@@ -323,7 +323,7 @@ public class DataMethod {
             JSONArray jsonArray = new JSONArray(sb.toString());
             return jsonArray;
         } catch (Exception e) {
-            System.out.println(e.toString());
+
             return null;
         }
 

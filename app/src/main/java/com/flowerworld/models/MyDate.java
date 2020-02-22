@@ -32,7 +32,6 @@ public class MyDate {
 
         String sf = sdf.format(date);
         String temp[] = sf.split("-");
-        System.out.println(temp[0]);
         String temp2 = temp[temp.length-1];
 
         String temp3[] = temp2.split(" ");

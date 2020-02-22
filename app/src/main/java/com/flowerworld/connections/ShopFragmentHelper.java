@@ -54,7 +54,7 @@ public class ShopFragmentHelper {
         try {
             JSONObject jsonObject = new DataMethod().fromScript(Scripts.fullDataShop(id)).getJSONObject(0);
             logo = jsonObject.getString("логотип");
-            System.out.println(logo);
+
             address = jsonObject.getString("адрес") + "\n" +
                     jsonObject.getString("телефон") + "\n" +
                     jsonObject.getString("почта");
@@ -70,7 +70,7 @@ public class ShopFragmentHelper {
                 String rate = temp.getString("рейтинг");
                 String images = Methods.strParser(temp.getString("картинки")," ").get(0);
                 String price = temp.getString("цена");
-                System.out.println(price);
+
                 items.add(new FlowerItem(name,images, rate, price, temp.getInt("ID")));
             }
         }

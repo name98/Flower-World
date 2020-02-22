@@ -21,8 +21,8 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
     public boolean haveMy = false;
 
     public void setComments(ArrayList<CommentItem> comments) {
-        notifyDataSetChanged();
         this.comments = comments;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -87,7 +87,7 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
 
         void setLightGreenColorPane() {
             RelativeLayout paneRelativeLayout = itemView.findViewById(R.id.commentItemRL);
-            paneRelativeLayout.setBackgroundColor(Color.parseColor("#7AFFB3"));
+            paneRelativeLayout.setBackgroundColor(itemView.getResources().getColor(R.color.greenForMyComment));
         }
 
         private String createItemHeadline(int rate) {
