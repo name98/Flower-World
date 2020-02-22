@@ -7,8 +7,6 @@
     android:background="@color/appColorWhite"
     tools:context=".MainActivity">
 
-
-
     <FrameLayout
         android:id="@+id/flowerPageFrForScr"
         android:layout_width="match_parent"

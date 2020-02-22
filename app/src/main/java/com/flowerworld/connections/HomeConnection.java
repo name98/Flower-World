@@ -1,20 +1,14 @@
 package com.flowerworld.connections;
 
 import android.os.Message;
-import android.util.Log;
+
 
 import com.flowerworld.database.DataBase;
 import com.flowerworld.fragments.HomeFragment;
-import com.flowerworld.items.FlowerItem;
+
 import com.flowerworld.items.Item;
 import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.ShopItem;
-import com.flowerworld.methods.Methods;
-import com.flowerworld.models.scripts.Scripts;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -81,11 +75,4 @@ public class HomeConnection {
         thread.start();
     }
 
-    private ArrayList<FlowerItem> getFlowersItemsData(ArrayList<String> ids) {
-        ArrayList<FlowerItem> temp = new ArrayList<>();
-        for(int i = 0; i < ids.size(); i++){
-            temp.add(DataBase.getProductById(ids.get(i)));
-        }
-        return temp;
-    }
 }

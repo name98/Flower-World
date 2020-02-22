@@ -2,7 +2,9 @@ package com.flowerworld.database;
 
 import android.util.Log;
 
+import com.flowerworld.items.FlowerImagesItem;
 import com.flowerworld.items.FlowerItem;
+import com.flowerworld.items.FullProductItem;
 import com.flowerworld.items.Item;
 import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.ShopItem;
@@ -21,6 +23,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DataBase {
     static JSONArray getJSONArrayByScript(String script){
@@ -111,5 +114,43 @@ public class DataBase {
         }
 
         return shops;
+    }
+
+    public static FullProductItem getFullProduct(int id) {
+        FullProductItem product = new FullProductItem();
+        try {
+            JSONObject object = Objects.requireNonNull(getJSONArrayByScript(Scripts.fullData(String.valueOf(id)))).getJSONObject(0);
+            product.setName(object.getString("название"));
+            product.setShopLogo(object.getString("логотип"));
+            product.setShopName(object.getString("магазин"));
+            product.setSizeH(object.getString("ширина"));
+            product.setSizeL(object.getString("длина"));
+            product.setAnnotation(object.getString("описание"));
+            product.setCompound(object.getString("состав"));
+            ArrayList<String> temp = Methods.strParser(object.getString("картинки")," ");
+            ArrayList<FlowerImagesItem> productImages = new ArrayList<>();
+            for (int i=0;i<temp.size();i++){
+                productImages.add(new FlowerImagesItem(temp.get(i)));
+            }
+            ArrayList<Integer> productRates = new ArrayList<>();
+            productRates.add(object.getInt("один"));
+            productRates.add(object.getInt("два"));
+            productRates.add(object.getInt("три"));
+            productRates.add(object.getInt("четыре"));
+            productRates.add(object.getInt("пять"));
+            product.setSumRate(object.getDouble("рейтинг"));
+            product.setPrice(object.getString("цена"));
+            product.setId(String.valueOf(id));
+            int max = 0;
+            for (int i = 0; i < 5; i++) {
+                max += product.getNumberOfRates().get(i);
+            }
+            product.setNumRaters(String.valueOf(max));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return product;
+
     }
 }

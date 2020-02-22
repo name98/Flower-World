@@ -35,11 +35,10 @@ public class CreateCommentFragment extends Fragment {
     private String idProduct;
     private CreateCommentFragmentHelper createHelper;
     private Handler checkIsCommented;
+    private final static String PRODUCT_ID_KEY = "id_key";
 
 
-    CreateCommentFragment(String idProduct) {
-        this.idProduct = idProduct;
-    }
+
 
 
     @Nullable
@@ -227,5 +226,12 @@ public class CreateCommentFragment extends Fragment {
         alert.show();
     }
 
+    public static CreateCommentFragment newInstance(int id) {
+        Bundle args = new Bundle();
+        args.putInt(PRODUCT_ID_KEY,id);
+        CreateCommentFragment fragment = new CreateCommentFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 }

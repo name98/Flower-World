@@ -15,16 +15,13 @@ import com.flowerworld.items.FlowerImagesItem;
 import java.util.ArrayList;
 
 public class FlowerImageItemAdapter extends RecyclerView.Adapter<FlowerImageItemAdapter.FlowerItemHolder> {
-    ArrayList<FlowerImagesItem> flowerImagesItemArrayList;
+    private ArrayList<FlowerImagesItem> flowerImagesItemArrayList;
 
-    public FlowerImageItemAdapter(ArrayList<FlowerImagesItem> flowerImagesItemArrayList) {
-        this.flowerImagesItemArrayList = flowerImagesItemArrayList;
-    }
 
     @NonNull
     @Override
     public FlowerItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.flower_page_images_banner,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flower_page_images_banner, parent, false);
         return new FlowerImageItemAdapter.FlowerItemHolder(view);
     }
 
@@ -33,19 +30,25 @@ public class FlowerImageItemAdapter extends RecyclerView.Adapter<FlowerImageItem
         holder.setFlowerImage(flowerImagesItemArrayList.get(position));
     }
 
+    public void setFlowerImagesItemArrayList(ArrayList<FlowerImagesItem> flowerImagesItemArrayList) {
+        this.flowerImagesItemArrayList = flowerImagesItemArrayList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
         return flowerImagesItemArrayList.size();
     }
 
-    class FlowerItemHolder extends RecyclerView.ViewHolder{
+    class FlowerItemHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView flowerImage;
-        public FlowerItemHolder(@NonNull View itemView) {
+
+        FlowerItemHolder(@NonNull View itemView) {
             super(itemView);
-            flowerImage=itemView.findViewById(R.id.imageBannerFP);
+            flowerImage = itemView.findViewById(R.id.imageBannerFP);
         }
-        void setFlowerImage (FlowerImagesItem flowerImage){
+
+        void setFlowerImage(FlowerImagesItem flowerImage) {
             String uri = flowerImage.getImageUrl();
             this.flowerImage.setImageURI(Uri.parse(uri));
         }

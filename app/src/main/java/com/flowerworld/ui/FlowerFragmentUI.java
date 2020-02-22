@@ -207,6 +207,7 @@ public class FlowerFragmentUI {
                 ((MainActivity) view.getContext()).getApp().getRouter().addFragment("createCommentFragment",idProduct);
             }
         });
+        Router.removeProgreesFragment(view.getContext());
     }
 
 }

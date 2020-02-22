@@ -18,7 +18,8 @@ public class Router {
     }
     private final static String MAIN_FRAGMENT_TAG = "main_fragment";
     private final static int CONTAINER = R.id.activity_fragment_contaner;
-
+    private final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
+    private final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -143,6 +144,32 @@ public class Router {
                 .commit();
     }
 
+    public static void addProgressFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        ProgressFragment progressFragment = ProgressFragment.newInstance();
+        manager.beginTransaction()
+                .add(CONTAINER, progressFragment, PROGRESS_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
 
+    public static void removeProgreesFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentByTag(PROGRESS_FRAGMENT_TAG);
+        assert fragment != null;
+        manager.beginTransaction()
+                .remove(fragment)
+                .disallowAddToBackStack()
+                .commit();
+        manager.popBackStack();
+    }
 
+    public static void addCreateCommentFragment(Context context, int idProduct) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        CreateCommentFragment createCommentFragment = CreateCommentFragment.newInstance(idProduct);
+        manager.beginTransaction()
+                .add(CONTAINER, createCommentFragment, CREATE_COMMENT_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
 }
