@@ -4,8 +4,10 @@ import android.os.Message;
 
 import com.flowerworld.database.DataBase;
 import com.flowerworld.interfaces.ProductGetData;
+import com.flowerworld.items.CommentItem;
 import com.flowerworld.items.FullProductItem;
 
+import java.util.ArrayList;
 
 
 public class ProductConnection {
@@ -15,8 +17,9 @@ public class ProductConnection {
         this.parent = parent;
     }
 
-    public void bind(int id) {
+    public void bind(int id, int myId) {
         createThreadToSendProduct(id);
+        createThreadToSendComments(id,String.valueOf(myId));
 
     }
 
@@ -36,8 +39,20 @@ public class ProductConnection {
         thread.start();
     }
 
-    private void createThreadToSendComments(int id) {
+    private void createThreadToSendComments(final int id, final String myId) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                msg.obj = getComments(id,myId);
+                parent.sendMessageForSetComment(msg);
+            }
+        });
+        thread.start();
+    }
 
+    private ArrayList<CommentItem> getComments(int id, String myId) {
+        return DataBase.getCommentsByProductId(String.valueOf(id),myId);
     }
 
 

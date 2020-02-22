@@ -2,9 +2,13 @@ package com.flowerworld.database;
 
 import android.util.Log;
 
+import com.flowerworld.connections.DataBaseHelper;
+import com.flowerworld.connections.DataMethod;
+import com.flowerworld.items.CommentItem;
 import com.flowerworld.items.FlowerImagesItem;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.FullProductItem;
+import com.flowerworld.items.FullShopItem;
 import com.flowerworld.items.Item;
 import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.ShopItem;
@@ -112,7 +116,6 @@ public class DataBase {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return shops;
     }
 
@@ -132,12 +135,14 @@ public class DataBase {
             for (int i=0;i<temp.size();i++){
                 productImages.add(new FlowerImagesItem(temp.get(i)));
             }
+            product.setItems(productImages);
             ArrayList<Integer> productRates = new ArrayList<>();
             productRates.add(object.getInt("один"));
             productRates.add(object.getInt("два"));
             productRates.add(object.getInt("три"));
             productRates.add(object.getInt("четыре"));
             productRates.add(object.getInt("пять"));
+            product.setNumberOfRates(productRates);
             product.setSumRate(object.getDouble("рейтинг"));
             product.setPrice(object.getString("цена"));
             product.setId(String.valueOf(id));
@@ -151,6 +156,66 @@ public class DataBase {
             e.printStackTrace();
         }
         return product;
+    }
 
+    public static ArrayList<CommentItem> getCommentsByProductId(String id, String myId) {
+        ArrayList<CommentItem> comments = new ArrayList<>();
+        JSONArray array = getJSONArrayByScript(Scripts.getCommentScript(id));
+        for (int i = 0; i<array.length(); i++) {
+            try {
+
+                JSONObject object = array.getJSONObject(i);
+                CommentItem comment = new CommentItem();
+                comment.setAuthor(object.getString("ФИО"));
+                comment.setComment(object.getString("отзыв"));
+                comment.setDate(object.getString("день"));
+                comment.setRate(object.getInt("оценка"));
+                comment.setId(object.getString("ID"));
+                String usersId = object.getString("id_пользователь");
+                comment.setMy(usersId.equals(myId));
+                System.out.println(object.getString("id_пользователь") + " : " + id);
+                comments.add(comment);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return comments;
+    }
+
+    public static FullShopItem getShopByName(String name) {
+        FullShopItem shop = new FullShopItem();
+        ArrayList<FlowerItem> products = new ArrayList<>();
+        try {
+            JSONObject jsonObject = getJSONArrayByScript(Scripts.fullDataShop(name)).getJSONObject(0);
+            String logo = jsonObject.getString("логотип");
+
+            String address = jsonObject.getString("адрес") + "\n" +
+                    jsonObject.getString("телефон") + "\n" +
+                    jsonObject.getString("почта");
+            String delivery = jsonObject.getString("тип") + "\n" +
+                    jsonObject.getString("внутри_МКАДа") + "\n" +
+                    jsonObject.getString("за_МКАДом");
+            String annotantion = jsonObject.getString("описание");
+            JSONArray array = getJSONArrayByScript(Scripts.flowerItemByShop(name));
+            for(int i =0; i<array.length();i++){
+                JSONObject temp = array.getJSONObject(i);
+                String nameProduct = temp.getString("название");
+                String rate = temp.getString("рейтинг");
+                String images = Methods.strParser(temp.getString("картинки")," ").get(0);
+                String price = temp.getString("цена");
+                products.add(new FlowerItem(nameProduct,images, rate, price, temp.getInt("ID")));
+            }
+            shop.setAddress(address);
+            shop.setAnnotantion(annotantion);
+            shop.setDelivery(delivery);
+            shop.setLogo(logo);
+            System.out.println(logo);
+            shop.setId(name);
+            shop.setItems(products);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return shop;
     }
 }

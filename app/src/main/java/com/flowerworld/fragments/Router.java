@@ -20,6 +20,7 @@ public class Router {
     private final static int CONTAINER = R.id.activity_fragment_contaner;
     private final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
     private final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
+    private final static String SHOP_FRAGMENT_TAG = "shop_fragment";
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -34,7 +35,7 @@ public class Router {
                 break;
 
             case "shopPage":
-                ShopFragment shopFragment = new ShopFragment(data);
+                ShopFragment shopFragment = new ShopFragment();
 
                 fragmentManager.beginTransaction()
                         .add(R.id.activity_fragment_contaner,shopFragment,tag)
@@ -55,12 +56,12 @@ public class Router {
                         .addToBackStack(null)
                         .commit();
                 break;
-                case "createCommentFragment":
-                CreateCommentFragment createCommentFragment= new CreateCommentFragment(data);
-                fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,createCommentFragment,tag)
-                        .addToBackStack(null)
-                        .commit();
+            case "createCommentFragment":
+            CreateCommentFragment createCommentFragment= new CreateCommentFragment();
+            fragmentManager.beginTransaction()
+                    .add(R.id.activity_fragment_contaner,createCommentFragment,tag)
+                    .addToBackStack(null)
+                    .commit();
                 break;
 
         }
@@ -169,6 +170,15 @@ public class Router {
         CreateCommentFragment createCommentFragment = CreateCommentFragment.newInstance(idProduct);
         manager.beginTransaction()
                 .add(CONTAINER, createCommentFragment, CREATE_COMMENT_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void addShopFragment(Context context, String shopName) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        ShopFragment shopFragment = ShopFragment.newInstance(shopName);
+        manager.beginTransaction()
+                .add(CONTAINER, shopFragment, SHOP_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }

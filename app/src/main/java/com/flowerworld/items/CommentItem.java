@@ -12,12 +12,27 @@ public class CommentItem {
         return id;
     }
 
-    public CommentItem(String comment, String author, String date, int rate, boolean isMy, String id) {
+    public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setRate(int rate) {
         this.rate = rate;
-        this.isMy = isMy;
+    }
+
+    public void setMy(boolean my) {
+        isMy = my;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 

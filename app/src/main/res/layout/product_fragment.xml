@@ -137,8 +137,151 @@
                     style="@style/Subtitle1"
                     android:text="@string/rates" />
 
-                <include layout="@layout/rates" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="7dp"
+                    tools:targetApi="o">
 
+                    <RelativeLayout
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="15dp"
+                            android:orientation="vertical"
+                            android:id="@+id/right_liner_layout">
+
+                            <TextView
+                                android:id="@+id/flowerPageTextForRatingB"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+
+                                android:textColor="#000"
+                                android:textSize="50sp"
+                                tools:text="4,5" />
+
+                            <RatingBar
+                                android:id="@+id/flowerPageRatingB"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:isIndicator="true"
+                                android:max="5"
+                                android:numStars="5"
+                                android:progressTint="#8BC34A"
+                                android:scaleX="1"
+                                android:scaleY="1"
+                                android:transformPivotX="0dp"
+                                android:transformPivotY="0dp" />
+
+                            <TextView
+                                android:id="@+id/flowerPageNumberRaters"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                tools:text="100 000" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_toEndOf="@id/right_liner_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="vertical"
+                            android:layout_centerVertical="true">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RatingBar
+                                    style="@style/rate_star"
+                                    android:max="5"
+                                    android:numStars="5"
+                                    android:progress="5" />
+
+                                <ProgressBar
+                                    android:id="@+id/flowerPageProgressFor5"
+                                    style="@style/rate_line" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:orientation="horizontal">
+
+                                <RatingBar
+                                    style="@style/rate_star"
+                                    android:max="4"
+                                    android:numStars="4"
+                                    android:progress="4" />
+
+                                <ProgressBar
+                                    android:id="@+id/flowerPageProgressFor4"
+                                    style="@style/rate_line" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:orientation="horizontal">
+
+                                <RatingBar
+                                    style="@style/rate_star"
+                                    android:max="3"
+                                    android:numStars="3"
+                                    android:progress="3" />
+
+                                <ProgressBar
+
+                                    android:id="@+id/flowerPageProgressFor3"
+                                    style="@style/rate_line" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <RatingBar
+                                    style="@style/rate_star"
+                                    android:max="2"
+                                    android:numStars="2"
+                                    android:progress="2" />
+
+                                <ProgressBar
+                                    android:id="@+id/flowerPageProgressFor2"
+                                    style="@style/rate_line" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <RatingBar
+                                    style="@style/rate_star"
+                                    android:max="1"
+                                    android:numStars="1"
+                                    android:progress="1" />
+
+                                <ProgressBar
+                                    android:id="@+id/flowerPageProgressFor1"
+                                    style="@style/rate_line" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
                 <Button
                     android:id="@+id/flowerPageOpenChangeFragmentButton"
                     android:layout_width="match_parent"

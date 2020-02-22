@@ -22,6 +22,7 @@ public class CommentItemAdapter extends RecyclerView.Adapter<CommentItemAdapter.
 
     public void setComments(ArrayList<CommentItem> comments) {
         this.comments = comments;
+        checkMyComment();
         notifyDataSetChanged();
     }
 

@@ -15,7 +15,7 @@ import com.flowerworld.items.FlowerImagesItem;
 import java.util.ArrayList;
 
 public class FlowerImageItemAdapter extends RecyclerView.Adapter<FlowerImageItemAdapter.FlowerItemHolder> {
-    private ArrayList<FlowerImagesItem> flowerImagesItemArrayList;
+    private ArrayList<FlowerImagesItem> flowerImagesItemArrayList = new ArrayList<>();
 
 
     @NonNull

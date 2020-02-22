@@ -1,7 +1,6 @@
 package com.flowerworld.items.adapters;
 
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 import com.flowerworld.items.ShopItem;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopItemHolder> {
     private ArrayList<ShopItem> shopItems = new ArrayList<>();
 
-    public void setShopItems(ArrayList<ShopItem> shopItems) {
+    void setShopItems(ArrayList<ShopItem> shopItems) {
         this.shopItems = shopItems;
         notifyDataSetChanged();
     }
@@ -33,7 +32,7 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
 
     @Override
     public void onBindViewHolder(@NonNull ShopItemHolder holder, int position) {
-        holder.setImage(shopItems.get(position));
+        holder.bind(shopItems.get(position));
     }
 
     @Override
@@ -42,27 +41,29 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
     }
 
     class ShopItemHolder extends RecyclerView.ViewHolder{
-        SimpleDraweeView shopPhoto;
-        String name;
-        public ShopItemHolder(@NonNull View itemView) {
+
+        ShopItemHolder(@NonNull View itemView) {
             super(itemView);
-            shopPhoto = itemView.findViewById(R.id.shopItemImg);
-            shopPhoto.setOnClickListener(new View.OnClickListener() {
+        }
+        void bind(ShopItem shopItem){
+            setListener(shopItem.getName());
+            setLogo(shopItem.getUrl());
+        }
+
+        private void setListener(final String name) {
+            SimpleDraweeView shoplogo = itemView.findViewById(R.id.shopItemImg);
+            shoplogo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MainActivity) shopPhoto.getContext())
-                            .getApp()
-                            .getRouter()
-                            .addFragment("shopPage",name);
-
-                    Log.d("shop ", name);
+                    Router.addShopFragment(itemView.getContext(),name);
                 }
             });
         }
-        public void setImage(ShopItem url){
-            String uri = url.getUrl();
-            name= url.getName();
-            shopPhoto.setImageURI(Uri.parse(uri));
+        private void setLogo(String urlLogo) {
+            SimpleDraweeView shoplogo = itemView.findViewById(R.id.shopItemImg);
+            shoplogo.setImageURI(Uri.parse(urlLogo));
         }
+
+
     }
 }

@@ -56,7 +56,6 @@ public class HomeConnection {
 
     private ArrayList<NewsItem> getNewsData() {
         return DataBase.getNewsArray();
-
     }
 
     private ArrayList<ShopItem> getShopData() {
