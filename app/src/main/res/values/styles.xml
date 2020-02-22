@@ -86,4 +86,19 @@
     </style>
 
 
+    <style name="rate_star" parent="Widget.AppCompat.RatingBar.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:isIndicator">true</item>
+        <item name="android:progressTint">@color/colorPrimary</item>
+    </style>
+
+    <style name="rate_line" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:layout_width">150dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:max">100</item>
+        <item name="android:progress">45</item>
+        <item name="android:progressTint">@color/colorPrimary</item>
+    </style>
+
 </resources>

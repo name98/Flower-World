@@ -9,4 +9,10 @@
     <string name="sendComment">Отправить</string>
     <string name="buy">Купить</string>
     <string name="shops">Магазины</string>
+    <string name="sizes">Размер</string>
+    <string name="compound">Состав</string>
+    <string name="description">Описание</string>
+    <string name="Shop">Магазин</string>
+    <string name="rates">Отзывы</string>
+    <string name="to_rate">Оставить отыз</string>
 </resources>
