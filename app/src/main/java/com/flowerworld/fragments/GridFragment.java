@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 
 import androidx.annotation.NonNull;
@@ -29,18 +30,19 @@ import java.util.Objects;
 
 public class GridFragment extends Fragment {
 
-    private static final String KEY_FOR_IDS = "keyIds";
+    private static final String KEY_FOR_IDS = "key_ids";
     private Handler handlerForProductItems;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.grid_recycle_view, container, false);
+        return inflater.inflate(R.layout.grid_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setVisibilityProgressBar(true);
         assert getArguments() != null;
         String ids = getArguments().getString(KEY_FOR_IDS);
         bind(ids);
@@ -73,6 +75,7 @@ public class GridFragment extends Fragment {
         ProductsGridAdapter adapter = new ProductsGridAdapter();
         adapter.setItems(products);
         gridItemsRecycleView.setAdapter(adapter);
+        setVisibilityProgressBar(false);
     }
 
     public void sendMessage(Message msg) {
@@ -85,5 +88,11 @@ public class GridFragment extends Fragment {
         connection.bind(ids);
     }
 
-
+    private void setVisibilityProgressBar(boolean visibility) {
+        ProgressBar progressBar = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_progress_bar);
+        if(visibility)
+            progressBar.setVisibility(View.VISIBLE);
+        else
+            progressBar.setVisibility(View.INVISIBLE);
+    }
 }

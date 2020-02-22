@@ -104,6 +104,7 @@ public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapte
         }
 
         private void addAboutProductFragment(int idProduct) {
+
             ((MainActivity) itemView.getContext()).getApp().getRouter().addFragment("flowerPage",String.valueOf(idProduct));
         }
     }

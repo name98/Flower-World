@@ -63,7 +63,7 @@
                 android:text="Товыры"
                 android:layout_marginBottom="20dp"/>
                 <include
-                    layout="@layout/grid_recycle_view"
+                    layout="@layout/grid_fragment"
                     />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
