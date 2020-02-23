@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.DataMethod;
+import com.flowerworld.items.AboutOrderItem;
+import com.flowerworld.items.AboutOrderModel;
 import com.flowerworld.items.CommentItem;
 import com.flowerworld.items.FlowerImagesItem;
 import com.flowerworld.items.FlowerItem;
@@ -11,6 +13,7 @@ import com.flowerworld.items.FullProductItem;
 import com.flowerworld.items.FullShopItem;
 import com.flowerworld.items.Item;
 import com.flowerworld.items.NewsItem;
+import com.flowerworld.items.OrderItem;
 import com.flowerworld.items.ShopItem;
 import com.flowerworld.links.UrlLinks;
 import com.flowerworld.methods.Methods;
@@ -278,5 +281,45 @@ public class DataBase {
         else
             insertFromScript(Scripts.addDateCommentScript(String.valueOf(commentItem.getRate()), commentItem.getDate(), productId,userID));
         return true;
+    }
+
+    public static ArrayList<OrderItem> getOrdersByUserId(boolean isCompleted, String idUser) {
+        JSONArray js;
+        ArrayList<OrderItem> orders = new ArrayList<>();
+        if (isCompleted)
+            js = new DataMethod().fromScript(Scripts.ordersByIdC(idUser));
+        else
+            js = new DataMethod().fromScript(Scripts.ordersById(idUser));
+        for (int i =0;i<js.length();i++) {
+            try {
+                String s = js.getJSONObject(i).getString("картинки");
+                JSONObject object = js.getJSONObject(i);
+                orders.add(new OrderItem(object.getString("id"),
+                        object.getString("название"),
+                        Methods.strParser(s, " ").get(0),
+                        object.getString("число"),
+                        object.getString("статус")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return orders;
+    }
+
+    public static AboutOrderModel getOrderInformation(String idOrder) {
+        AboutOrderItem aboutOrder = new AboutOrderItem();
+        JSONArray orderValues = getJSONArrayByScript(Scripts.aboutOrderById(idOrder));
+        try {
+            JSONObject object = orderValues.getJSONObject(0);
+            aboutOrder.setCost(object.getString("цена"));
+            aboutOrder.setDate(object.getString("число")+" в "+
+                    object.getString("время"));
+            aboutOrder.setProductId(object.getString("товар"));
+            aboutOrder.setReceiver(object.getString("Получатель"));
+            aboutOrder.setState(object.getString("статус"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.flowerworld.models;
+package com.flowerworld.items;
 
 public class AboutOrderModel {
     private String receiver;

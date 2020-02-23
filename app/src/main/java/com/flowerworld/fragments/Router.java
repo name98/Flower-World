@@ -22,6 +22,8 @@ public class Router {
     private final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
     private final static String SHOP_FRAGMENT_TAG = "shop_fragment";
     private final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
+    private final static String ORDERS_FRAGMENT_TAG = "orders_fragment";
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -108,17 +110,7 @@ public class Router {
 
     }
 
-    public void addFragment(String tag, boolean flag){
-        switch (tag){
-            case "ordersFragment":
-                OrdersFragment ordersFragment = new OrdersFragment(flag);
-                fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,ordersFragment,tag)
-                        .addToBackStack(null)
-                        .commit();
-                break;
-        }
-    }
+    
     public void reload(String tag){
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
         fragmentManager.beginTransaction()
@@ -201,5 +193,14 @@ public class Router {
                 .disallowAddToBackStack()
                 .commit();
         manager.popBackStack();
+    }
+
+    public static void addOrderFragment(Context context, boolean isCompleted) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        OrdersFragment ordersFragment = OrdersFragment.newInstance(isCompleted);
+        manager.beginTransaction()
+                .add(CONTAINER, ordersFragment, ORDERS_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
     }
 }

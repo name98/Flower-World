@@ -22,7 +22,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.items.FlowerItem;
-import com.flowerworld.models.AboutOrderModel;
+import com.flowerworld.items.AboutOrderModel;
 import com.flowerworld.ui.AboutOrderFragmentUI;
 
 import java.util.Objects;

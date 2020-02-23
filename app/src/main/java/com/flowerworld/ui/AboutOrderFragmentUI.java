@@ -5,7 +5,7 @@ package com.flowerworld.ui;
 import com.flowerworld.connections.AboutOrderHelper;
 import com.flowerworld.connections.FlowerItemHelper;
 import com.flowerworld.items.FlowerItem;
-import com.flowerworld.models.AboutOrderModel;
+import com.flowerworld.items.AboutOrderModel;
 
 
 public class AboutOrderFragmentUI {

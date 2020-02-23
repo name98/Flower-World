@@ -20,7 +20,7 @@ public class OrdersFragmentHelper {
             js = new DataMethod().fromScript(Scripts.ordersByIdC(id));
         else
             js = new DataMethod().fromScript(Scripts.ordersById(id));
-        ArrayList<String> temp = new ArrayList<>();
+
         for (int i =0;i<js.length();i++){
             String s = js.getJSONObject(i).getString("картинки");
             JSONObject object = js.getJSONObject(i);

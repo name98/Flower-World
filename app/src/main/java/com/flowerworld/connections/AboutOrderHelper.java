@@ -1,6 +1,6 @@
 package com.flowerworld.connections;
 
-import com.flowerworld.models.AboutOrderModel;
+import com.flowerworld.items.AboutOrderModel;
 import com.flowerworld.models.scripts.Scripts;
 
 import org.json.JSONArray;

@@ -5,6 +5,7 @@ import android.widget.Button;
 
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 
 public class PersonFragmentUI {
     private View view;
@@ -18,14 +19,14 @@ public class PersonFragmentUI {
         activeOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) view.getContext()).getApp().getRouter().addFragment("ordersFragment",false);
+                Router.addOrderFragment(view.getContext(), false);
             }
         });
-        Button compledOrders = view.findViewById(R.id.personFragmentCompledOrdersBt);
-        compledOrders.setOnClickListener(new View.OnClickListener() {
+        Button completedOrders = view.findViewById(R.id.personFragmentCompledOrdersBt);
+        completedOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) view.getContext()).getApp().getRouter().addFragment("ordersFragment",true);
+                Router.addOrderFragment(view.getContext(), true);
             }
         });
     }
