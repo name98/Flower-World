@@ -25,7 +25,6 @@ public class AboutOrderFragmentUI {
         helper.createOrder();
         model = helper.getOrderModel();
         item = new FlowerItemHelper(model.getProductId()).getFlowerItem();
-
     }
 
     public AboutOrderModel getModel() {

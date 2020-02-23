@@ -52,6 +52,29 @@ public class DataBase {
         }
     }
 
+    static void insertFromScript(String script){
+        try {
+            String data = URLEncoder.encode("script", "UTF-8") + "=" + URLEncoder.encode(script, "UTF-8");
+            URL url = new URL(UrlLinks.FROM_SCRIPT_Insert);
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+
+
+            wr.write(data);
+            wr.flush();
+
+            BufferedReader reader = new BufferedReader(new
+                    InputStreamReader(conn.getInputStream()));
+
+
+
+        } catch (Exception e) {
+
+
+        }
+    }
+
     public static FlowerItem getProductById(String id) {
         JSONArray array = getJSONArrayByScript(Scripts.getProductByIdScript(id));
         FlowerItem product = new FlowerItem();
@@ -217,5 +240,43 @@ public class DataBase {
             e.printStackTrace();
         }
         return shop;
+    }
+
+    public static boolean isCommented(String id, String userId) {
+        JSONArray array = getJSONArrayByScript(Scripts.getCommentScriptByIdProductAndIdUser(id,userId));
+        return array.length() != 0;
+    }
+
+    public static CommentItem getCommentByIdAndUserId(String id, String userId) {
+        JSONArray array = getJSONArrayByScript(Scripts.getCommentScriptByIdProductAndIdUser(id,userId));
+        System.out.println(id + " : " + userId);
+        CommentItem comment = new CommentItem();
+        try {
+            JSONObject object = array.getJSONObject(0);
+            comment.setComment(object.getString("отзыв"));
+            comment.setDate(object.getString("день"));
+            comment.setRate(object.getInt("оценка"));
+            comment.setId(object.getString("ID"));
+            comment.setMy(true);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return comment;
+    }
+
+    public static boolean upDateComment(CommentItem comment, String productId, String userID) {
+        insertFromScript(Scripts.upDateCommentScript(String.valueOf(comment.getRate()), comment.getComment(),
+                comment.getDate(), productId,userID));
+        return true;
+    }
+
+    public static boolean insertComment(CommentItem commentItem, String productId, String userID) {
+        if (commentItem.getComment() != null)
+            insertFromScript(Scripts.addDateCommentScript(String.valueOf(commentItem.getRate()), commentItem.getComment(),
+                    commentItem.getDate(), productId,userID));
+        else
+            insertFromScript(Scripts.addDateCommentScript(String.valueOf(commentItem.getRate()), commentItem.getDate(), productId,userID));
+        return true;
     }
 }

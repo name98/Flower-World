@@ -22,19 +22,21 @@ import androidx.fragment.app.Fragment;
 
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
-import com.flowerworld.connections.CreateCommentFragmentHelper;
+import com.flowerworld.connections.CommentConnection;
 import com.flowerworld.connections.DataBaseHelper;
 
+import com.flowerworld.interfaces.CommentFragmentDataInterface;
+import com.flowerworld.interfaces.FragmentSetDataInterface;
+import com.flowerworld.items.CommentItem;
 import com.flowerworld.models.MyDate;
 
 import java.util.Objects;
 
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class CreateCommentFragment extends Fragment {
-    private String idProduct;
-    private CreateCommentFragmentHelper createHelper;
-    private Handler checkIsCommented;
+public class CreateCommentFragment extends Fragment implements CommentFragmentDataInterface {
+    private Handler handlerForGetComment;
+    private Handler handlerForSendComment;
     private final static String PRODUCT_ID_KEY = "id_key";
 
 
@@ -49,64 +51,105 @@ public class CreateCommentFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        initFirstlyValues();
+        setHandler();
+        int productId = getArguments().getInt(PRODUCT_ID_KEY);
+        DataBaseHelper dBHelper = new DataBaseHelper(this.getContext());
+        String myId = dBHelper.getKey();
+        CommentConnection connection = new CommentConnection();
+        connection.setParent(this);
+        connection.bind(String.valueOf(productId), myId);
+
+
     }
 
-    private boolean isUserCommented(){
-        return createHelper.isCommented();
-    }
+
     @SuppressLint("HandlerLeak")
-    private void initCheckCommented(){
-        checkIsCommented = new Handler(){
+    private void setHandler() {
+        handlerForGetComment = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                if((boolean) msg.obj){
-                    isChangeMode();
-                }
-                else isCreateMode();
+                CommentItem comment = (CommentItem) msg.obj;
+                bind(comment);
+            }
+        };
+        handlerForSendComment = new Handler() {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                createDialog();
             }
         };
     }
-    private void startCheckCommentedHandle(){
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Message msg = Message.obtain();
-                msg.obj = isUserCommented();
-                msg.setTarget(checkIsCommented);
-                checkIsCommented.sendMessage(msg);
-            }
-        });
-        t.start();
+
+    public void bind(CommentItem comment) {
+        if (comment.isMy())
+            setViewsChangeMode(comment);
+        else
+            setViewsCreateMode(comment);
     }
 
-    private void isChangeMode(){
+    private void setViewsCreateMode(CommentItem comment) {
         View view = getView();
         assert view != null;
-        EditText comment = view.findViewById(R.id.createCommentEnterText);
-        comment.setText(createHelper.getComment());
-        RatingBar rated = view.findViewById(R.id.createCommentRating);
-        rated.setRating(createHelper.getRate()*2);
-        TextView textRate = view.findViewById(R.id.createCommentResultRateTextView);
-        textRate.setText(getResultTextRate(createHelper.getRate()));
-        initButtonForChangeMode();
-
-    }
-    private void isCreateMode(){
-        initButtonForCreateComment();
-        TextView textRate = Objects.requireNonNull(getView()).findViewById(R.id.createCommentResultRateTextView);
+        TextView textRate = Objects.requireNonNull(view).findViewById(R.id.createCommentResultRateTextView);
         textRate.setText(getResultTextRate(5));
+        setButton(true);
     }
 
-    private void initFirstlyValues(){
-        createHelper= new CreateCommentFragmentHelper();
-        createHelper.setProductId(this.idProduct);
+    private void setButton (boolean isCreateMode) {
+        View view = getView();
         DataBaseHelper dBHelper = new DataBaseHelper(this.getContext());
-        createHelper.setUserId(dBHelper.getKey());
-        initCheckCommented();
-        startCheckCommentedHandle();
-        initRateBar();
+        final String myId = dBHelper.getKey();
+        assert view != null;
+        Button createCommentButton = view.findViewById(R.id.createCommentSendCommentButton);
+        final EditText commentEditText = view.findViewById(R.id.createCommentEnterText);
+        final RatingBar rateProductRatingBar = view.findViewById(R.id.createCommentRating);
+        final CommentFragmentDataInterface parent = this;
+        final CommentItem comment = new CommentItem();
+        if (isCreateMode) {
+            createCommentButton.setText("отправить");
+            comment.setMy(false);
+
+        }
+        else {
+            comment.setMy(true);
+            createCommentButton.setText("Изменить");
+        }
+        createCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                comment.setRate(Math.round(rateProductRatingBar.getProgress()/2));
+                comment.setDate(getToDay());
+                comment.setComment(commentEditText.getText().toString());
+                CommentConnection connection = new CommentConnection();
+                connection.setParent(parent);
+                String productId = getArguments().getString(PRODUCT_ID_KEY);
+                connection.unBind(comment, productId, myId);
+            }
+        });
     }
+
+
+
+
+
+
+
+
+    private void setViewsChangeMode(CommentItem comment) {
+        setButton(false);
+        View view = getView();
+        assert view != null;
+        EditText commentEditText = view.findViewById(R.id.createCommentEnterText);
+        commentEditText.setText(comment.getComment());
+        RatingBar rated = view.findViewById(R.id.createCommentRating);
+        rated.setRating(comment.getRate()*2);
+        TextView textRate = view.findViewById(R.id.createCommentResultRateTextView);
+        textRate.setText(getResultTextRate(comment.getRate()));
+    }
+
+
+
+
 
     private String getResultTextRate(int i){
         switch (i) {
@@ -130,96 +173,22 @@ public class CreateCommentFragment extends Fragment {
         return date.getToDayForDB();
     }
 
-    private void initButtonForChangeMode(){
-        View view =getView();
-        assert view != null;
-        final Button changeComment = view.findViewById(R.id.createCommentSendCommentButton);
-        changeComment.setText("изменить");
-        final EditText comment = view.findViewById(R.id.createCommentEnterText);
-        final RatingBar rated = view.findViewById(R.id.createCommentRating);
-        final String dayOfChange = getToDay();
-        changeComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createHelper.setComment(comment.getText().toString());
-                createHelper.setDate(dayOfChange);
-                createHelper.setRate(Math.round(rated.getProgress()/2));
-                createHelper.upDateComment();
-                upDateComment();
-                createDialog();
-            }
-        });
-
-    }
-
-    private void upDateComment(){
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                createHelper.upDateComment();
-
-            }
-        });
-        t.start();
-    }
-    private void initRateBar(){
-        final RatingBar rated = Objects.requireNonNull(getView()).findViewById(R.id.createCommentRating);
-        final TextView resultRate= getView().findViewById(R.id.createCommentResultRateTextView);
-        rated.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                resultRate.setText(getResultTextRate(Math.round(rated.getProgress()/2)));
-            }
-        });
-    }
-    private void initButtonForCreateComment(){
-        View view =getView();
-        assert view != null;
-        Button changeComment = view.findViewById(R.id.createCommentSendCommentButton);
-        changeComment.setText("отправить");
-        final EditText comment = view.findViewById(R.id.createCommentEnterText);
-
-        final RatingBar rated = view.findViewById(R.id.createCommentRating);
-        changeComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createHelper.setRate(Math.round(rated.getProgress()/2));
-                createHelper.setDate(getToDay());
-                createHelper.setComment(comment.getText().toString());
-                addData();
-                createDialog();
-
-            }
-        });
 
 
-    }
 
-    private void addData(){
-        Thread t =new Thread(new Runnable() {
-            @Override
-            public void run() {
-                createHelper.sendData();
 
-            }
-        });
-        t.start();
-    }
+
+
     private void createDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Успешно")
                 .setMessage("Спасибо за отзыв")
-
                 .setCancelable(false)
                 .setNegativeButton("Ок",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                ((MainActivity) Objects.requireNonNull(getActivity()))
-                                        .getApp().getRouter()
-                                        .remove("createCommentFragment");
-                                ((MainActivity) getActivity())
-                                        .getApp().getRouter()
-                                        .reload("flowerPage");
+                                Router.removeCreateCommentFragment(getContext());
+                                Router.reloadProductFragment(getContext());
                             }
                         });
         AlertDialog alert = builder.create();
@@ -233,5 +202,16 @@ public class CreateCommentFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+    @Override
+    public void sendMessageForGetHandler(Message msg) {
+        handlerForGetComment.sendMessage(msg);
+    }
+
+    @Override
+    public void sendMessageForSendHandler(Message msg) {
+        handlerForSendComment.sendMessage(msg);
+    }
+
 
 }

@@ -43,8 +43,7 @@ public class CreateCommentFragmentHelper {
     }
 
     public boolean isCommented() {
-        JSONArray array = new JSONArray();
-        array = new DataMethod().fromScript(Scripts.getCommentScriptByIdProductAndIdUser(productId, userId));
+        JSONArray array  = new DataMethod().fromScript(Scripts.getCommentScriptByIdProductAndIdUser(productId, userId));
         if (array.length() == 0)
             return false;
         else {

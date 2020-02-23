@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -23,12 +23,12 @@ import com.flowerworld.connections.ShopConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.FullShopItem;
-import com.flowerworld.items.ShopItem;
-import com.flowerworld.items.adapters.FlowerItemAdapter;
+
 import com.flowerworld.items.adapters.ProductsGridAdapter;
-import com.flowerworld.ui.ShopFragmentUI;
+
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ShopFragment extends Fragment implements FragmentSetDataInterface {
 
@@ -45,17 +45,18 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setProgreeBar(true);
         setHandler();
         ShopConnection connection = new ShopConnection();
         connection.setParent(this);
+        assert getArguments() != null;
         String shopName = getArguments().getString(SHOP_NAME_KEY);
         connection.bind(shopName);
-
-        //new ShopFragmentUI(view,getArguments().getString(SHOP_NAME_KEY));
     }
 
     private void setViews(FullShopItem shop) {
         View view = getView();
+        assert view != null;
         TextView name = view.findViewById(R.id.shopPageNameShop);
         TextView address = view.findViewById(R.id.shopPageAddress);
         TextView annotat = view.findViewById(R.id.shopPageAnnotation);
@@ -70,11 +71,12 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     }
 
     private void setGridProducts(ArrayList<FlowerItem> products) {
-        RecyclerView recyclerViewGrid = getView().findViewById(R.id.gridItemsRecycleView);
+        RecyclerView recyclerViewGrid = Objects.requireNonNull(getView()).findViewById(R.id.gridItemsRecycleView);
         recyclerViewGrid.setLayoutManager(new GridLayoutManager(getContext(), 2));
         ProductsGridAdapter adapter = new ProductsGridAdapter();
         adapter.setItems(products);
         recyclerViewGrid.setAdapter(adapter);
+        setProgreeBar(false);
     }
 
     public static ShopFragment newInstance(String shopName) {
@@ -104,6 +106,13 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
                 bind(shop);
             }
         };
+    }
+
+    private void setProgreeBar(boolean isProgress) {
+        if(isProgress)
+            Router.addProgressFragment(getContext());
+        else
+            Router.removeProgreesFragment(getContext());
     }
 
 

@@ -21,6 +21,7 @@ public class Router {
     private final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
     private final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
     private final static String SHOP_FRAGMENT_TAG = "shop_fragment";
+    private final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -140,7 +141,7 @@ public class Router {
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
         FlowerFragment flowerFragment = FlowerFragment.newInstance(id);
         manager.beginTransaction()
-                .add(CONTAINER, flowerFragment, MAIN_FRAGMENT_TAG)
+                .add(CONTAINER, flowerFragment, PRODUCT_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -181,5 +182,24 @@ public class Router {
                 .add(CONTAINER, shopFragment, SHOP_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static void reloadProductFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentByTag(PRODUCT_FRAGMENT_TAG);
+        manager.beginTransaction()
+                .detach(fragment)
+                .attach(fragment)
+                .commit();
+    }
+
+    public static void removeCreateCommentFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentByTag(CREATE_COMMENT_FRAGMENT_TAG);
+        manager.beginTransaction()
+                .remove(fragment)
+                .disallowAddToBackStack()
+                .commit();
+        manager.popBackStack();
     }
 }
