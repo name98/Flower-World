@@ -38,8 +38,8 @@ public class CharterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        int id = getArguments().getInt(KEY_FOR_ID_PRODUCT);
 
+        int id = getArguments().getInt(KEY_FOR_ID_PRODUCT);
         handler = new Handler(){
             @Override
             public void handleMessage(@NonNull Message msg) {

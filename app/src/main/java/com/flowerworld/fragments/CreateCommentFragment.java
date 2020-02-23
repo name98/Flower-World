@@ -39,10 +39,6 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
     private Handler handlerForSendComment;
     private final static String PRODUCT_ID_KEY = "id_key";
 
-
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +47,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Router.addProgressFragment(getContext());
         setHandler();
         int productId = getArguments().getInt(PRODUCT_ID_KEY);
         DataBaseHelper dBHelper = new DataBaseHelper(this.getContext());
@@ -85,6 +82,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
             setViewsChangeMode(comment);
         else
             setViewsCreateMode(comment);
+        Router.removeProgreesFragment(getContext());
     }
 
     private void setViewsCreateMode(CommentItem comment) {
@@ -122,8 +120,8 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
                 comment.setComment(commentEditText.getText().toString());
                 CommentConnection connection = new CommentConnection();
                 connection.setParent(parent);
-                String productId = getArguments().getString(PRODUCT_ID_KEY);
-                connection.unBind(comment, productId, myId);
+                int productId = getArguments().getInt(PRODUCT_ID_KEY);
+                connection.unBind(comment, String.valueOf(productId),myId);
             }
         });
     }
