@@ -31,7 +31,7 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.orders_fragment,container,false);
+        return inflater.inflate(R.layout.orders_fragment, container, false);
 
     }
 
@@ -45,12 +45,12 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
         String userId = helper.getKey();
         OrderConnection connection = new OrderConnection();
         connection.setParent(this);
-        connection.bind(isCompleted,userId);
+        connection.bind(isCompleted, userId);
     }
 
     public static OrdersFragment newInstance(boolean isCompleted) {
         Bundle args = new Bundle();
-        args.putBoolean(IS_COMPLETED_KEY,isCompleted);
+        args.putBoolean(IS_COMPLETED_KEY, isCompleted);
         OrdersFragment fragment = new OrdersFragment();
         fragment.setArguments(args);
         return fragment;

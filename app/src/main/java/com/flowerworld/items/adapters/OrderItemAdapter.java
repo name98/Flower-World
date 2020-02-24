@@ -93,7 +93,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Router.addFlowerFragment(itemView.getContext(), id);
+                    Router.addAboutOrderFragment(itemView.getContext(), String.valueOf(id));
                 }
             });
         }
