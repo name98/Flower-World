@@ -23,7 +23,7 @@ public class OrderItem {
         return nameProduct;
     }
 
-    public String getIco() {
+    public String getImage() {
         return ico;
     }
 

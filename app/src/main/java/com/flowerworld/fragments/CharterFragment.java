@@ -18,11 +18,11 @@ import androidx.fragment.app.Fragment;
 
 import com.flowerworld.R;
 import com.flowerworld.connections.CharterFragmentHelper;
-import com.flowerworld.connections.FlowerFragmentHalper;
+import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.ui.CharterFragmentUI;
 
-public class CharterFragment extends Fragment {
+public class CharterFragment extends Fragment implements FragmentSetDataInterface {
     private static final String KEY_FOR_ID_PRODUCT = "productId";
     private Handler handler;
 
@@ -57,6 +57,17 @@ public class CharterFragment extends Fragment {
 
     }
 
+    @SuppressLint("HandlerLeak")
+    public void setHandler() {
+        handler = new Handler() {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                FlowerItem item = (FlowerItem) msg.obj;
+                bind(item);
+            }
+        };
+    }
+
     private void initValues(final int id){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -70,13 +81,22 @@ public class CharterFragment extends Fragment {
         t.start();
     }
 
+    private void bind(FlowerItem product) {
+
+    }
+
     static CharterFragment newInstance(int id) {
 
         Bundle args = new Bundle();
         args.putInt(KEY_FOR_ID_PRODUCT,id);
-
         CharterFragment fragment = new CharterFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void sendMessage(Message msg) {
+        handler.sendMessage(msg);
     }
 }

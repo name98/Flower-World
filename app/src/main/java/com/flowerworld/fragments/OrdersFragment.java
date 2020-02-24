@@ -28,8 +28,6 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
     private static final String IS_COMPLETED_KEY = "completed_key";
     private Handler handler;
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,12 +39,12 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHandler();
-        OrderConnection connection = new OrderConnection();
-        connection.setParent(this);
         assert getArguments() != null;
         boolean isCompleted = getArguments().getBoolean(IS_COMPLETED_KEY);
         DataBaseHelper helper = new DataBaseHelper(getContext());
         String userId = helper.getKey();
+        OrderConnection connection = new OrderConnection();
+        connection.setParent(this);
         connection.bind(isCompleted,userId);
     }
 
@@ -80,7 +78,8 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
         RecyclerView recyclerView = view.findViewById(R.id.ordersFragmentRV);
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        OrderItemAdapter adapter = new OrderItemAdapter(orders);
+        OrderItemAdapter adapter = new OrderItemAdapter();
+        adapter.setOrders(orders);
         recyclerView.setAdapter(adapter);
     }
 }
