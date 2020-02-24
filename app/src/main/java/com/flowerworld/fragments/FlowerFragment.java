@@ -79,7 +79,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
             public void handleMessage(@NonNull Message msg) {
                 ArrayList<CommentItem> comments = (ArrayList<CommentItem>) msg.obj;
                 setComments(comments);
-                Router.removeProgreesFragment(getContext());
+                Router.removeProgressFragment(getContext());
             }
         };
     }

@@ -306,7 +306,7 @@ public class DataBase {
         return orders;
     }
 
-    public static AboutOrderModel getOrderInformation(String idOrder) {
+    public static AboutOrderItem getOrderInformation(String idOrder) {
         AboutOrderItem aboutOrder = new AboutOrderItem();
         JSONArray orderValues = getJSONArrayByScript(Scripts.aboutOrderById(idOrder));
         try {
@@ -317,9 +317,11 @@ public class DataBase {
             aboutOrder.setProductId(object.getString("товар"));
             aboutOrder.setReceiver(object.getString("Получатель"));
             aboutOrder.setState(object.getString("статус"));
+            aboutOrder.setProduct(getProductById(aboutOrder.getProductId()));
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return aboutOrder;
     }
 }

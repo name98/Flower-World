@@ -20,7 +20,7 @@ import com.flowerworld.connections.OrderConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.OrderItem;
 import com.flowerworld.items.adapters.OrderItemAdapter;
-import com.flowerworld.ui.OrdersFragmentUI;
+
 
 import java.util.ArrayList;
 
@@ -48,7 +48,6 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
         DataBaseHelper helper = new DataBaseHelper(getContext());
         String userId = helper.getKey();
         connection.bind(isCompleted,userId);
-        //new OrdersFragmentUI(completed,view);
     }
 
     public static OrdersFragment newInstance(boolean isCompleted) {

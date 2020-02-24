@@ -20,13 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.connections.CommentConnection;
 import com.flowerworld.connections.DataBaseHelper;
 
 import com.flowerworld.interfaces.CommentFragmentDataInterface;
-import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.CommentItem;
 import com.flowerworld.models.MyDate;
 
@@ -82,7 +80,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
             setViewsChangeMode(comment);
         else
             setViewsCreateMode(comment);
-        Router.removeProgreesFragment(getContext());
+        Router.removeProgressFragment(getContext());
     }
 
     private void setViewsCreateMode(CommentItem comment) {

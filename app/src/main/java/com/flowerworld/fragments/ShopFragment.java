@@ -112,7 +112,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
         if(isProgress)
             Router.addProgressFragment(getContext());
         else
-            Router.removeProgreesFragment(getContext());
+            Router.removeProgressFragment(getContext());
     }
 
 

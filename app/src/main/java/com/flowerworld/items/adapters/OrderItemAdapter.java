@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 import com.flowerworld.items.OrderItem;
 
 import java.util.ArrayList;
@@ -56,8 +57,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)holder.nameProduct.getContext()).getApp().getRouter()
-                        .addFragment("aboutOrderFragment",item.getId());
+                Router.addAboutOrderFragment(holder.cardView.getContext(),item.getId());
             }
         });
     }

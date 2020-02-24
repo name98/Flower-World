@@ -18,11 +18,12 @@ public class Router {
     }
     private final static String MAIN_FRAGMENT_TAG = "main_fragment";
     private final static int CONTAINER = R.id.activity_fragment_contaner;
-    private final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
+    final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
     private final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
     private final static String SHOP_FRAGMENT_TAG = "shop_fragment";
     private final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
     private final static String ORDERS_FRAGMENT_TAG = "orders_fragment";
+    final static String ABOUT_ORDER_FRAGMENT_TAG = "about_orders_fragment";
 
 
 
@@ -52,13 +53,7 @@ public class Router {
                         .addToBackStack(null)
                         .commit();
                 break;
-            case "aboutOrderFragment":
-                AboutOrderFragment aboutOrderFragment = new AboutOrderFragment(data);
-                fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,aboutOrderFragment,tag)
-                        .addToBackStack(null)
-                        .commit();
-                break;
+
             case "createCommentFragment":
             CreateCommentFragment createCommentFragment= new CreateCommentFragment();
             fragmentManager.beginTransaction()
@@ -147,9 +142,20 @@ public class Router {
                 .commit();
     }
 
-    public static void removeProgreesFragment(Context context) {
+    public static void removeProgressFragment(Context context) {
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
         Fragment fragment = manager.findFragmentByTag(PROGRESS_FRAGMENT_TAG);
+        assert fragment != null;
+        manager.beginTransaction()
+                .remove(fragment)
+                .disallowAddToBackStack()
+                .commit();
+        manager.popBackStack();
+    }
+
+    public static void removeFragmentByTag(Context context, String tag) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentByTag(tag);
         assert fragment != null;
         manager.beginTransaction()
                 .remove(fragment)
@@ -200,6 +206,15 @@ public class Router {
         OrdersFragment ordersFragment = OrdersFragment.newInstance(isCompleted);
         manager.beginTransaction()
                 .add(CONTAINER, ordersFragment, ORDERS_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void addAboutOrderFragment(Context context, String orderId) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        AboutOrderFragment aboutOrderFragment = AboutOrderFragment.newInstance(orderId);
+        manager.beginTransaction()
+                .add(CONTAINER, aboutOrderFragment, ABOUT_ORDER_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }
