@@ -12,15 +12,33 @@ public class CharterItem {
     private String state ="waiting";
     private String icoUrl;
 
-    public CharterItem(String address, String receiver, String idProduct, String idUser, String  date,String time, String icoUrl, String state) {
+
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public void setIdProduct(String idProduct) {
         this.idProduct = idProduct;
+    }
+
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public void setDate(String date) {
         this.date = date;
-        this.time=time;
-        this.icoUrl=icoUrl;
-        this.state=state;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setIcoUrl(String icoUrl) {
+        this.icoUrl = icoUrl;
     }
 
     public void setState(String state) {

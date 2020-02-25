@@ -24,6 +24,7 @@ public class Router {
     private final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
     private final static String ORDERS_FRAGMENT_TAG = "orders_fragment";
     final static String ABOUT_ORDER_FRAGMENT_TAG = "about_orders_fragment";
+    public final static String CHARTER_FRAGMENT_TAG = "charter_fragment";
 
 
 
@@ -85,7 +86,7 @@ public class Router {
         FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
         CharterFragment charterFragment = CharterFragment.newInstance(id);
         fragmentManager.beginTransaction()
-                .add(R.id.activity_fragment_contaner,charterFragment,"charterFragment")
+                .add(R.id.activity_fragment_contaner,charterFragment, CHARTER_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }

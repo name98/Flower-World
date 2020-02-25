@@ -15,4 +15,7 @@
     <string name="Shop">Магазин</string>
     <string name="rates">Отзывы</string>
     <string name="to_rate">Оставить отыз</string>
+    <string name="address">Куда:</string>
+    <string name="date">Дата:</string>
+    <string name="time">Время:</string>
 </resources>

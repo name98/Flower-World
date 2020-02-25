@@ -1,6 +1,12 @@
 package com.flowerworld.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.icu.util.Calendar;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,24 +14,33 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.R;
 import com.flowerworld.connections.CharterConnection;
-import com.flowerworld.connections.CharterFragmentHelper;
-import com.flowerworld.interfaces.FragmentSetDataInterface;
+import com.flowerworld.connections.DataBaseHelper;
+import com.flowerworld.interfaces.FragmentSetTwoMessage;
+import com.flowerworld.items.CharterItem;
 import com.flowerworld.items.FlowerItem;
-import com.flowerworld.ui.CharterFragmentUI;
+import com.flowerworld.models.MyDate;
 
-public class CharterFragment extends Fragment implements FragmentSetDataInterface {
+import java.util.Date;
+import java.util.Objects;
+
+public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
     private static final String KEY_FOR_ID_PRODUCT = "productId";
-    private Handler handler;
+    private Handler handlerForGetting;
+    private Handler handlerForSending;
 
 
     @Nullable
@@ -40,32 +55,20 @@ public class CharterFragment extends Fragment implements FragmentSetDataInterfac
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Router.addProgressFragment(getContext());
-        setHandler();
+        setHandlerForGetting();
+        setHandlerForSending();
+        assert getArguments() != null;
         int id = getArguments().getInt(KEY_FOR_ID_PRODUCT);
         CharterConnection connection = new CharterConnection();
         connection.setParent(this);
         connection.bind(id);
 
 
-        handler = new Handler() {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                ProgressBar progressBar = getView().findViewById(R.id.charterFragmentProgressbar);
-                progressBar.setVisibility(View.INVISIBLE);
-                LinearLayout linearLayout = getView().findViewById(R.id.charterFragmentLinLay);
-                linearLayout.setVisibility(View.VISIBLE);
-                new CharterFragmentUI(getView(), CharterFragmentHelper.getPRODUCT());
-            }
-        };
-
-        initValues(id);
-
-
     }
 
     @SuppressLint("HandlerLeak")
-    private void setHandler() {
-        handler = new Handler() {
+    private void setHandlerForGetting() {
+        handlerForGetting = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 FlowerItem product = (FlowerItem) msg.obj;
@@ -74,32 +77,94 @@ public class CharterFragment extends Fragment implements FragmentSetDataInterfac
         };
     }
 
-    private void initValues(final int id) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                CharterFragmentHelper.bind(id);
-                Message msg = new Message();
-                msg.setTarget(handler);
-                handler.sendMessage(msg);
-            }
-        });
-        t.start();
-    }
-
     private void bind(FlowerItem product) {
-
+        setViews(product);
+        setListener(String.valueOf(product.getId()));
     }
 
     private void setViews(FlowerItem product) {
-
+        View view = getView();
+        assert view != null;
+        TextView dateTextView = view.findViewById(R.id.orderDate);
+        TextView timeTextView = view.findViewById(R.id.orderTime);
+        SimpleDraweeView productImageSimpleDV = view.findViewById(R.id.flowerIconImage);
+        TextView productNameTextView = view.findViewById(R.id.flowerIconName);
+        productImageSimpleDV.setImageURI(Uri.parse(product.getImageUrl()));
+        productNameTextView.setText(product.getName());
+        Date nowDate = new Date();
+        Calendar calendar;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            calendar = Calendar.getInstance();
+            calendar.setTime(nowDate);
+            calendar.add(Calendar.DATE, 1);
+            nowDate = calendar.getTime();
+        }
+        setDatePicker(nowDate);
+        MyDate dateFormat = new MyDate(nowDate);
+        dateTextView.setText(dateFormat.getDate());
+        timeTextView.setText(dateFormat.getTime());
     }
 
-    private void setListener() {
-
+    private void setListener(final String productId) {
+        final View view = getView();
+        assert view != null;
+        Button buyButton = view.findViewById(R.id.orderGo);
+        final EditText receiverEditText = view.findViewById(R.id.orderReceiver);
+        final EditText addressEditText = view.findViewById(R.id.orderAddress);
+        final TextView dateTextView =  view.findViewById(R.id.orderDate);
+        final TextView timeTextView = view.findViewById(R.id.orderTime);
+        final FragmentSetTwoMessage parent = this;
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataBaseHelper helper = new DataBaseHelper(getContext());
+                String useId = helper.getKey();
+                CharterItem charter = new CharterItem();
+                charter.setAddress(addressEditText.getText().toString());
+                charter.setDate(dateTextView.getText().toString());
+                charter.setIdUser(useId);
+                charter.setIdProduct(productId);
+                charter.setReceiver(receiverEditText.getText().toString());
+                charter.setTime(timeTextView.getText().toString());
+                CharterConnection connection = new CharterConnection();
+                connection.setParent(parent);
+                connection.bind2(charter);
+            }
+        });
     }
 
-    
+    private void setDatePicker(final Date now) {
+        View view = getView();
+        assert view != null;
+        final TextView dateTextView = view.findViewById(R.id.orderDate);
+        final TextView timeTextView = view.findViewById(R.id.orderTime);
+        dateTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dDialog = new DatePickerDialog(Objects.requireNonNull(getContext()), new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        dateTextView.setText(dayOfMonth + "/" + month + "/" + year);
+                    }
+                }, now.getYear() + 1900, now.getMonth(), now.getDay());
+                dDialog.show();
+            }
+        });
+        timeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog tDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        timeTextView.setText(hourOfDay + ":" + minute);
+                    }
+                }, now.getHours(), now.getMinutes(), true);
+                tDialog.show();
+            }
+        });
+    }
 
 
     static CharterFragment newInstance(int id) {
@@ -114,6 +179,38 @@ public class CharterFragment extends Fragment implements FragmentSetDataInterfac
 
     @Override
     public void sendMessage(Message msg) {
-        handler.sendMessage(msg);
+        handlerForGetting.sendMessage(msg);
+    }
+
+    @Override
+    public void sendMessage2(Message msg) {
+        handlerForSending.sendMessage(msg);
+    }
+
+    private void endCharter() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Ваш заказ принят!")
+                .setMessage("Чтобы следить за статусом заказа перейдите в 'Активные заказы'")
+                .setCancelable(false)
+                .setNegativeButton("Ок",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Router.removeFragmentByTag(getContext(), Router.CHARTER_FRAGMENT_TAG);                                    }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @SuppressLint("HandlerLeak")
+    private void setHandlerForSending() {
+        handlerForSending = new Handler() {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                boolean isPerformed = (boolean) msg.obj;
+                if (isPerformed)
+                    endCharter();
+                else Router.removeFragmentByTag(getContext(), Router.CHARTER_FRAGMENT_TAG);
+            }
+        };
     }
 }
