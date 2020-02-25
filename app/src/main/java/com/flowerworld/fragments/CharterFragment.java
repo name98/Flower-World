@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.flowerworld.R;
+import com.flowerworld.connections.CharterConnection;
 import com.flowerworld.connections.CharterFragmentHelper;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.FlowerItem;
@@ -30,7 +31,7 @@ public class CharterFragment extends Fragment implements FragmentSetDataInterfac
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.charter_fragmnet,container,false);
+        return inflater.inflate(R.layout.charter_fragmnet, container, false);
     }
 
     @SuppressLint("HandlerLeak")
@@ -38,9 +39,15 @@ public class CharterFragment extends Fragment implements FragmentSetDataInterfac
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Router.addProgressFragment(getContext());
+        setHandler();
         int id = getArguments().getInt(KEY_FOR_ID_PRODUCT);
-        handler = new Handler(){
+        CharterConnection connection = new CharterConnection();
+        connection.setParent(this);
+        connection.bind(id);
+
+
+        handler = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 ProgressBar progressBar = getView().findViewById(R.id.charterFragmentProgressbar);
@@ -54,21 +61,20 @@ public class CharterFragment extends Fragment implements FragmentSetDataInterfac
         initValues(id);
 
 
-
     }
 
     @SuppressLint("HandlerLeak")
-    public void setHandler() {
+    private void setHandler() {
         handler = new Handler() {
             @Override
             public void handleMessage(@NonNull Message msg) {
-                FlowerItem item = (FlowerItem) msg.obj;
-                bind(item);
+                FlowerItem product = (FlowerItem) msg.obj;
+                bind(product);
             }
         };
     }
 
-    private void initValues(final int id){
+    private void initValues(final int id) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -85,10 +91,21 @@ public class CharterFragment extends Fragment implements FragmentSetDataInterfac
 
     }
 
+    private void setViews(FlowerItem product) {
+
+    }
+
+    private void setListener() {
+
+    }
+
+    
+
+
     static CharterFragment newInstance(int id) {
 
         Bundle args = new Bundle();
-        args.putInt(KEY_FOR_ID_PRODUCT,id);
+        args.putInt(KEY_FOR_ID_PRODUCT, id);
         CharterFragment fragment = new CharterFragment();
         fragment.setArguments(args);
         return fragment;

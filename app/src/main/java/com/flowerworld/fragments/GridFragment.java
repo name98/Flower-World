@@ -1,6 +1,7 @@
 package com.flowerworld.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -11,8 +12,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,6 +47,12 @@ public class GridFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setToolBar();
+//        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_toolbar);
+//        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+//        parentActivity.setSupportActionBar(toolbar);
+//        ActionBar actionBar = parentActivity.getSupportActionBar();
+//        actionBar.setTitle("Title");
         setVisibilityProgressBar(true);
         assert getArguments() != null;
         String ids = getArguments().getString(KEY_FOR_IDS);
@@ -94,5 +105,13 @@ public class GridFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
         else
             progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void setToolBar() {
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
+        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+        parentActivity.setSupportActionBar(toolbar);
+        ActionBar actionBar = parentActivity.getSupportActionBar();
+        actionBar.setTitle("Title");
     }
 }
