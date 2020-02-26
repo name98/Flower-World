@@ -1,6 +1,7 @@
 package com.flowerworld.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +39,7 @@ import com.flowerworld.items.adapters.CommentItemAdapter;
 import com.flowerworld.items.adapters.FlowerImageItemAdapter;
 import com.flowerworld.methods.Methods;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 
 import java.util.ArrayList;
@@ -93,7 +95,6 @@ public class FlowerFragment extends Fragment implements ProductGetData {
     private void setTextViews(FullProductItem product) {
         View view = getView();
         assert view != null;
-        TextView nameTextView = view.findViewById(R.id.flowerPageNameFlower);
         TextView priceTextView = view.findViewById(R.id.flowerPagePriceTextV);
         TextView descriptionTextView = view.findViewById(R.id.flowerPageAnnotation);
         TextView heightProductTextView = view.findViewById(R.id.flowerPageSizeFlowerH);
@@ -101,7 +102,6 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         TextView compoundTextView = view.findViewById(R.id.flowerPageSostav);
         TextView ratingProductTextView = view.findViewById(R.id.flowerPageTextForRatingB);
         TextView shopName = view.findViewById(R.id.flowerPageShop);
-        nameTextView.setText(product.getName());
         priceTextView.setText(Methods.formatRuble(product.getPrice()));
         descriptionTextView.setText(product.getAnnotation());
         heightProductTextView.setText(product.getSizeH());
@@ -222,7 +222,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
     }
 
     private void setCardListener(final String shopName) {
-        CardView shopPaneCardView = getView().findViewById(R.id.flowerPageGoToShop);
+        CardView shopPaneCardView = Objects.requireNonNull(getView()).findViewById(R.id.flowerPageGoToShop);
         shopPaneCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,13 +232,10 @@ public class FlowerFragment extends Fragment implements ProductGetData {
     }
 
     private void setToolbar(String title) {
-        final Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.flower_fragment_toolbar);
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.flower_fragment_toolbar);
         AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
         assert parentActivity != null;
         parentActivity.setSupportActionBar(toolbar);
-        ActionBar actionBar = parentActivity.getSupportActionBar();
-        assert actionBar != null;
-
         toolbar.setTitle(title);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -247,23 +244,8 @@ public class FlowerFragment extends Fragment implements ProductGetData {
                 Router.removeFragmentByTag(getContext(), Router.PRODUCT_FRAGMENT_TAG);
             }
         });
-        AppBarLayout appBarLayout = getView().findViewById(R.id.flower_fragment_appbar_layout);
-
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-
-
-            @Override
-            public void onOffsetChanged(final AppBarLayout appBarLayout, int verticalOffset) {
-                if (Math.abs(verticalOffset) - Math.abs(appBarLayout.getTotalScrollRange()) == 0) {
-                    toolbar.setTitleTextColor(getResources().getColor(R.color.green));
-                }
-                else
-                    toolbar.setTitleTextColor(getResources().getColor(R.color.grey));
-
-
-            }
-        });
-
-
+        CollapsingToolbarLayout collapsingToolbar = getView().findViewById(R.id.flower_fragment_collapsing_toolbar);
+        collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
+        collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.appColorWhite));
     }
 }
