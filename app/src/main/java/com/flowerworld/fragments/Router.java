@@ -21,10 +21,11 @@ public class Router {
     final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
     private final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
     private final static String SHOP_FRAGMENT_TAG = "shop_fragment";
-    private final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
+    public final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
     private final static String ORDERS_FRAGMENT_TAG = "orders_fragment";
     final static String ABOUT_ORDER_FRAGMENT_TAG = "about_orders_fragment";
     public final static String CHARTER_FRAGMENT_TAG = "charter_fragment";
+    public final static String GRID_FRAGMENT_TAG = "grid_fragment";
 
 
 
@@ -44,13 +45,6 @@ public class Router {
 
                 fragmentManager.beginTransaction()
                         .add(R.id.activity_fragment_contaner,shopFragment,tag)
-                        .addToBackStack(null)
-                        .commit();
-                break;
-            case "gridFragment":
-                GridFragment gridFragment = GridFragment.newInstance(data);
-                fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,gridFragment,tag)
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -216,6 +210,15 @@ public class Router {
         AboutOrderFragment aboutOrderFragment = AboutOrderFragment.newInstance(orderId);
         manager.beginTransaction()
                 .add(CONTAINER, aboutOrderFragment, ABOUT_ORDER_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void addGridFragment(Context context, String ids, String title) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        GridFragment gridFragment = GridFragment.newInstance(ids, title);
+        manager.beginTransaction()
+                .add(CONTAINER, gridFragment, GRID_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }

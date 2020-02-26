@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 import com.flowerworld.items.NewsItem;
 
 import java.util.ArrayList;
@@ -39,10 +40,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsIt
         holder.newImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)holder.newImage.getContext())
-                        .getApp()
-                        .getRouter()
-                        .addFragment("gridFragment",newsItems.get(position).getIds());
+                Router.addGridFragment(holder.newsTitleText.getContext(), newsItems.get(position).getIds(), newsItems.get(position).getTitleNews());
             }
         });
     }

@@ -83,7 +83,7 @@ public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapte
             mainPaneConstraintLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addAboutProductFragment(idProduct);
+                    Router.addFlowerFragment(itemView.getContext(), idProduct);
                 }
             });
         }
@@ -103,9 +103,5 @@ public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapte
             productImageSimpleDraweeView.setImageURI(Uri.parse(urlImage));
         }
 
-        private void addAboutProductFragment(int idProduct) {
-
-            ((MainActivity) itemView.getContext()).getApp().getRouter().addFragment("flowerPage",String.valueOf(idProduct));
-        }
     }
 }

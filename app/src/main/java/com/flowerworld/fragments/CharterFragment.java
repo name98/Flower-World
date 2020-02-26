@@ -62,8 +62,6 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
         CharterConnection connection = new CharterConnection();
         connection.setParent(this);
         connection.bind(id);
-
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -80,6 +78,7 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
     private void bind(FlowerItem product) {
         setViews(product);
         setListener(String.valueOf(product.getId()));
+        Router.removeFragmentByTag(getContext(), Router.PROGRESS_FRAGMENT_TAG);
     }
 
     private void setViews(FlowerItem product) {
@@ -111,7 +110,7 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
         Button buyButton = view.findViewById(R.id.orderGo);
         final EditText receiverEditText = view.findViewById(R.id.orderReceiver);
         final EditText addressEditText = view.findViewById(R.id.orderAddress);
-        final TextView dateTextView =  view.findViewById(R.id.orderDate);
+        final TextView dateTextView = view.findViewById(R.id.orderDate);
         final TextView timeTextView = view.findViewById(R.id.orderTime);
         final FragmentSetTwoMessage parent = this;
         buyButton.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +146,7 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         dateTextView.setText(dayOfMonth + "/" + month + "/" + year);
                     }
-                }, now.getYear() + 1900, now.getMonth(), now.getDay());
+                }, now.getYear() + 1900, now.getMonth(), now.getDate());
                 dDialog.show();
             }
         });
@@ -168,14 +167,12 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
 
 
     static CharterFragment newInstance(int id) {
-
         Bundle args = new Bundle();
         args.putInt(KEY_FOR_ID_PRODUCT, id);
         CharterFragment fragment = new CharterFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void sendMessage(Message msg) {
@@ -195,7 +192,8 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
                 .setNegativeButton("Ок",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Router.removeFragmentByTag(getContext(), Router.CHARTER_FRAGMENT_TAG);                                    }
+                                Router.removeFragmentByTag(getContext(), Router.CHARTER_FRAGMENT_TAG);
+                            }
                         });
         AlertDialog alert = builder.create();
         alert.show();

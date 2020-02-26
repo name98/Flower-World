@@ -15,7 +15,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +37,7 @@ import com.flowerworld.items.FullProductItem;
 import com.flowerworld.items.adapters.CommentItemAdapter;
 import com.flowerworld.items.adapters.FlowerImageItemAdapter;
 import com.flowerworld.methods.Methods;
+import com.google.android.material.appbar.AppBarLayout;
 
 
 import java.util.ArrayList;
@@ -213,6 +218,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         setShop(product.getShopLogo());
         setProductRate(product);
         setCardListener(product.getShopName());
+        setToolbar(product.getName());
     }
 
     private void setCardListener(final String shopName) {
@@ -223,5 +229,41 @@ public class FlowerFragment extends Fragment implements ProductGetData {
                 Router.addShopFragment(getContext(), shopName);
             }
         });
+    }
+
+    private void setToolbar(String title) {
+        final Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.flower_fragment_toolbar);
+        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+        assert parentActivity != null;
+        parentActivity.setSupportActionBar(toolbar);
+        ActionBar actionBar = parentActivity.getSupportActionBar();
+        assert actionBar != null;
+
+        toolbar.setTitle(title);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Router.removeFragmentByTag(getContext(), Router.PRODUCT_FRAGMENT_TAG);
+            }
+        });
+        AppBarLayout appBarLayout = getView().findViewById(R.id.flower_fragment_appbar_layout);
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+
+
+            @Override
+            public void onOffsetChanged(final AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset) - Math.abs(appBarLayout.getTotalScrollRange()) == 0) {
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.green));
+                }
+                else
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.grey));
+
+
+            }
+        });
+
+
     }
 }

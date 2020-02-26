@@ -1,7 +1,6 @@
 package com.flowerworld.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -9,8 +8,6 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-
 
 
 import androidx.annotation.NonNull;
@@ -36,6 +33,7 @@ import java.util.Objects;
 public class GridFragment extends Fragment {
 
     private static final String KEY_FOR_IDS = "key_ids";
+    private static final String KEY_FOR_TITLE = "key_title";
     private Handler handlerForProductItems;
 
     @Nullable
@@ -48,17 +46,11 @@ public class GridFragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setToolBar();
-//        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_toolbar);
-//        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
-//        parentActivity.setSupportActionBar(toolbar);
-//        ActionBar actionBar = parentActivity.getSupportActionBar();
-//        actionBar.setTitle("Title");
         setVisibilityProgressBar(true);
         assert getArguments() != null;
         String ids = getArguments().getString(KEY_FOR_IDS);
         bind(ids);
     }
-
 
     @SuppressLint("HandlerLeak")
     private void setHandler() {
@@ -71,9 +63,10 @@ public class GridFragment extends Fragment {
         };
     }
 
-    static GridFragment newInstance(String ids) {
+    static GridFragment newInstance(String ids, String title) {
         Bundle args = new Bundle();
         args.putString(KEY_FOR_IDS, ids);
+        args.putString(KEY_FOR_TITLE, title);
         GridFragment fragment = new GridFragment();
         fragment.setArguments(args);
         return fragment;
@@ -100,18 +93,28 @@ public class GridFragment extends Fragment {
     }
 
     private void setVisibilityProgressBar(boolean visibility) {
-        ProgressBar progressBar = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_progress_bar);
-        if(visibility)
-            progressBar.setVisibility(View.VISIBLE);
+        if (visibility)
+            Router.addProgressFragment(getContext());
         else
-            progressBar.setVisibility(View.INVISIBLE);
+            Router.removeFragmentByTag(getContext(), Router.PROGRESS_FRAGMENT_TAG);
     }
 
     private void setToolBar() {
+        assert getArguments() != null;
+        String title = getArguments().getString(KEY_FOR_TITLE);
         Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+        assert parentActivity != null;
         parentActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = parentActivity.getSupportActionBar();
-        actionBar.setTitle("Title");
+        assert actionBar != null;
+        actionBar.setTitle(title);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Router.removeFragmentByTag(getContext(), Router.GRID_FRAGMENT_TAG);
+            }
+        });
     }
 }
