@@ -2,6 +2,7 @@ package com.flowerworld.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.flowerworld.R;
@@ -79,19 +83,25 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         if (comment.isMy())
             setViewsChangeMode(comment);
         else
-            setViewsCreateMode(comment);
+            setViewsCreateMode();
         Router.removeProgressFragment(getContext());
+        setRatingBarListener();
     }
 
-    private void setViewsCreateMode(CommentItem comment) {
+    private void setViewsCreateMode() {
         View view = getView();
         assert view != null;
         TextView textRate = Objects.requireNonNull(view).findViewById(R.id.createCommentResultRateTextView);
         textRate.setText(getResultTextRate(5));
-        setButton(true);
+        setButton(true, 0);
+        EditText commentEditText = view.findViewById(R.id.createCommentEnterText);
+        commentEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(commentEditText, InputMethodManager.SHOW_IMPLICIT);
+
     }
 
-    private void setButton (boolean isCreateMode) {
+    private void setButton (boolean isCreateMode, final int oldRate) {
         View view = getView();
         DataBaseHelper dBHelper = new DataBaseHelper(this.getContext());
         final String myId = dBHelper.getKey();
@@ -104,7 +114,6 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         if (isCreateMode) {
             createCommentButton.setText("отправить");
             comment.setMy(false);
-
         }
         else {
             comment.setMy(true);
@@ -113,13 +122,31 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         createCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                comment.setRate(Math.round(rateProductRatingBar.getProgress()/2));
+                Router.addProgressFragment(getContext());
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
+                System.out.println(rateProductRatingBar.getProgress()+"finish0");
+                comment.setRate(rateProductRatingBar.getProgress());
                 comment.setDate(getToDay());
                 comment.setComment(commentEditText.getText().toString());
                 CommentConnection connection = new CommentConnection();
                 connection.setParent(parent);
                 int productId = getArguments().getInt(PRODUCT_ID_KEY);
-                connection.unBind(comment, String.valueOf(productId),myId);
+                connection.unBind(comment, String.valueOf(productId),myId,oldRate);
+            }
+        });
+    }
+
+    private void setRatingBarListener() {
+        final RatingBar rateProductRatingBar = Objects.requireNonNull(getView()).findViewById(R.id.createCommentRating);
+        rateProductRatingBar.setMax(5);
+        rateProductRatingBar.setStepSize(1.0f);
+        rateProductRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                TextView textRate = Objects.requireNonNull(getView()).findViewById(R.id.createCommentResultRateTextView);
+                textRate.setText(getResultTextRate((int) rating));
+                System.out.println(rateProductRatingBar.getProgress()+"progress");
             }
         });
     }
@@ -129,16 +156,19 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
 
 
 
-
-
     private void setViewsChangeMode(CommentItem comment) {
-        setButton(false);
+        setButton(false, comment.getRate());
         View view = getView();
         assert view != null;
         EditText commentEditText = view.findViewById(R.id.createCommentEnterText);
         commentEditText.setText(comment.getComment());
+        commentEditText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(commentEditText, InputMethodManager.SHOW_IMPLICIT);
         RatingBar rated = view.findViewById(R.id.createCommentRating);
-        rated.setRating(comment.getRate()*2);
+        rated.setStepSize(1.0f);
+        rated.setMax(5);
+        rated.setRating(comment.getRate());
         TextView textRate = view.findViewById(R.id.createCommentResultRateTextView);
         textRate.setText(getResultTextRate(comment.getRate()));
     }
@@ -183,6 +213,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
                 .setNegativeButton("Ок",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                Router.removeFragmentByTag(getContext(), Router.PROGRESS_FRAGMENT_TAG);
                                 Router.removeCreateCommentFragment(getContext());
                                 Router.reloadProductFragment(getContext());
                             }

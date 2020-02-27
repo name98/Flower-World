@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -45,7 +47,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setProgreeBar(true);
+        setProgressBar(true);
         setHandler();
         ShopConnection connection = new ShopConnection();
         connection.setParent(this);
@@ -57,12 +59,10 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     private void setViews(FullShopItem shop) {
         View view = getView();
         assert view != null;
-        TextView name = view.findViewById(R.id.shopPageNameShop);
         TextView address = view.findViewById(R.id.shopPageAddress);
         TextView annotat = view.findViewById(R.id.shopPageAnnotation);
         TextView uslD = view.findViewById(R.id.shopPageUslDost);
         SimpleDraweeView shopPhoto =view.findViewById(R.id.shopItemImg);
-        name.setText(shop.getId());
         address.setText(shop.getAddress());
         annotat.setText(shop.getAnnotantion());
         uslD.setText(shop.getDelivery());
@@ -71,12 +71,13 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     }
 
     private void setGridProducts(ArrayList<FlowerItem> products) {
-        RecyclerView recyclerViewGrid = Objects.requireNonNull(getView()).findViewById(R.id.gridItemsRecycleView);
+        RecyclerView recyclerViewGrid = Objects.requireNonNull(getView()).findViewById(R.id.shop_fragment_products_recycle_view);
         recyclerViewGrid.setLayoutManager(new GridLayoutManager(getContext(), 2));
         ProductsGridAdapter adapter = new ProductsGridAdapter();
+        System.out.println("length2" + products.size());
         adapter.setItems(products);
         recyclerViewGrid.setAdapter(adapter);
-        setProgreeBar(false);
+        setProgressBar(false);
     }
 
     public static ShopFragment newInstance(String shopName) {
@@ -95,6 +96,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     private void bind(FullShopItem shop) {
         setViews(shop);
         setGridProducts(shop.getItems());
+        setToolbar(shop.getId());
     }
 
     @SuppressLint("HandlerLeak")
@@ -108,11 +110,26 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
         };
     }
 
-    private void setProgreeBar(boolean isProgress) {
+    private void setProgressBar(boolean isProgress) {
         if(isProgress)
             Router.addProgressFragment(getContext());
         else
             Router.removeProgressFragment(getContext());
+    }
+
+    private void setToolbar(String title) {
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.shop_fragment_toolbar);
+        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+        assert parentActivity != null;
+        parentActivity.setSupportActionBar(toolbar);
+        toolbar.setTitle(title);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Router.removeFragmentByTag(getContext(), Router.SHOP_FRAGMENT_TAG);
+            }
+        });
     }
 
 

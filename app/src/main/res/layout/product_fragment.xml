@@ -23,6 +23,8 @@
             app:expandedTitleMarginStart="15dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/flowerPageViewP"
                 android:layout_width="match_parent"
@@ -44,6 +46,8 @@
                 app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways" />
+
+
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

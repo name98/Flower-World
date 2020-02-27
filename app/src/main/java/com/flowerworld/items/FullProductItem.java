@@ -13,7 +13,7 @@ public class FullProductItem {
     private String compound;
     private String annotation;
     private ArrayList<Integer> numberOfRates = new ArrayList<>();
-    private Double sumRate;
+    private String sumRate;
     private String numRaters;
     private String price;
 
@@ -57,7 +57,7 @@ public class FullProductItem {
         return numberOfRates;
     }
 
-    public Double getSumRate() {
+    public String getSumRate() {
         return sumRate;
     }
 
@@ -105,7 +105,7 @@ public class FullProductItem {
         this.numberOfRates = numberOfRates;
     }
 
-    public void setSumRate(Double sumRate) {
+    public void setSumRate(String sumRate) {
         this.sumRate = sumRate;
     }
 

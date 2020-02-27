@@ -14,6 +14,7 @@ import com.flowerworld.items.FullShopItem;
 import com.flowerworld.items.Item;
 import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.OrderItem;
+import com.flowerworld.items.RatingItem;
 import com.flowerworld.items.ShopItem;
 import com.flowerworld.links.UrlLinks;
 import com.flowerworld.methods.Methods;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class DataBase {
-    static JSONArray getJSONArrayByScript(String script){
+    static JSONArray getJSONArrayByScript(String script) {
         try {
             String data = URLEncoder.encode("script", "UTF-8") + "=" + URLEncoder.encode(script, "UTF-8");
             URL url = new URL(UrlLinks.FROM_SCRIPT);
@@ -50,12 +51,12 @@ public class DataBase {
             sb.append(line);
             return new JSONArray(sb.toString());
         } catch (Exception e) {
-
+            System.out.println("ERROR");
             return null;
         }
     }
 
-    static void insertFromScript(String script){
+    static void insertFromScript(String script) {
         try {
             String data = URLEncoder.encode("script", "UTF-8") + "=" + URLEncoder.encode(script, "UTF-8");
             URL url = new URL(UrlLinks.FROM_SCRIPT_Insert);
@@ -71,7 +72,6 @@ public class DataBase {
                     InputStreamReader(conn.getInputStream()));
 
 
-
         } catch (Exception e) {
 
 
@@ -85,10 +85,17 @@ public class DataBase {
             assert array != null;
             JSONObject object = array.getJSONObject(0);
             product.setName(object.getString("название"));
-            product.setRating(object.getString("рейтинг"));
-            product.setImageUrl(Methods.strParser(object.getString("картинки")," ").get(0));
+            product.setImageUrl(Methods.strParser(object.getString("картинки"), " ").get(0));
             product.setPrice(object.getString("цена"));
             product.setId(Integer.valueOf(id));
+            RatingItem ratingItem = new RatingItem();
+            ratingItem.setOne(object.getInt("один"));
+            ratingItem.setTwo(object.getInt("два"));
+            ratingItem.setTree(object.getInt("три"));
+            ratingItem.setFour(object.getInt("четыре"));
+            ratingItem.setFive(object.getInt("пять"));
+            System.out.println(ratingItem.getGeneralFormated()+"as");
+            product.setRating(String.valueOf(ratingItem.getGeneral()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -134,7 +141,7 @@ public class DataBase {
         ArrayList<ShopItem> shops = new ArrayList<>();
         try {
             assert array != null;
-            for (int i=0;i<array.length();i++){
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
                 shops.add(new ShopItem(jsonObject.getString("логотип"),
                         jsonObject.getString("название")));
@@ -156,27 +163,30 @@ public class DataBase {
             product.setSizeL(object.getString("длина"));
             product.setAnnotation(object.getString("описание"));
             product.setCompound(object.getString("состав"));
-            ArrayList<String> temp = Methods.strParser(object.getString("картинки")," ");
+            ArrayList<String> temp = Methods.strParser(object.getString("картинки"), " ");
             ArrayList<FlowerImagesItem> productImages = new ArrayList<>();
-            for (int i=0;i<temp.size();i++){
+            for (int i = 0; i < temp.size(); i++) {
                 productImages.add(new FlowerImagesItem(temp.get(i)));
             }
             product.setItems(productImages);
             ArrayList<Integer> productRates = new ArrayList<>();
-            productRates.add(object.getInt("один"));
-            productRates.add(object.getInt("два"));
-            productRates.add(object.getInt("три"));
-            productRates.add(object.getInt("четыре"));
-            productRates.add(object.getInt("пять"));
+            RatingItem ratingItem = new RatingItem();
+
+            ratingItem.setOne(object.getInt("один"));
+            ratingItem.setTwo(object.getInt("два"));
+            ratingItem.setTree(object.getInt("три"));
+            ratingItem.setFour(object.getInt("четыре"));
+            ratingItem.setFive(object.getInt("пять"));
+            productRates.add(ratingItem.getOne());
+            productRates.add(ratingItem.getTwo());
+            productRates.add(ratingItem.getTree());
+            productRates.add(ratingItem.getFour());
+            productRates.add(ratingItem.getFive());
             product.setNumberOfRates(productRates);
-            product.setSumRate(object.getDouble("рейтинг"));
+            product.setSumRate(ratingItem.getGeneralFormated());
             product.setPrice(object.getString("цена"));
             product.setId(String.valueOf(id));
-            int max = 0;
-            for (int i = 0; i < 5; i++) {
-                max += product.getNumberOfRates().get(i);
-            }
-            product.setNumRaters(String.valueOf(max));
+            product.setNumRaters(String.valueOf(ratingItem.getNumberOfRates()));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -187,7 +197,7 @@ public class DataBase {
     public static ArrayList<CommentItem> getCommentsByProductId(String id, String myId) {
         ArrayList<CommentItem> comments = new ArrayList<>();
         JSONArray array = getJSONArrayByScript(Scripts.getCommentScript(id));
-        for (int i = 0; i<array.length(); i++) {
+        for (int i = 0; i < array.length(); i++) {
             try {
 
                 JSONObject object = array.getJSONObject(i);
@@ -223,13 +233,20 @@ public class DataBase {
                     jsonObject.getString("за_МКАДом");
             String annotantion = jsonObject.getString("описание");
             JSONArray array = getJSONArrayByScript(Scripts.flowerItemByShop(name));
-            for(int i =0; i<array.length();i++){
+            System.out.println(array.length()+"length");
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject temp = array.getJSONObject(i);
                 String nameProduct = temp.getString("название");
-                String rate = temp.getString("рейтинг");
-                String images = Methods.strParser(temp.getString("картинки")," ").get(0);
+                String images = Methods.strParser(temp.getString("картинки"), " ").get(0);
                 String price = temp.getString("цена");
-                products.add(new FlowerItem(nameProduct,images, rate, price, temp.getInt("ID")));
+                int productId = temp.getInt("ID");
+                RatingItem ratingItem = new RatingItem();
+                ratingItem.setOne(temp.getInt("один"));
+                ratingItem.setTwo(temp.getInt("два"));
+                ratingItem.setTree(temp.getInt("три"));
+                ratingItem.setFour(temp.getInt("четыре"));
+                ratingItem.setFive(temp.getInt("пять"));
+                products.add(new FlowerItem(nameProduct, images, String.valueOf(ratingItem.getGeneral()), price, productId));
             }
             shop.setAddress(address);
             shop.setAnnotantion(annotantion);
@@ -246,12 +263,12 @@ public class DataBase {
     }
 
     public static boolean isCommented(String id, String userId) {
-        JSONArray array = getJSONArrayByScript(Scripts.getCommentScriptByIdProductAndIdUser(id,userId));
+        JSONArray array = getJSONArrayByScript(Scripts.getCommentScriptByIdProductAndIdUser(id, userId));
         return array.length() != 0;
     }
 
     public static CommentItem getCommentByIdAndUserId(String id, String userId) {
-        JSONArray array = getJSONArrayByScript(Scripts.getCommentScriptByIdProductAndIdUser(id,userId));
+        JSONArray array = getJSONArrayByScript(Scripts.getCommentScriptByIdProductAndIdUser(id, userId));
         System.out.println(id + " : " + userId);
         CommentItem comment = new CommentItem();
         try {
@@ -268,18 +285,29 @@ public class DataBase {
         return comment;
     }
 
-    public static boolean upDateComment(CommentItem comment, String productId, String userID) {
+    public static boolean upDateComment(CommentItem comment, String productId, String userID, int oldRate) {
+        String ratingId = getRatingIdByProductId(productId);
+        RatingItem ratingItem = getRatingByRatingId(ratingId);
+        ratingItem.minus(oldRate);
+        System.out.println("oldComment " + oldRate);
+        ratingItem.plus(comment.getRate());
         insertFromScript(Scripts.upDateCommentScript(String.valueOf(comment.getRate()), comment.getComment(),
-                comment.getDate(), productId,userID));
+                comment.getDate(), productId, userID));
+        insertFromScript(Scripts.upDateRatingById(ratingId, ratingItem));
         return true;
     }
 
     public static boolean insertComment(CommentItem commentItem, String productId, String userID) {
-        if (commentItem.getComment() != null)
+        if (commentItem.getComment() != null) {
             insertFromScript(Scripts.addDateCommentScript(String.valueOf(commentItem.getRate()), commentItem.getComment(),
-                    commentItem.getDate(), productId,userID));
-        else
-            insertFromScript(Scripts.addDateCommentScript(String.valueOf(commentItem.getRate()), commentItem.getDate(), productId,userID));
+                    commentItem.getDate(), productId, userID));
+            String ratingId = getRatingIdByProductId(productId);
+            RatingItem ratingItem = getRatingByRatingId(ratingId);
+            System.out.println("finish " + commentItem.getRate());
+            ratingItem.plus(commentItem.getRate());
+            insertFromScript(Scripts.upDateRatingById(ratingId, ratingItem));
+        } else
+            insertFromScript(Scripts.addDateCommentScript(String.valueOf(commentItem.getRate()), commentItem.getDate(), productId, userID));
         return true;
     }
 
@@ -290,7 +318,7 @@ public class DataBase {
             js = new DataMethod().fromScript(Scripts.ordersByIdC(idUser));
         else
             js = new DataMethod().fromScript(Scripts.ordersById(idUser));
-        for (int i =0;i<js.length();i++) {
+        for (int i = 0; i < js.length(); i++) {
             try {
                 String s = js.getJSONObject(i).getString("картинки");
                 JSONObject object = js.getJSONObject(i);
@@ -312,7 +340,7 @@ public class DataBase {
         try {
             JSONObject object = orderValues.getJSONObject(0);
             aboutOrder.setCost(object.getString("цена"));
-            aboutOrder.setDate(object.getString("число")+" в "+
+            aboutOrder.setDate(object.getString("число") + " в " +
                     object.getString("время"));
             aboutOrder.setProductId(object.getString("товар"));
             aboutOrder.setReceiver(object.getString("Получатель"));
@@ -323,5 +351,37 @@ public class DataBase {
             e.printStackTrace();
         }
         return aboutOrder;
+    }
+
+    public static RatingItem getRatingByRatingId(String ratingId) {
+        RatingItem ratingItem = new RatingItem();
+        JSONArray array = getJSONArrayByScript(Scripts.getRatingById(ratingId));
+        try {
+            JSONObject object = array.getJSONObject(0);
+            ratingItem.setOne(object.getInt("один"));
+            ratingItem.setTwo(object.getInt("два"));
+            ratingItem.setTree(object.getInt("три"));
+            ratingItem.setFour(object.getInt("четыре"));
+            ratingItem.setFive(object.getInt("пять"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return ratingItem;
+    }
+
+    public static String getRatingIdByProductId(String productId) {
+        String ratingId = "";
+        JSONArray array = getJSONArrayByScript(Scripts.getRatingIdByProductId(productId));
+        try {
+            JSONObject object = array.getJSONObject(0);
+            ratingId = object.getString("рейтинг");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return ratingId;
+    }
+
+    public void updateRatingById(int id) {
+
     }
 }

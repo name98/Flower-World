@@ -72,7 +72,7 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
             setProductImage(item.getImageUrl());
             setProductName(item.getName());
             setProductPrice(item.getPrice());
-            setProductRating(Float.valueOf(item.getPrice()));
+            setProductRating(Float.valueOf(item.getRating()));
             offProgress();
         }
 

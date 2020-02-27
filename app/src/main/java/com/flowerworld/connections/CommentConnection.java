@@ -43,16 +43,16 @@ public class CommentConnection {
         thread.start();
     }
 
-    public void unBind(CommentItem comment, String idProduct, String idUser) {
-        createThreadForSendData(comment, idProduct, idUser);
+    public void unBind(CommentItem comment, String idProduct, String idUser, int oldRating) {
+        createThreadForSendData(comment, idProduct, idUser, oldRating);
     }
 
-    private void createThreadForSendData(final CommentItem comment, final String idProduct, final String idUser) {
+    private void createThreadForSendData(final CommentItem comment, final String idProduct, final String idUser, final int oldRating) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 if (comment.isMy()) {
-                    boolean isSuccsess = DataBase.upDateComment(comment, idProduct, idUser);
+                    boolean isSuccsess = DataBase.upDateComment(comment, idProduct, idUser, oldRating);
                     Message msg = Message.obtain();
                     msg.obj = isSuccsess;
                     parent.sendMessageForSendHandler(msg);

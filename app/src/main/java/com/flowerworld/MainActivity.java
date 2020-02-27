@@ -17,11 +17,6 @@ public class MainActivity extends AppCompatActivity  {
         app = new Application(this,
                 getSupportFragmentManager());
 
-        System.out.println("SELECT g.время, g.число, g.статус, g.товар, a1.цена, g.Получатель \n" +
-                "                    FROM\n" +
-                "                    `заказы` as `g` \n" +
-                "                    LEFT JOIN `товары` as `a1` ON (`a1`.`id` = `g`.`товар`)    \n" +
-                "                   WHERE g.id = " + 1 + ";");
     }
 
     public Application getApp() {

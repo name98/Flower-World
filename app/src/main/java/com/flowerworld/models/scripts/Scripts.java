@@ -1,13 +1,14 @@
 package com.flowerworld.models.scripts;
 
 import com.flowerworld.items.CharterItem;
+import com.flowerworld.items.RatingItem;
 
 public class Scripts {
     public static final String ALL_MINI_SHOPS = "SELECT название, логотип FROM `магазины`";
 
     public static String getProductByIdScript(String id) {
         return "SELECT\n" +
-                "    a2.рейтинг, картинки, g.название, цена\n" +
+                "    a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена\n" +
                 "FROM\n" +
                 "    `товары` as `g`\n" +
 
@@ -18,7 +19,7 @@ public class Scripts {
 
     public static String flowerItemByShop(String id) {
         return "SELECT\n" +
-                "        g.ID, a2.рейтинг, картинки, g.название, цена\n" +
+                "        g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена\n" +
                 "    FROM\n" +
                 "        `товары` as `g`\n" +
                 "    LEFT JOIN\n" +
@@ -108,15 +109,35 @@ public class Scripts {
                 + date + "' WHERE `отзывы`.`id_товар` = "
                 + productId + " AND `отзывы`.`id_пользователь` = " + userID + ";";
     }
-    public static String addDateCommentScript(String rate, String comment, String date, String productId, String userID){
+
+    public static String addDateCommentScript(String rate, String comment, String date, String productId, String userID) {
         return "INSERT INTO `отзывы` (`ID`, `id_товар`, `id_пользователь`, " +
-                "`оценка`, `отзыв`, `день`) VALUES (NULL, '"+productId+"', '"+userID+"', '"+rate+"', '" +
-                ""+comment+"', '"+date+"');";
+                "`оценка`, `отзыв`, `день`) VALUES (NULL, '" + productId + "', '" + userID + "', '" + rate + "', '" +
+                "" + comment + "', '" + date + "');";
     }
-    public static String addDateCommentScript(String rate, String date, String productId, String userID){
+
+    public static String addDateCommentScript(String rate, String date, String productId, String userID) {
         return "INSERT INTO `отзывы` (`ID`, `id_товар`, `id_пользователь`, " +
-                "`оценка`, `отзыв`, `день`) VALUES (NULL, '"+productId+"', '"+userID+"', '"+rate+"', '" +
-                "NULL', '"+date+"');";
+                "`оценка`, `отзыв`, `день`) VALUES (NULL, '" + productId + "', '" + userID + "', '" + rate + "', '" +
+                "NULL', '" + date + "');";
+    }
+
+    public static String getRatingById(String ratingId) {
+        return "SELECT * FROM `рейтинг` WHERE ID = " + ratingId + ";";
+    }
+
+    public static String getRatingIdByProductId(String productId) {
+        return "SELECT рейтинг FROM `товары`where ID = " + productId + ";";
+    }
+
+    public static String upDateRatingById(String ratingId, RatingItem ratingItem) {
+        return "UPDATE `рейтинг` SET " +
+                "`один` = '" + ratingItem.getOne() + "', " +
+                "`два` = '" + ratingItem.getTwo() + "', " +
+                "`три` = '" + ratingItem.getTree() + "', " +
+                "`четыре` = '" + ratingItem.getFour() + "', " +
+                "`пять` = '" + ratingItem.getFive() + "' " +
+                "WHERE `рейтинг`.`ID` = " + ratingId + ";";
     }
 
 }

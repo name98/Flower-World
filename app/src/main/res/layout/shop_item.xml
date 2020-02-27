@@ -10,6 +10,5 @@
         android:src="@drawable/ic_launcher_background"
         app:roundedCornerRadius="90dp"
         app:retryImageScaleType="fitXY"
-        android:id="@+id/shopItemImg"
-        />
+        android:id="@+id/shopItemImg" />
 </RelativeLayout>

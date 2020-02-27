@@ -35,6 +35,7 @@ import com.flowerworld.interfaces.ProductGetData;
 import com.flowerworld.items.CommentItem;
 import com.flowerworld.items.FlowerImagesItem;
 import com.flowerworld.items.FullProductItem;
+import com.flowerworld.items.RatingItem;
 import com.flowerworld.items.adapters.CommentItemAdapter;
 import com.flowerworld.items.adapters.FlowerImageItemAdapter;
 import com.flowerworld.methods.Methods;
@@ -107,7 +108,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         heightProductTextView.setText(product.getSizeH());
         widthProductTextView.setText(product.getSizeL());
         compoundTextView.setText(product.getCompound());
-        ratingProductTextView.setText(product.getSumRate().toString());
+        ratingProductTextView.setText(product.getSumRate());
         shopName.setText(product.getShopName());
     }
 
@@ -130,6 +131,13 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         ProgressBar fourStartProgressBar = view.findViewById(R.id.flowerPageProgressFor4);
         ProgressBar fiveStartProgressBar = view.findViewById(R.id.flowerPageProgressFor5);
         TextView numberOfRatesTextView = view.findViewById(R.id.flowerPageNumberRaters);
+        RatingItem ratingItem = new RatingItem();
+        ratingItem.setOne(product.getNumberOfRates().get(0));
+        ratingItem.setTwo(product.getNumberOfRates().get(1));
+        ratingItem.setTree(product.getNumberOfRates().get(2));
+        ratingItem.setFour(product.getNumberOfRates().get(3));
+        ratingItem.setFive(product.getNumberOfRates().get(4));
+
         int numRates = product.getNumberOfRates().get(0) +
                 product.getNumberOfRates().get(1) +
                 product.getNumberOfRates().get(2) +
@@ -141,7 +149,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         treeStartProgressBar.setMax(numRates);
         fourStartProgressBar.setMax(numRates);
         fiveStartProgressBar.setMax(numRates);
-        productRating.setRating(product.getSumRate().floatValue());
+        productRating.setRating((float) ratingItem.getGeneral());
         oneStartProgressBar.setProgress(product.getNumberOfRates().get(0));
         twoStartProgressBar.setProgress(product.getNumberOfRates().get(1));
         treeStartProgressBar.setProgress(product.getNumberOfRates().get(2));
