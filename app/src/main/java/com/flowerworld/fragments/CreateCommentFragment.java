@@ -11,7 +11,6 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,7 +54,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         setHandler();
         int productId = getArguments().getInt(PRODUCT_ID_KEY);
         DataBaseHelper dBHelper = new DataBaseHelper(this.getContext());
-        String myId = dBHelper.getKey();
+        String myId = dBHelper.getId();
         CommentConnection connection = new CommentConnection();
         connection.setParent(this);
         connection.bind(String.valueOf(productId), myId);
@@ -108,7 +107,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
     private void setButton (boolean isCreateMode, final int oldRate) {
         View view = getView();
         DataBaseHelper dBHelper = new DataBaseHelper(this.getContext());
-        final String myId = dBHelper.getKey();
+        final String myId = dBHelper.getId();
         assert view != null;
         Button createCommentButton = view.findViewById(R.id.createCommentSendCommentButton);
         final EditText commentEditText = view.findViewById(R.id.createCommentEnterText);

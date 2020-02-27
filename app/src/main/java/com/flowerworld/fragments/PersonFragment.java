@@ -22,6 +22,8 @@ import com.flowerworld.R;
 import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.DataMethod;
 import com.flowerworld.database.SQLDataBase;
+import com.flowerworld.interfaces.FragmentSetDataInterface;
+import com.flowerworld.items.UserItem;
 import com.flowerworld.ui.PersonFragmentUI;
 
 import org.json.JSONArray;
@@ -41,11 +43,25 @@ public class PersonFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        new PersonFragmentUI(view);
-
+        UserItem user = getUserItem();
+        setViews(user);
     }
 
     public static PersonFragment newInstance() {
         return new PersonFragment();
+    }
+
+    private UserItem getUserItem() {
+        DataBaseHelper helper = new DataBaseHelper(getContext());
+        UserItem userItem = new UserItem();
+        userItem.setUserEmail(helper.get(DataBaseHelper.EMAIL));
+        userItem.setUserId(Integer.valueOf(helper.get(DataBaseHelper.KEY)));
+        userItem.setUserName(helper.get(DataBaseHelper.USER_NAME));
+        userItem.setUserPassword(helper.get(DataBaseHelper.PASSWORD));
+        return userItem;
+    }
+
+    private void setViews(UserItem user) {
+
     }
 }

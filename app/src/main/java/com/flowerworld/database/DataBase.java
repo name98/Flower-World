@@ -16,6 +16,7 @@ import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.OrderItem;
 import com.flowerworld.items.RatingItem;
 import com.flowerworld.items.ShopItem;
+import com.flowerworld.items.UserItem;
 import com.flowerworld.links.UrlLinks;
 import com.flowerworld.methods.Methods;
 import com.flowerworld.models.scripts.Scripts;
@@ -379,9 +380,5 @@ public class DataBase {
             e.printStackTrace();
         }
         return ratingId;
-    }
-
-    public void updateRatingById(int id) {
-
     }
 }

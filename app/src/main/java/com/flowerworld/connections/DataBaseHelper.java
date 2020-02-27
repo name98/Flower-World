@@ -11,10 +11,13 @@ import androidx.annotation.Nullable;
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "auth";
-    public static final String TABLE_NAME= "user";
-    private static final String LOGIN = "login";
-    private static final String PASSWORD= "password";
-    private static final String KEY = "id";
+    public static final String TABLE_NAME = "user";
+    public static final String PASSWORD = "password";
+    public static final String EMAIL = "email";
+    public static final String TELEPHONE = "telephone";
+    public static final String KEY = "id";
+    public static final String USER_NAME = "user_name";
+
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,48 +25,66 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table " + TABLE_NAME +"(" +
-                KEY+" integer primary key,"+
-                LOGIN + " text," +
-                PASSWORD + " text"+
+        db.execSQL("create table " + TABLE_NAME + "(" +
+                KEY + " integer primary key," +
+                EMAIL + " text," +
+                PASSWORD + " text," +
+                TELEPHONE + " text," +
+                USER_NAME + " text" +
                 ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists "+TABLE_NAME);
+        db.execSQL("drop table if exists " + TABLE_NAME);
         onCreate(db);
     }
-    public void add(String login, String pass, int key){
+
+    public void add(String email, String pass, int key) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(LOGIN, login);
+        contentValues.put(EMAIL, email);
         contentValues.put(PASSWORD, pass);
-        contentValues.put(KEY,key);
-        db.insert(TABLE_NAME,null,contentValues);
+        contentValues.put(KEY, key);
+        db.insert(TABLE_NAME, null, contentValues);
     }
-    public String getLogin(){
+
+    public String getLogin() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cr = db.rawQuery("Select "+ LOGIN +" from "+TABLE_NAME+" where "+KEY+"=1;",null);
+        Cursor cr = db.rawQuery("Select " + EMAIL + " from " + TABLE_NAME + " where " + KEY + "=1;", null);
         String str = "";
         if (cr.moveToFirst()) {
             do {
-                str+=cr.getString(0);
+                str += cr.getString(0);
             } while (cr.moveToNext());
         }
         return str;
     }
-    public String getKey(){
+
+    public String getId() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cr = db.rawQuery("Select "+ KEY+" from "+TABLE_NAME+";",null);
+        Cursor cr = db.rawQuery("Select " + KEY + " from " + TABLE_NAME + ";", null);
         String str = "";
         if (cr.moveToFirst()) {
             do {
-                str+=cr.getString(0);
+                str += cr.getString(0);
             } while (cr.moveToNext());
         }
         return str;
     }
+
+    public String get(String column) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cr = db.rawQuery("Select " + column + TABLE_NAME + ";", null);
+        String str = "";
+        if (cr.moveToFirst()) {
+            do {
+                str += cr.getString(0);
+            } while (cr.moveToNext());
+        }
+        return str;
+    }
+
 
 
 

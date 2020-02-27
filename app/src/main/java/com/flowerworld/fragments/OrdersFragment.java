@@ -1,7 +1,6 @@
 package com.flowerworld.fragments;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -49,7 +48,7 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
         boolean isCompleted = getArguments().getBoolean(IS_COMPLETED_KEY);
         setToolbar(isCompleted);
         DataBaseHelper helper = new DataBaseHelper(getContext());
-        String userId = helper.getKey();
+        String userId = helper.getId();
         OrderConnection connection = new OrderConnection();
         connection.setParent(this);
         connection.bind(isCompleted, userId);

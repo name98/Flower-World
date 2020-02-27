@@ -117,7 +117,7 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
             @Override
             public void onClick(View v) {
                 DataBaseHelper helper = new DataBaseHelper(getContext());
-                String useId = helper.getKey();
+                String useId = helper.getId();
                 CharterItem charter = new CharterItem();
                 charter.setAddress(addressEditText.getText().toString());
                 charter.setDate(dateTextView.getText().toString());

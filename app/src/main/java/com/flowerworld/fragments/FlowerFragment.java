@@ -1,7 +1,6 @@
 package com.flowerworld.fragments;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,11 +15,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +36,6 @@ import com.flowerworld.items.RatingItem;
 import com.flowerworld.items.adapters.CommentItemAdapter;
 import com.flowerworld.items.adapters.FlowerImageItemAdapter;
 import com.flowerworld.methods.Methods;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 
@@ -69,7 +65,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         setCommentHandler();
         ProductConnection connection = new ProductConnection();
         connection.setParent(this);
-        connection.bind(productId,Integer.valueOf(helper.getKey()));
+        connection.bind(productId,Integer.valueOf(helper.getId()));
     }
 
     static FlowerFragment newInstance(int id) {
