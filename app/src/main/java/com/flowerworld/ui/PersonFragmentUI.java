@@ -3,7 +3,6 @@ package com.flowerworld.ui;
 import android.view.View;
 import android.widget.Button;
 
-import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.fragments.Router;
 
@@ -15,7 +14,7 @@ public class PersonFragmentUI {
         createUI();
     }
     private void createUI(){
-        Button activeOrders =  view.findViewById(R.id.personFragmentActiveOrdersBT);
+        Button activeOrders =  view.findViewById(R.id.person_fragment_active_orders_button);
         activeOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

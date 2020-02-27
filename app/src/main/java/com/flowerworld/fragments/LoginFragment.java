@@ -1,18 +1,30 @@
 package com.flowerworld.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.flowerworld.R;
-import com.flowerworld.ui.LoginFragmentUI;
+import com.flowerworld.connections.DataBaseHelper;
+import com.flowerworld.connections.LoginConnection;
+import com.flowerworld.interfaces.FragmentSetDataInterface;
+import com.flowerworld.items.UserItem;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements FragmentSetDataInterface {
+    private Handler handler;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,6 +34,87 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new LoginFragmentUI(view);
+        setHandler();
+        setViews();
+        //new LoginFragmentUI(view);
+    }
+
+    private void setViews() {
+        View view = getView();
+        assert view != null;
+        final Button enter = view.findViewById(R.id.loginFragmentEnterBt);
+        enter.setEnabled(false);
+        final EditText email = view.findViewById(R.id.email);
+        final EditText pass = view.findViewById(R.id.password);
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!pass.getText().toString().equals("") && !email.getText().toString().equals(""))
+                    enter.setEnabled(true);
+                else
+                    enter.setEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        email.addTextChangedListener(watcher);
+        pass.addTextChangedListener(watcher);
+        enter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tryLogIn(email.getText().toString(), pass.getText().toString());
+            }
+        });
+    }
+
+    private void tryLogIn(String email, String userPassword) {
+        LoginConnection connection = new LoginConnection();
+        connection.setParent(this);
+        connection.bind(email, userPassword);
+    }
+
+    @SuppressLint("HandlerLeak")
+    private void setHandler() {
+        handler = new Handler() {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                int isTrue = msg.arg1;
+                if (isTrue == 0)
+                    setErrorDialog();
+                else {
+                    UserItem user = (UserItem) msg.obj;
+                    setDatabase(user);
+                }
+
+            }
+        };
+    }
+
+    @Override
+    public void sendMessage(Message msg) {
+        handler.sendMessage(msg);
+    }
+
+    private void setErrorDialog() {
+
+    }
+
+    private void setDatabase(UserItem userItem) {
+        DataBaseHelper helper = new DataBaseHelper(getContext());
+        helper.add(userItem);
+        Router.addMainFragment(getContext());
+        Router.removeFragmentByTag(getContext(), Router.LOGIN_FRAGMENT_TAG);
+    }
+
+    public static LoginFragment newInstance() {
+        return new LoginFragment();
     }
 }

@@ -381,4 +381,26 @@ public class DataBase {
         }
         return ratingId;
     }
+
+    public static UserItem getUserByEmailAndPassword(String email, String password) {
+        JSONArray array = getJSONArrayByScript(Scripts.auth(email,password));
+        if (array == null) {
+            return null;
+        }
+        else {
+            UserItem user = new UserItem();
+            try {
+                JSONObject object = array.getJSONObject(0);
+                user.setUserPassword(object.getString("пароль"));
+                user.setUserName(object.getString("ФИО"));
+                user.setUserId(object.getInt("ID"));
+                user.setUserEmail(object.getString("почта"));
+                user.setTelephone(object.getString("телефон"));
+                return user;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
 }

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.flowerworld.items.UserItem;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "auth";
@@ -40,12 +42,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void add(String email, String pass, int key) {
+    public void add(UserItem user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(EMAIL, email);
-        contentValues.put(PASSWORD, pass);
-        contentValues.put(KEY, key);
+        contentValues.put(EMAIL, user.getUserEmail());
+        contentValues.put(PASSWORD, user.getUserPassword());
+        contentValues.put(KEY, user.getUserId());
+        contentValues.put(TELEPHONE, user.getTelephone());
+        contentValues.put(USER_NAME, user.getUserName());
         db.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -75,7 +79,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public String get(String column) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cr = db.rawQuery("Select " + column + TABLE_NAME + ";", null);
+        Cursor cr = db.rawQuery("Select " + column + " FROM " + TABLE_NAME + ";", null);
         String str = "";
         if (cr.moveToFirst()) {
             do {

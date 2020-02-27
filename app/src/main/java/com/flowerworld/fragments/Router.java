@@ -2,6 +2,8 @@ package com.flowerworld.fragments;
 
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -10,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.connections.DataBaseHelper;
 
 public class Router {
     private FragmentManager fragmentManager;
@@ -26,6 +29,8 @@ public class Router {
     public final static String ABOUT_ORDER_FRAGMENT_TAG = "about_orders_fragment";
     public final static String CHARTER_FRAGMENT_TAG = "charter_fragment";
     public final static String GRID_FRAGMENT_TAG = "grid_fragment";
+    public final static String LOGIN_FRAGMENT_TAG = "login_fragment";
+
 
 
 
@@ -221,5 +226,28 @@ public class Router {
                 .add(CONTAINER, gridFragment, GRID_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static void addLoginFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        System.out.println("heloo");
+        LoginFragment loginFragment = LoginFragment.newInstance();
+        manager.beginTransaction()
+                .add(R.id.activity_fragment_contaner, loginFragment, LOGIN_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void start(Context context) {
+        DataBaseHelper helper = new DataBaseHelper(context);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String count = "SELECT count(*) FROM " + DataBaseHelper.TABLE_NAME;
+        Cursor cursor = db.rawQuery(count, null);
+        cursor.moveToFirst();
+        int bool = cursor.getInt(0);
+        if (bool > 0) {
+            addMainFragment(context);
+        }
+        else addLoginFragment(context);
     }
 }

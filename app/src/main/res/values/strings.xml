@@ -21,4 +21,10 @@
     <string name="shop_adress">Адрес</string>
     <string name="delivery">Условия доставки</string>
     <string name="products">Товыры</string>
+    <string name="orders">Покупки</string>
+    <string name="active_orders">Активные</string>
+    <string name="no_active_orders">Купленные товары</string>
+    <string name="follow_products">Избранные</string>
+    <string name="rated_products">Отзывы</string>
+    <string name="exit">Выход</string>
 </resources>

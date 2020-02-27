@@ -2,8 +2,11 @@ package com.flowerworld;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.flowerworld.fragments.Router;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -11,12 +14,17 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Fresco.initialize(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        app = new Application(this,
-                getSupportFragmentManager());
+        Fresco.initialize(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Router.start(this);
     }
 
     public Application getApp() {

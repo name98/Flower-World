@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/appColorWhite">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -15,108 +19,121 @@
                 android:layout_height="300dp"
 
                 android:background="@color/colorPrimary">
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp">
-                <include
-                    layout="@layout/shop_item"/>
+
+                    <include layout="@layout/shop_item" />
                 </RelativeLayout>
+
                 <TextView
+                    android:id="@+id/person_fragment_user_name_text_view"
                     style="@style/Subtitle1"
-                    android:text="Имя Фамилия"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="200dp"
-                    android:textSize="25dp"
-                    android:id="@+id/accPageName"/>
+                    android:textSize="25sp"
+                    tools:text="Имя Фамилия" />
+
                 <TextView
+                    android:id="@+id/person_fragment_user_email_text_view"
                     style="@style/Subtitle1"
-                    android:text="Почта"
-                    android:id="@+id/accPageEmailText"
+                    android:layout_below="@id/person_fragment_user_name_text_view"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/accPageName"/>
+                    tools:text="Почта" />
 
             </RelativeLayout>
 
             <TextView
                 style="@style/Subtitle1"
-                android:text="Покупки"
-                android:layout_marginBottom="15dp"/>
+                android:layout_marginBottom="15dp"
+                android:text="@string/orders" />
+
             <Button
+                android:id="@+id/person_fragment_active_orders_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Активные"
+                android:background="@color/appColorWhite"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="20dp"
-                android:textSize="15dp"
-                android:id="@+id/personFragmentActiveOrdersBT"
-                android:background="@color/appColorWhite"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginHorizontal="5dp"
-                android:background="@color/colorPrimaryDark"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Купленные товары"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="20dp"
-                android:textSize="15dp"
-                android:id="@+id/personFragmentCompledOrdersBt"
-                android:background="@color/appColorWhite"/>
+                android:paddingStart="20dp"
+                android:text="@string/active_orders"
+                android:textSize="15sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="5dp"
-                android:background="@color/colorPrimaryDark"
-                android:layout_marginBottom="15dp"/>
-            <TextView
-                style="@style/Subtitle1"
-                android:text="Профиль"
+                android:background="@color/colorPrimaryDark" />
+
+            <Button
+                android:id="@+id/personFragmentCompledOrdersBt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/appColorWhite"
+                android:gravity="left|center_vertical"
+                android:paddingStart="20dp"
+                android:text="@string/no_active_orders"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="5dp"
                 android:layout_marginBottom="15dp"
-                android:id="@+id/gggggg"/>
+                android:background="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/gggggg"
+                style="@style/Subtitle1"
+                android:layout_marginBottom="15dp"
+                android:text="Профиль" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Избранные"
+                android:background="@color/appColorWhite"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="20dp"
-                android:textSize="15dp"
-                android:background="@color/appColorWhite"/>
+                android:paddingStart="20dp"
+                android:text="@string/follow_products"
+                android:textSize="15sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="5dp"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Отзывы"
+                android:background="@color/appColorWhite"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="20dp"
-                android:textSize="15dp"
-                android:background="@color/appColorWhite"/>
+                android:paddingStart="20dp"
+                android:text="@string/rated_products"
+                android:textSize="15sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="5dp"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Выход"
+                android:background="@color/appColorWhite"
                 android:gravity="left|center_vertical"
-                android:paddingLeft="20dp"
-                android:textSize="15dp"
-                android:background="@color/appColorWhite"/>
+                android:paddingStart="20dp"
+                android:text="@string/exit"
+                android:textSize="15sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginHorizontal="5dp"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark" />
 
         </LinearLayout>
 
