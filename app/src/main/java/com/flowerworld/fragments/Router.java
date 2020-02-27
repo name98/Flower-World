@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.view.KeyEvent;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -14,11 +16,15 @@ import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.connections.DataBaseHelper;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
+
 public class Router {
     private FragmentManager fragmentManager;
+
     public Router(final FragmentManager fragmentManager) {
-        this.fragmentManager=fragmentManager;
+        this.fragmentManager = fragmentManager;
     }
+
     private final static String MAIN_FRAGMENT_TAG = "main_fragment";
     private final static int CONTAINER = R.id.activity_fragment_contaner;
     final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
@@ -32,15 +38,13 @@ public class Router {
     public final static String LOGIN_FRAGMENT_TAG = "login_fragment";
 
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void addFragment(String tag, String data){
-        switch (tag){
+    public void addFragment(String tag, String data) {
+        switch (tag) {
             case "test":
                 TestFragment testFragment = new TestFragment();
                 fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,testFragment,tag)
+                        .add(R.id.activity_fragment_contaner, testFragment, tag)
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -49,48 +53,51 @@ public class Router {
                 ShopFragment shopFragment = new ShopFragment();
 
                 fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,shopFragment,tag)
+                        .add(R.id.activity_fragment_contaner, shopFragment, tag)
                         .addToBackStack(null)
                         .commit();
                 break;
 
             case "createCommentFragment":
-            CreateCommentFragment createCommentFragment= new CreateCommentFragment();
-            fragmentManager.beginTransaction()
-                    .add(R.id.activity_fragment_contaner,createCommentFragment,tag)
-                    .addToBackStack(null)
-                    .commit();
+                CreateCommentFragment createCommentFragment = new CreateCommentFragment();
+                fragmentManager.beginTransaction()
+                        .add(R.id.activity_fragment_contaner, createCommentFragment, tag)
+                        .addToBackStack(null)
+                        .commit();
                 break;
 
         }
     }
-    public void addFragment(String tag){
-        switch (tag){
+
+    public void addFragment(String tag) {
+        switch (tag) {
             case "mainFragment":
                 MainFragment mainFragment = new MainFragment();
                 fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,mainFragment,tag)
+                        .add(R.id.activity_fragment_contaner, mainFragment, tag)
                         .commit();
                 break;
             case "loginFragment":
-                LoginFragment loginFragment= new LoginFragment();
+                LoginFragment loginFragment = new LoginFragment();
                 fragmentManager.beginTransaction()
-                        .add(R.id.activity_fragment_contaner,loginFragment,tag)
+                        .add(R.id.activity_fragment_contaner, loginFragment, tag)
                         .commit();
                 break;
 
         }
     }
-    public static void addCharterFragment (Context context, int id){
+
+    public static void addCharterFragment(Context context, int id) {
         FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
         CharterFragment charterFragment = CharterFragment.newInstance(id);
         fragmentManager.beginTransaction()
-                .add(R.id.activity_fragment_contaner,charterFragment, CHARTER_FRAGMENT_TAG)
+                .add(R.id.activity_fragment_contaner, charterFragment, CHARTER_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }
-    public void remove(String tag){
-        if(isAdded(tag)){
+
+    public void remove(String tag) {
+        if (isAdded(tag)) {
             fragmentManager.beginTransaction()
                     .remove(fragmentManager.findFragmentByTag(tag))
                     .disallowAddToBackStack()
@@ -98,15 +105,16 @@ public class Router {
             fragmentManager.popBackStack();
         }
     }
-    private boolean isAdded(String tag){
-        if(fragmentManager.findFragmentByTag(tag)==null)
+
+    private boolean isAdded(String tag) {
+        if (fragmentManager.findFragmentByTag(tag) == null)
             return false;
         else return true;
 
     }
 
-    
-    public void reload(String tag){
+
+    public void reload(String tag) {
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
         fragmentManager.beginTransaction()
                 .detach(fragment)
@@ -114,7 +122,7 @@ public class Router {
                 .commit();
     }
 
-    public static void addMainFragment(Context context){
+    public static void addMainFragment(Context context) {
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
         MainFragment mainFragment = MainFragment.newInstance();
         manager.beginTransaction()
@@ -156,12 +164,13 @@ public class Router {
     public static void removeFragmentByTag(Context context, String tag) {
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
         Fragment fragment = manager.findFragmentByTag(tag);
-        assert fragment != null;
-        manager.beginTransaction()
-                .remove(fragment)
-                .disallowAddToBackStack()
-                .commit();
-        manager.popBackStack();
+        if (fragment != null) {
+            manager.beginTransaction()
+                    .remove(fragment)
+                    .disallowAddToBackStack()
+                    .commit();
+            manager.popBackStack();
+        }
     }
 
     public static void addCreateCommentFragment(Context context, int idProduct) {
@@ -228,10 +237,9 @@ public class Router {
                 .commit();
     }
 
-    public static void addLoginFragment(Context context) {
+    private static void addLoginFragment(Context context) {
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
-        System.out.println("heloo");
-        LoginFragment loginFragment = LoginFragment.newInstance();
+        final LoginFragment loginFragment = LoginFragment.newInstance();
         manager.beginTransaction()
                 .add(R.id.activity_fragment_contaner, loginFragment, LOGIN_FRAGMENT_TAG)
                 .addToBackStack(null)
@@ -247,7 +255,15 @@ public class Router {
         int bool = cursor.getInt(0);
         if (bool > 0) {
             addMainFragment(context);
+        } else addLoginFragment(context);
+    }
+
+    static void removeAllFragments(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        for (Fragment fragment : manager.getFragments()) {
+            manager.beginTransaction().remove(fragment).commit();
+            manager.popBackStack();
         }
-        else addLoginFragment(context);
+        start(context);
     }
 }

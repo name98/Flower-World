@@ -11,8 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.connections.DataBaseHelper;
+import com.flowerworld.database.DataBase;
 import com.flowerworld.items.UserItem;
 
 public class PersonFragment extends Fragment {
@@ -31,6 +33,7 @@ public class PersonFragment extends Fragment {
         UserItem user = getUserItem();
         setViews(user);
         setListeners();
+        setExit();
     }
 
     public static PersonFragment newInstance() {
@@ -40,10 +43,12 @@ public class PersonFragment extends Fragment {
     private UserItem getUserItem() {
         DataBaseHelper helper = new DataBaseHelper(getContext());
         UserItem userItem = new UserItem();
+        System.out.println("21111111111111111111111111111");
         userItem.setUserEmail(helper.get(DataBaseHelper.EMAIL));
         userItem.setUserId(Integer.valueOf(helper.get(DataBaseHelper.KEY)));
         userItem.setUserName(helper.get(DataBaseHelper.USER_NAME));
         userItem.setUserPassword(helper.get(DataBaseHelper.PASSWORD));
+
         return userItem;
     }
 
@@ -73,5 +78,20 @@ public class PersonFragment extends Fragment {
                 Router.addOrderFragment(view.getContext(), true);
             }
         });
+    }
+    private void setExit() {
+        Button exitButton = getView().findViewById(R.id.person_fragment_exit_button);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAndRecreate();
+            }
+        });
+    }
+
+    private void removeAndRecreate() {
+        DataBaseHelper helper = new DataBaseHelper(getContext());
+        helper.remove();
+        Router.removeAllFragments(getActivity());
     }
 }

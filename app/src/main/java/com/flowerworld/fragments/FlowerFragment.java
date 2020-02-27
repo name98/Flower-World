@@ -56,6 +56,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         Router.addProgressFragment(getContext());
         DataBaseHelper helper = new DataBaseHelper(getContext());

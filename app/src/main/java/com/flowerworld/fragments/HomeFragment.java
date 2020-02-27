@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.flowerworld.R;
 import com.flowerworld.connections.HomeConnection;
 import com.flowerworld.items.Item;
@@ -37,12 +38,14 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.home_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         bind();
     }
 
@@ -68,6 +71,7 @@ public class HomeFragment extends Fragment {
             public void handleMessage(@NonNull Message msg) {
                 ArrayList<NewsItem> news = (ArrayList<NewsItem>) msg.obj;
                 setNews(news);
+                System.out.println(Fresco.hasBeenInitialized() + " asash");
             }
         };
         handlerForShops = new Handler() {

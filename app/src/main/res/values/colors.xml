@@ -19,4 +19,5 @@
     <color name="goldForRatingBar">#FFD600</color>
     <color name="greenForMyComment">#7AFFB3</color>
     <color name="transparent">#00000000</color>
+    <color name="red">#D50000</color>
 </resources>

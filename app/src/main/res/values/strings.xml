@@ -27,4 +27,5 @@
     <string name="follow_products">Избранные</string>
     <string name="rated_products">Отзывы</string>
     <string name="exit">Выход</string>
+    <string name="error_auth">Неверный логин или пароль</string>
 </resources>

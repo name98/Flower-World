@@ -47,13 +47,11 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
         return new FlowerItemViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull final FlowerItemViewHolder holder, int position) {
         if(flowerItemArrayList != null){
             holder.bind(flowerItemArrayList.get(position));
         }
-
     }
 
     @Override
@@ -78,6 +76,7 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
 
         private void setProductImage(String url) {
             SimpleDraweeView productImage = itemView.findViewById(R.id.flowerPictureMini);
+            System.out.println(url);
             productImage.setImageURI(Uri.parse(url));
         }
 

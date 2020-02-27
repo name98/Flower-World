@@ -6,21 +6,26 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.LoginConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.UserItem;
+
+import static android.view.KeyEvent.KEYCODE_BACK;
 
 public class LoginFragment extends Fragment implements FragmentSetDataInterface {
     private Handler handler;
@@ -104,17 +109,26 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
     }
 
     private void setErrorDialog() {
+        TextView errorAuthTextView = getView().findViewById(R.id.login_fragment_error_auth_text_view);
+        errorAuthTextView.setVisibility(View.VISIBLE);
 
     }
 
     private void setDatabase(UserItem userItem) {
         DataBaseHelper helper = new DataBaseHelper(getContext());
         helper.add(userItem);
-        Router.addMainFragment(getContext());
-        Router.removeFragmentByTag(getContext(), Router.LOGIN_FRAGMENT_TAG);
+        getActivity().recreate();
+        Router.removeFragmentByTag(getActivity(), Router.LOGIN_FRAGMENT_TAG);
     }
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
+    }
+
+    @Override
+    public void onDestroy() {
+        ((MainActivity) getActivity()).backPressed();
+        super.onDestroy();
+
     }
 }

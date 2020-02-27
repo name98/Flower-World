@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -69,4 +70,10 @@ public class MainFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onDestroy() {
+        ((MainActivity) getActivity()).backPressedFromMain();
+        super.onDestroy();
+
+    }
 }

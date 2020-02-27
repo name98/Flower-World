@@ -89,7 +89,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return str;
     }
 
+    public void remove() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME + " ;");
+    }
 
+    public boolean isEmpty() {
+        SQLiteDatabase db = getWritableDatabase();
+        String count = "SELECT count(*) FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(count, null);
+        cursor.moveToFirst();
+        int bool = cursor.getInt(0);
+        return bool < 1;
+    }
 
 
 }

@@ -122,6 +122,7 @@
 
             <Button
                 android:layout_width="match_parent"
+                android:id="@+id/person_fragment_exit_button"
                 android:layout_height="wrap_content"
                 android:background="@color/appColorWhite"
                 android:gravity="left|center_vertical"

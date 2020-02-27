@@ -53,7 +53,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsIt
     class NewsItemHolder extends RecyclerView.ViewHolder{
         TextView newsTitleText;
         SimpleDraweeView newImage;
-        public NewsItemHolder(@NonNull View itemView) {
+        NewsItemHolder(@NonNull View itemView) {
             super(itemView);
             newsTitleText=itemView.findViewById(R.id.newsTitleText);
             newImage=itemView.findViewById(R.id.newsImage);
