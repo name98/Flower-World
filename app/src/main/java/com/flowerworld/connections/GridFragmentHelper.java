@@ -63,8 +63,4 @@ public class GridFragmentHelper {
             return null;
         }
     }
-
-    public static ArrayList<FlowerItem> getITEMS() {
-        return ITEMS;
-    }
 }

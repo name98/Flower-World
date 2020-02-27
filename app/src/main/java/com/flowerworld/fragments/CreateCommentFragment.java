@@ -21,7 +21,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.flowerworld.R;
@@ -84,8 +86,10 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
             setViewsChangeMode(comment);
         else
             setViewsCreateMode();
-        Router.removeProgressFragment(getContext());
+        setToolbar(comment.isMy());
         setRatingBarListener();
+        Router.removeProgressFragment(getContext());
+
     }
 
     private void setViewsCreateMode() {
@@ -240,5 +244,27 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         handlerForSendComment.sendMessage(msg);
     }
 
+    private void setToolbar(boolean isChangeMode) {
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+        assert parentActivity != null;
+        parentActivity.setSupportActionBar(toolbar);
+        ActionBar actionBar = parentActivity.getSupportActionBar();
+        assert actionBar != null;
+        if (isChangeMode)
+            actionBar.setTitle("Изменить отзыв");
+        else
+            actionBar.setTitle("Написать отзыв");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText commentEditText = getView().findViewById(R.id.createCommentEnterText);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(commentEditText.getWindowToken(), 0);
+                Router.removeFragmentByTag(getContext(), Router.CREATE_COMMENT_FRAGMENT_TAG);
+            }
+        });
+    }
 
 }

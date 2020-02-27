@@ -346,7 +346,7 @@ public class DataBase {
             aboutOrder.setReceiver(object.getString("Получатель"));
             aboutOrder.setState(object.getString("статус"));
             aboutOrder.setProduct(getProductById(aboutOrder.getProductId()));
-
+            aboutOrder.setOrderId(idOrder);
         } catch (JSONException e) {
             e.printStackTrace();
         }

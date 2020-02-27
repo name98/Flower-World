@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appColorWhite">
 
-    <LinearLayout
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/appColorWhite"
-        android:orientation="vertical">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appColorWhite"
+            android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -54,25 +62,24 @@
             android:text="@string/pay" />
 
         <TextView
+            android:id="@+id/aboutOrderFragmentCostText"
             style="@style/Body1"
             android:layout_margin="10dp"
-            tools:text="2000 руб."
-            android:id="@+id/aboutOrderFragmentCostText"/>
+            tools:text="2000 руб." />
 
+        <Button
+            android:id="@+id/aboutOrderFragmentOkButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_styles"
+            android:fontFamily="@font/rubik"
+            android:text="@string/ok"
+            android:textColor="#fff"
+            android:textSize="20sp" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/aboutOrderFragmentOkButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_styles"
-        android:fontFamily="@font/rubik"
-        android:text="@string/ok"
-        android:textColor="#fff"
-        android:textSize="20sp"/>
+</androidx.core.widget.NestedScrollView>
 
 
-</RelativeLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>

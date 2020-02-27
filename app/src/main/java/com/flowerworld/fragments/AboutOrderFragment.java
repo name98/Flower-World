@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -25,6 +28,8 @@ import com.flowerworld.connections.AboutOrderConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.AboutOrderItem;
 import com.flowerworld.items.FlowerItem;
+
+import java.util.Objects;
 
 
 public class AboutOrderFragment extends Fragment implements FragmentSetDataInterface {
@@ -117,13 +122,31 @@ public class AboutOrderFragment extends Fragment implements FragmentSetDataInter
 
     private void bind(AboutOrderItem order) {
         setTextViews(order);
-        Router.removeFragmentByTag(getContext(), Router.PROGRESS_FRAGMENT_TAG);
         setProductViews(order.getProduct());
         setListeners(Integer.valueOf(order.getProductId()));
+        setToolbar(order.getOrderId());
+        Router.removeFragmentByTag(getContext(), Router.PROGRESS_FRAGMENT_TAG);
     }
 
     @Override
     public void sendMessage(Message msg) {
         handler.sendMessage(msg);
+    }
+
+    private void setToolbar(String title) {
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+        assert parentActivity != null;
+        parentActivity.setSupportActionBar(toolbar);
+        ActionBar actionBar = parentActivity.getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle("Заказ №" + title);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Router.removeFragmentByTag(getContext(), Router.ABOUT_ORDER_FRAGMENT_TAG);
+            }
+        });
     }
 }

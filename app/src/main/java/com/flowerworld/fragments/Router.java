@@ -19,11 +19,11 @@ public class Router {
     private final static String MAIN_FRAGMENT_TAG = "main_fragment";
     private final static int CONTAINER = R.id.activity_fragment_contaner;
     final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
-    private final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
+    public final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
     public final static String SHOP_FRAGMENT_TAG = "shop_fragment";
     public final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
-    private final static String ORDERS_FRAGMENT_TAG = "orders_fragment";
-    final static String ABOUT_ORDER_FRAGMENT_TAG = "about_orders_fragment";
+    public final static String ORDERS_FRAGMENT_TAG = "orders_fragment";
+    public final static String ABOUT_ORDER_FRAGMENT_TAG = "about_orders_fragment";
     public final static String CHARTER_FRAGMENT_TAG = "charter_fragment";
     public final static String GRID_FRAGMENT_TAG = "grid_fragment";
 

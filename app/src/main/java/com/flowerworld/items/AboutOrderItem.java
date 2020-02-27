@@ -7,6 +7,15 @@ public class AboutOrderItem {
     private String state;
     private String cost;
     private String productId;
+    private String orderId;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public FlowerItem getProduct() {
         return product;
