@@ -28,4 +28,5 @@
     <string name="rated_products">Отзывы</string>
     <string name="exit">Выход</string>
     <string name="error_auth">Неверный логин или пароль</string>
+    <string name="registration"><u>Регистрация</u></string>
 </resources>

@@ -14,7 +14,9 @@
         android:animateLayoutChanges="true">
 
         <TextView
-            style="@style/Headline1"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:text="Авторизация" />
@@ -55,6 +57,16 @@
             android:layout_marginHorizontal="90dp"
             android:layout_marginVertical="20dp"
             android:background="@drawable/button_styles"
-            android:text="войти" />
+            android:text="войти"
+            android:textColor="@color/appColorWhite"/>
+        <TextView
+
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/grey"
+            android:gravity=""
+            android:text="@string/registration" />
     </LinearLayout>
 </RelativeLayout>
