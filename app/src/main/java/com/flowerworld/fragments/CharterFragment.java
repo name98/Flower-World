@@ -23,6 +23,9 @@ import android.widget.TimePicker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -55,6 +58,7 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Router.addProgressFragment(getContext());
+        setToolbar();
         setHandlerForGetting();
         setHandlerForSending();
         assert getArguments() != null;
@@ -210,5 +214,22 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
                 else Router.removeFragmentByTag(getContext(), Router.CHARTER_FRAGMENT_TAG);
             }
         };
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+        assert parentActivity != null;
+        parentActivity.setSupportActionBar(toolbar);
+        ActionBar actionBar = parentActivity.getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle("Новый заказ");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Router.removeFragmentByTag(getContext(), Router.CHARTER_FRAGMENT_TAG);
+            }
+        });
     }
 }
