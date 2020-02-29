@@ -1,20 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/appBarLayout"
+    android:id="@+id/search_fragment_appbar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/appColorWhite">
 
     <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
+        android:id="@+id/search_fragment_toolbar"
         style="@style/ThemeOverlay.MaterialComponents.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?actionBarSize"
         android:elevation="2dp"
+        android:minHeight="?actionBarSize"
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_scrollFlags="scroll|enterAlways">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:id="@+id/search_fragment_toolbar_text_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/search_pane"
+                android:hint="@string/enterText"
+                android:maxLines="1"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="7dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:scrollHorizontally="true" />
+
+            <Button
+                android:id="@+id/search_toolbar_cancel_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/design_default_color_primary" />
+        </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>

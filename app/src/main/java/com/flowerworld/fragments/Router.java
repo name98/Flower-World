@@ -36,6 +36,7 @@ public class Router {
     public final static String CHARTER_FRAGMENT_TAG = "charter_fragment";
     public final static String GRID_FRAGMENT_TAG = "grid_fragment";
     public final static String LOGIN_FRAGMENT_TAG = "login_fragment";
+    public final static String SEARCH_FRAGMENT_EDIT_MODE = "search_fragment_edit_mode";
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -265,5 +266,14 @@ public class Router {
             manager.popBackStack();
         }
         start(context);
+    }
+
+    static void addSearchFragmentEditMode(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        SearchFragmentEditMode searchFragmentEditMode = SearchFragmentEditMode.newInstance();
+        manager.beginTransaction()
+                .add(R.id.activity_fragment_contaner, searchFragmentEditMode, SEARCH_FRAGMENT_EDIT_MODE)
+                .addToBackStack(null)
+                .commit();
     }
 }
