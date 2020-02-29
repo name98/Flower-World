@@ -29,4 +29,6 @@
     <string name="exit">Выход</string>
     <string name="error_auth">Неверный логин или пароль</string>
     <string name="registration"><u>Регистрация</u></string>
+    <string name="enter_text">Введите текст</string>
+    <string name="search">Поиск</string>
 </resources>
