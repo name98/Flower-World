@@ -5,22 +5,19 @@ import android.os.Message;
 import com.flowerworld.database.DataBase;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 
-public class SearchEditModeConnection {
+public class ListForSearchConnection {
     private FragmentSetDataInterface parent;
-    private Thread thread;
-
 
     public void setParent(FragmentSetDataInterface parent) {
         this.parent = parent;
     }
 
     public void bind(String text) {
-        if (!text.equals(""))
-            createThread(text);
+        createThread(text);
     }
 
     private void createThread(final String text) {
-        thread = new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = Message.obtain();
@@ -30,13 +27,5 @@ public class SearchEditModeConnection {
         });
         System.out.println("starting");
         thread.start();
-    }
-
-    public void stopThread() {
-        System.out.println("stopping");
-        if (thread != null && thread.isInterrupted()) {
-            System.out.println("stopped");
-            thread.interrupt();
-        }
     }
 }

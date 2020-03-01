@@ -153,4 +153,11 @@ public class Scripts {
     public static String getLikeTagByName(String tagName) {
         return "SELECT DISTINCT LCASE(t.тэг) as тэг, t.id FROM тэги as t where t.тэг LIKE '%" + tagName + "%' GROUP by (t.тэг) LIMIT 4;";
     }
+
+    public static String getProductsItemByTag(String tag) {
+        return "SELECT DISTINCT a2.один, a2.два, a2.три, a2.четыре, a2.пять, t.картинки, t.название, t.цена, t.ID FROM товары as t LEFT JOIN\n" +
+                "              `рейтинг` as `a2` ON (`a2`.`id` = `t`.`рейтинг`)\n" +
+                "               where t.ID in\n" +
+                "               (SELECT товар from тэги as a WHERE a.тэг = '" + tag + "');";
+    }
 }

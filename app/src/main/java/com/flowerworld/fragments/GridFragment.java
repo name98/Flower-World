@@ -73,7 +73,7 @@ public class GridFragment extends Fragment {
     }
 
     private void setProductItems(ArrayList<FlowerItem> products) {
-        RecyclerView gridItemsRecycleView = Objects.requireNonNull(getView()).findViewById(R.id.gridItemsRecycleView);
+        RecyclerView gridItemsRecycleView = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_product_list_recycle_view);
         GridLayoutManager gridLayout = (new GridLayoutManager(getContext(), 2));
         gridItemsRecycleView.setLayoutManager(gridLayout);
         ProductsGridAdapter adapter = new ProductsGridAdapter();

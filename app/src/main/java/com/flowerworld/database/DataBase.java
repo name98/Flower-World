@@ -450,4 +450,33 @@ public class DataBase {
 
         return temp;
     }
+
+    public static ArrayList<FlowerItem> getProductsByTag(String text) {
+        ArrayList<FlowerItem> temp = new ArrayList<>();
+        JSONArray array = getJSONArrayByScript(Scripts.getProductsItemByTag(text));
+
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(0);
+                FlowerItem product = new FlowerItem();
+                product.setName(object.getString("название"));
+                product.setImageUrl(Methods.strParser(object.getString("картинки"), " ").get(0));
+                product.setPrice(object.getString("цена"));
+                product.setId(object.getInt("ID"));
+                RatingItem ratingItem = new RatingItem();
+                ratingItem.setOne(object.getInt("один"));
+                ratingItem.setTwo(object.getInt("два"));
+                ratingItem.setTree(object.getInt("три"));
+                ratingItem.setFour(object.getInt("четыре"));
+                ratingItem.setFive(object.getInt("пять"));
+                product.setRating(String.valueOf(ratingItem.getGeneral()));
+                temp.add(product);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return temp;
+
+    }
 }

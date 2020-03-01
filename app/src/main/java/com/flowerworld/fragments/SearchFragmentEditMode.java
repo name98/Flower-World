@@ -1,10 +1,7 @@
 package com.flowerworld.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,51 +10,48 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.flowerworld.R;
-import com.flowerworld.connections.SearchEditModeConnection;
-import com.flowerworld.interfaces.FragmentSetDataInterface;
-import com.flowerworld.items.SearchItem;
-import com.flowerworld.items.adapters.SearchItemAdapter;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class SearchFragmentEditMode extends Fragment implements FragmentSetDataInterface {
-    private Handler handler;
-    private SearchEditModeConnection connection;
+public class SearchFragmentEditMode extends Fragment {
+    public static final String FLOWER_FRAGMENT = "flower_fragment";
+    public static final String GRID_FRAGMENT = "grid_fragment";
+    public static final String LIST_FRAGMENT = "list_fragment";
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.search_fragment_enter_text_mode,container,false);
+        return inflater.inflate(R.layout.search_fragment_enter_text_mode, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        setProgressBar(false);
         setToolBar();
-        setHandler();
-        setFocus();
+        setFocus(true);
         setListeners();
     }
 
-    private void setFocus() {
-        EditText yourEditText= Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_toolbar_text_edit_text);
-        yourEditText.requestFocus();
+    private void setFocus(boolean hasFocus) {
+        EditText searchPaneEditText = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_toolbar_text_edit_text);
         InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
         assert imm != null;
-        imm.showSoftInput(yourEditText, InputMethodManager.SHOW_IMPLICIT);
+        if (hasFocus) {
+            searchPaneEditText.requestFocus();
+            imm.showSoftInput(searchPaneEditText, InputMethodManager.SHOW_IMPLICIT);
+        }
+        else {
+            searchPaneEditText.clearFocus();
+            imm.hideSoftInputFromWindow(searchPaneEditText.getWindowToken(), 0);
+        }
     }
 
     public static SearchFragmentEditMode newInstance() {
@@ -74,7 +68,7 @@ public class SearchFragmentEditMode extends Fragment implements FragmentSetDataI
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText searchText = getView().findViewById(R.id.search_fragment_toolbar_text_edit_text);
+                EditText searchText = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_toolbar_text_edit_text);
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
                 Router.removeFragmentByTag(getContext(), Router.SEARCH_FRAGMENT_EDIT_MODE);
@@ -82,39 +76,6 @@ public class SearchFragmentEditMode extends Fragment implements FragmentSetDataI
         };
         toolbar.setNavigationOnClickListener(listener);
         cancelButton.setOnClickListener(listener);
-    }
-
-    @SuppressLint("HandlerLeak")
-    private void setHandler() {
-        connection = new SearchEditModeConnection();
-        connection.setParent(this);
-        handler = new Handler() {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                ArrayList<SearchItem> searchItems = (ArrayList) msg.obj;
-                bind(searchItems);
-            }
-        };
-    }
-
-    private void bind(ArrayList<SearchItem> searchItems) {
-        System.out.println("started " + searchItems.size());
-        setList(searchItems);
-    }
-
-    private void setList(ArrayList<SearchItem> searchItems) {
-        View view = getView();
-        assert view != null;
-        RecyclerView searchesRecycleView = view.findViewById(R.id.search_fragment_edit_mode_recycle_view);
-        SearchItemAdapter adapter = new SearchItemAdapter();
-        adapter.setSearches(searchItems);
-        LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-        DividerItemDecoration itemDecorator = new DividerItemDecoration(Objects.requireNonNull(getContext()), DividerItemDecoration.VERTICAL);
-        itemDecorator.setDrawable(Objects.requireNonNull(Objects.requireNonNull(getActivity()).getDrawable(R.drawable.divider)));
-        searchesRecycleView.addItemDecoration(itemDecorator);
-        searchesRecycleView.setAdapter(adapter);
-        searchesRecycleView.setLayoutManager(manager);
-        setProgressBar(false);
     }
 
     private void setListeners() {
@@ -127,7 +88,7 @@ public class SearchFragmentEditMode extends Fragment implements FragmentSetDataI
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                createConnection(searchText.getText().toString());
+                switchChild(LIST_FRAGMENT, searchText.getText().toString());
             }
 
             @Override
@@ -138,35 +99,31 @@ public class SearchFragmentEditMode extends Fragment implements FragmentSetDataI
         searchText.addTextChangedListener(watcher);
     }
 
-
-    private void createConnection(String text) {
-        if (text.length() >= 3) {
-            setProgressBar(true);
-            connection.stopThread();
-            connection.bind(text);
-
-        }
-        else {
-            RecyclerView searchesRecycleView = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_edit_mode_recycle_view);
-            setProgressBar(false);
-            SearchItemAdapter adapter = new SearchItemAdapter();
-            adapter.setSearches(new ArrayList<SearchItem>());
-            searchesRecycleView.setAdapter(adapter);
+    private void switchChild(String type, String text) {
+        if (text.length() < 3 && !type.equals(FLOWER_FRAGMENT))
+            return;
+        if (type.equals(LIST_FRAGMENT)) {
+            SearchFragmentRouter.reloadListFragment(this, text);
+            SearchFragmentRouter.showFragmentByTag(this, SearchFragmentRouter.LIST_FRAGMENT_TAG);
+            SearchFragmentRouter.hideFragmentByTag(this, SearchFragmentRouter.GRID_FRAGMENT_SEARCH_TAG);
         }
 
+        if (type.equals(GRID_FRAGMENT)) {
+            SearchFragmentRouter.reloadGridFragment(this, text);
+            SearchFragmentRouter.hideFragmentByTag(this, SearchFragmentRouter.LIST_FRAGMENT_TAG);
+            SearchFragmentRouter.showFragmentByTag(this, SearchFragmentRouter.GRID_FRAGMENT_SEARCH_TAG);
+        }
+
+        if (type.equals(FLOWER_FRAGMENT)) {
+            Router.addFlowerFragment(getContext(), Integer.valueOf(text));
+
+        }
     }
 
-    @Override
-    public void sendMessage(Message msg) {
-        handler.sendMessage(msg);
+    void sendMessageToParent (String type, String text) {
+        switchChild(type, text);
+        setFocus(false);
     }
 
-    private void setProgressBar(boolean hasVisible) {
-        ProgressBar progressBar = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_edit_mode_progress_bar);
-        if (hasVisible)
-            progressBar.setVisibility(View.VISIBLE);
-        else
-            progressBar.setVisibility(View.GONE);
 
-    }
 }

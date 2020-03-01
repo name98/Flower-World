@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flowerworld.R;
+import com.flowerworld.fragments.Router;
 
 import java.util.ArrayList;
 
@@ -51,13 +52,18 @@ public class SearchesListAdapter extends RecyclerView.Adapter<SearchesListAdapte
             inquiryTextView.setText(text);
         }
 
-        private void setListener() {
-
+        private void setListener(final String tag) {
+            inquiryTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Router.addGridSearchesFragment(itemView.getContext(), tag);
+                }
+            });
         }
 
         void bind(String text) {
             setInquiryText(text);
-            setListener();
+            setListener(text);
         }
     }
 }
