@@ -25,6 +25,7 @@ import com.flowerworld.connections.GridConnection;
 
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.adapters.ProductsGridAdapter;
+import com.google.android.material.appbar.AppBarLayout;
 
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class GridFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString(KEY_FOR_IDS, ids);
         args.putString(KEY_FOR_TITLE, title);
+        System.out.println(title);
         GridFragment fragment = new GridFragment();
         fragment.setArguments(args);
         return fragment;

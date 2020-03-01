@@ -270,20 +270,11 @@ public class Router {
         start(context);
     }
 
-    static void addSearchFragmentEditMode(Context context) {
+    public static void addSearchFragmentEditMode(Context context, String tag) {
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
-        SearchFragmentEditMode searchFragmentEditMode = SearchFragmentEditMode.newInstance();
+        SearchFragmentEditMode searchFragmentEditMode = SearchFragmentEditMode.newInstance(tag);
         manager.beginTransaction()
                 .add(R.id.activity_fragment_contaner, searchFragmentEditMode, SEARCH_FRAGMENT_EDIT_MODE)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    public static void addGridSearchesFragment(Context context, String tag) {
-        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
-        GridSearchesFragment gridSearchesFragment = GridSearchesFragment.newInstance(tag);
-        manager.beginTransaction()
-                .add(R.id.activity_fragment_contaner, gridSearchesFragment, GRID_SEARCHES_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit();
     }

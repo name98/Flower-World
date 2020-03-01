@@ -84,9 +84,9 @@ public class SearchItemAdapter extends RecyclerView.Adapter<SearchItemAdapter.Se
                 @Override
                 public void onClick(View v) {
                     if (item.getType().equals("tag"))
-                        parentFragment.sendParentMessage(SearchFragmentEditMode.GRID_FRAGMENT, item.getText());
+                        parentFragment.sendParentMessage(SearchFragmentEditMode.GRID_FRAGMENT, item.getText(), item.getText());
                     else
-                        parentFragment.sendParentMessage(SearchFragmentEditMode.FLOWER_FRAGMENT, String.valueOf(item.getId()));
+                        parentFragment.sendParentMessage(SearchFragmentEditMode.FLOWER_FRAGMENT, String.valueOf(item.getId()), item.getText());
                     hideKeyboard();
                 }
             });

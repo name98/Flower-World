@@ -1,5 +1,5 @@
 package com.flowerworld.interfaces;
 
 public interface ParentFragment {
-    void sendParentMessage(String type, String text);
+    void sendParentMessage(String type, String text, String value);
 }

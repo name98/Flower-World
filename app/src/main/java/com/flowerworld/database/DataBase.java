@@ -457,7 +457,7 @@ public class DataBase {
 
         try {
             for (int i = 0; i < array.length(); i++) {
-                JSONObject object = array.getJSONObject(0);
+                JSONObject object = array.getJSONObject(i);
                 FlowerItem product = new FlowerItem();
                 product.setName(object.getString("название"));
                 product.setImageUrl(Methods.strParser(object.getString("картинки"), " ").get(0));

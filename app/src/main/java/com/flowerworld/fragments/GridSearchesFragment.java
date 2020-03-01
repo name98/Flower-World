@@ -23,7 +23,7 @@ import com.flowerworld.items.adapters.ProductsGridAdapter;
 import java.util.ArrayList;
 public class GridSearchesFragment extends Fragment implements FragmentSetDataInterface {
     private Handler handler;
-    public static final String TAG_KEY = "tag_key";
+    static final String TAG_KEY = "tag_key";
 
     @Nullable
     @Override
@@ -33,6 +33,7 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        setProgress(true);
         setHandler();
         assert getArguments() != null;
         String tag = getArguments().getString(TAG_KEY);
@@ -80,6 +81,18 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
         ProductsGridAdapter adapter = new ProductsGridAdapter();
         adapter.setItems(products);
         gridItemsRecycleView.setAdapter(adapter);
+        setProgress(false);
     }
+
+    private void setProgress(boolean hasToolbar) {
+        Fragment parent = getParentFragment();
+        if (hasToolbar) {
+            Router.addProgressFragment(parent.getContext());
+        }
+        else
+            Router.removeFragmentByTag(parent.getContext(), Router.PROGRESS_FRAGMENT_TAG);
+    }
+
+
 
 }

@@ -92,7 +92,7 @@ public class ListFragmentForSearch extends Fragment implements FragmentSetDataIn
         return fragment;
     }
 
-    public void sendParentMessage(String type, String text) {
-        ((SearchFragmentEditMode) getParentFragment()).sendMessageToParent(type, text);
+    public void sendParentMessage(String type, String text, String value) {
+        ((SearchFragmentEditMode) getParentFragment()).sendMessageToParent(type, text, value);
     }
 }

@@ -8,10 +8,11 @@
     <androidx.appcompat.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/search_fragment_toolbar"
         style="@style/ThemeOverlay.MaterialComponents.Light"
+        android:background="#fafafb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:minHeight="?actionBarSize"
+        android:maxHeight="?actionBarSize"
         app:contentInsetStart="0dp"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_scrollFlags="scroll|enterAlways">
@@ -23,6 +24,7 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
+
             <EditText
                 android:id="@+id/search_fragment_toolbar_text_edit_text"
                 android:layout_width="match_parent"
@@ -30,15 +32,16 @@
                 android:layout_marginVertical="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/search_pane"
-                android:hint="@string/enterText"
+                android:hint="@string/app_name"
                 android:maxLines="1"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="7dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:scrollHorizontally="true"
-                android:singleLine="true"/>
-
+                android:drawableLeft="@drawable/ic_search_grey"
+                android:inputType="textVisiblePassword" />
             <Button
                 android:id="@+id/search_toolbar_cancel_button"
                 style="@style/Widget.AppCompat.Button.Borderless"

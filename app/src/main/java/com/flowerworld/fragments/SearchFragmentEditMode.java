@@ -24,7 +24,8 @@ import java.util.Objects;
 public class SearchFragmentEditMode extends Fragment {
     public static final String FLOWER_FRAGMENT = "flower_fragment";
     public static final String GRID_FRAGMENT = "grid_fragment";
-    public static final String LIST_FRAGMENT = "list_fragment";
+    private static final String LIST_FRAGMENT = "list_fragment";
+    private static final String TAG_KEY = "tag";
 
 
     @Nullable
@@ -35,9 +36,17 @@ public class SearchFragmentEditMode extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        String tag = getArguments().getString(TAG_KEY);
         setToolBar();
-        setFocus(true);
         setListeners();
+        if (!tag.equals("")) {
+            EditText searchPaneEditText = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_toolbar_text_edit_text);
+            searchPaneEditText.setText(tag);
+            setFocus(false);
+            switchChild(GRID_FRAGMENT, tag);
+        }
+        else
+            setFocus(true);
     }
 
     private void setFocus(boolean hasFocus) {
@@ -54,8 +63,13 @@ public class SearchFragmentEditMode extends Fragment {
         }
     }
 
-    public static SearchFragmentEditMode newInstance() {
-        return new SearchFragmentEditMode();
+    public static SearchFragmentEditMode newInstance(String text) {
+
+        Bundle args = new Bundle();
+        args.putString(TAG_KEY, text);
+        SearchFragmentEditMode fragment = new SearchFragmentEditMode();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private void setToolBar() {
@@ -69,7 +83,8 @@ public class SearchFragmentEditMode extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText searchText = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_toolbar_text_edit_text);
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) Objects.requireNonNull(getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(searchText.getWindowToken(), 0);
                 Router.removeFragmentByTag(getContext(), Router.SEARCH_FRAGMENT_EDIT_MODE);
             }
@@ -79,7 +94,7 @@ public class SearchFragmentEditMode extends Fragment {
     }
 
     private void setListeners() {
-        final EditText searchText = getView().findViewById(R.id.search_fragment_toolbar_text_edit_text);
+        final EditText searchText = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_toolbar_text_edit_text);
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -100,8 +115,12 @@ public class SearchFragmentEditMode extends Fragment {
     }
 
     private void switchChild(String type, String text) {
-        if (text.length() < 3 && !type.equals(FLOWER_FRAGMENT))
+        if (text.length() < 3 && !type.equals(FLOWER_FRAGMENT)){
+            SearchFragmentRouter.hideFragmentByTag(this, SearchFragmentRouter.GRID_FRAGMENT_SEARCH_TAG);
+            SearchFragmentRouter.hideFragmentByTag(this, SearchFragmentRouter.LIST_FRAGMENT_TAG);
             return;
+        }
+
         if (type.equals(LIST_FRAGMENT)) {
             SearchFragmentRouter.reloadListFragment(this, text);
             SearchFragmentRouter.showFragmentByTag(this, SearchFragmentRouter.LIST_FRAGMENT_TAG);
@@ -120,7 +139,9 @@ public class SearchFragmentEditMode extends Fragment {
         }
     }
 
-    void sendMessageToParent (String type, String text) {
+    void sendMessageToParent (String type, String text, String value) {
+        EditText searchText = Objects.requireNonNull(getView()).findViewById(R.id.search_fragment_toolbar_text_edit_text);
+        searchText.setText(value);
         switchChild(type, text);
         setFocus(false);
     }

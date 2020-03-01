@@ -56,7 +56,7 @@ public class SearchesListAdapter extends RecyclerView.Adapter<SearchesListAdapte
             inquiryTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Router.addGridSearchesFragment(itemView.getContext(), tag);
+                    Router.addSearchFragmentEditMode(itemView.getContext(), tag);
                 }
             });
         }

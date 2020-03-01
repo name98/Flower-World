@@ -1,5 +1,6 @@
 package com.flowerworld.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.flowerworld.MainActivity;
@@ -43,7 +45,6 @@ public class PersonFragment extends Fragment {
     private UserItem getUserItem() {
         DataBaseHelper helper = new DataBaseHelper(getContext());
         UserItem userItem = new UserItem();
-        System.out.println("21111111111111111111111111111");
         userItem.setUserEmail(helper.get(DataBaseHelper.EMAIL));
         userItem.setUserId(Integer.valueOf(helper.get(DataBaseHelper.KEY)));
         userItem.setUserName(helper.get(DataBaseHelper.USER_NAME));
@@ -81,10 +82,26 @@ public class PersonFragment extends Fragment {
     }
     private void setExit() {
         Button exitButton = getView().findViewById(R.id.person_fragment_exit_button);
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("Подтвердите действие");
+        alertDialog.setMessage("Выход из Flower World?");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Да",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        removeAndRecreate();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Отмена",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeAndRecreate();
+                alertDialog.show();
             }
         });
     }

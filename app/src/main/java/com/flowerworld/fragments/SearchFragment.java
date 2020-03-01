@@ -51,7 +51,7 @@ public class SearchFragment extends Fragment implements FragmentSetDataInterface
         textEditFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Router.addSearchFragmentEditMode(getContext());
+                Router.addSearchFragmentEditMode(getContext(), "");
             }
         });
     }
