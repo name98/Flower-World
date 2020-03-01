@@ -140,4 +140,17 @@ public class Scripts {
                 "WHERE `рейтинг`.`ID` = " + ratingId + ";";
     }
 
+    public static String getTags() {
+        return "SELECT тэг FROM `тэги` GROUP by тэг;";
+    }
+
+    public static String getLikeProductsByName(String productName) {
+        return "SELECT DISTINCT LCASE(t.название) as название, t.ID FROM товары as t" +
+                " where название LIKE '%" + productName + "%' or ID in " +
+                "(SELECT товар from тэги as a WHERE a.тэг LIKE '%" + productName + "%') LIMIT 10;";
+    }
+
+    public static String getLikeTagByName(String tagName) {
+        return "SELECT DISTINCT LCASE(t.тэг) as тэг, t.id FROM тэги as t where t.тэг LIKE '%" + tagName + "%' GROUP by (t.тэг) LIMIT 4;";
+    }
 }

@@ -15,6 +15,7 @@ import com.flowerworld.items.Item;
 import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.OrderItem;
 import com.flowerworld.items.RatingItem;
+import com.flowerworld.items.SearchItem;
 import com.flowerworld.items.ShopItem;
 import com.flowerworld.items.UserItem;
 import com.flowerworld.links.UrlLinks;
@@ -52,7 +53,7 @@ public class DataBase {
             sb.append(line);
             return new JSONArray(sb.toString());
         } catch (Exception e) {
-            System.out.println("ERROR");
+            System.out.println(e.toString());
             return null;
         }
     }
@@ -95,7 +96,7 @@ public class DataBase {
             ratingItem.setTree(object.getInt("три"));
             ratingItem.setFour(object.getInt("четыре"));
             ratingItem.setFive(object.getInt("пять"));
-            System.out.println(ratingItem.getGeneralFormated()+"as");
+            System.out.println(ratingItem.getGeneralFormated() + "as");
             product.setRating(String.valueOf(ratingItem.getGeneral()));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -234,7 +235,7 @@ public class DataBase {
                     jsonObject.getString("за_МКАДом");
             String annotantion = jsonObject.getString("описание");
             JSONArray array = getJSONArrayByScript(Scripts.flowerItemByShop(name));
-            System.out.println(array.length()+"length");
+            System.out.println(array.length() + "length");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject temp = array.getJSONObject(i);
                 String nameProduct = temp.getString("название");
@@ -383,11 +384,10 @@ public class DataBase {
     }
 
     public static UserItem getUserByEmailAndPassword(String email, String password) {
-        JSONArray array = getJSONArrayByScript(Scripts.auth(email,password));
+        JSONArray array = getJSONArrayByScript(Scripts.auth(email, password));
         if (array == null) {
             return null;
-        }
-        else {
+        } else {
             UserItem user = new UserItem();
             try {
                 JSONObject object = array.getJSONObject(0);
@@ -402,5 +402,52 @@ public class DataBase {
                 return null;
             }
         }
+    }
+
+    public static ArrayList<String> getPopularSearches() {
+        JSONArray array = getJSONArrayByScript(Scripts.getTags());
+        ArrayList<String> temp = new ArrayList<>();
+
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                temp.add(object.getString("тэг"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    public static ArrayList<SearchItem> getSearches(String text) {
+        ArrayList<SearchItem> temp = new ArrayList<>();
+        JSONArray array1 = getJSONArrayByScript(Scripts.getLikeTagByName(text));
+        try {
+            for(int i =0 ;i < array1.length();i++) {
+                JSONObject object = array1.getJSONObject(i);
+                SearchItem item = new SearchItem();
+                item.setId(object.getInt("id"));
+                item.setType("tag");
+                item.setText(object.getString("тэг"));
+                temp.add(item);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JSONArray array = getJSONArrayByScript(Scripts.getLikeProductsByName(text));
+        try {
+            for(int i =0 ;i < array.length();i++) {
+                JSONObject object = array.getJSONObject(i);
+                SearchItem item = new SearchItem();
+                item.setId(object.getInt("ID"));
+                item.setType("product");
+                item.setText(object.getString("название"));
+                temp.add(item);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return temp;
     }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginHorizontal="10dp">
+    <ImageView
+        android:layout_width="25sp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_search_black_24dp"
+        android:layout_margin="5dp"
+        android:id="@+id/search_item_icon_type_image_view"/>
+    <TextView
+        android:id="@+id/search_item_item_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="1"
+        android:orientation="vertical"
+        android:paddingVertical="5dp"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        tools:text="Розы" />
+
+</LinearLayout>

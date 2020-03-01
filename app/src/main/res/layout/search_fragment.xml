@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/search_fragment_popular_searches_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -43,7 +43,7 @@
         android:fontFamily="@font/roboto_bold"
         android:text="Чаще всего ищут:"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/search_text_pane_frame_layout"
@@ -52,7 +52,7 @@
     <FrameLayout
         android:id="@+id/search_text_pane_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="40dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="15dp"
@@ -82,7 +82,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:text="Искать"
                 android:textColor="#9999"
-                android:textSize="24sp" />
+                android:textSize="22sp" />
         </LinearLayout>
     </FrameLayout>
 

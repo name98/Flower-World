@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_fragment_inquiry_text_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fontFamily="sans-serif-condensed"
@@ -8,7 +9,7 @@
     android:orientation="vertical"
     android:paddingVertical="5dp"
     android:textColor="@color/black"
-    android:textSize="30sp"
+    android:textSize="20sp"
     tools:text="Розы">
 
 </TextView>
