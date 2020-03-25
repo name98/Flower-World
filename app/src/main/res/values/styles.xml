@@ -101,4 +101,33 @@
         <item name="android:progressTint">@color/colorPrimary</item>
     </style>
 
+    <style name="general_enter_text" >
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ems">10</item>
+        <item name="android:fontFamily">@font/roboto_condensed_regular"</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:background">@drawable/border_radius_background</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginStart">50dp</item>
+        <item name="android:layout_marginEnd">50dp</item>
+    </style>
+
+    <style name="FW_MHeadline">
+        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:fontFamily">@font/trebuchet_bd</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/grey_text</item>
+    </style>
 </resources>
+
+
+

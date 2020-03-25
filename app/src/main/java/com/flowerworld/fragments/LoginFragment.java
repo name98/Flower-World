@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,6 @@ import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.LoginConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.UserItem;
-
-import static android.view.KeyEvent.KEYCODE_BACK;
 
 public class LoginFragment extends Fragment implements FragmentSetDataInterface {
     private Handler handler;
@@ -49,8 +46,8 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
         assert view != null;
         final Button enter = view.findViewById(R.id.loginFragmentEnterBt);
         enter.setEnabled(false);
-        final EditText email = view.findViewById(R.id.email);
-        final EditText pass = view.findViewById(R.id.password);
+        final EditText email = view.findViewById(R.id.log_in_fragment_email);
+        final EditText pass = view.findViewById(R.id.log_in_fragment_password);
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

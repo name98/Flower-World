@@ -23,5 +23,6 @@
     <color name="blue">#0051EB</color>
     <color name="light_blue">#4C85DB</color>
     <color name="light_light_grey">#EDE7F6</color>
+    <color name="grey_text">#808080</color>
 
 </resources>
