@@ -2,6 +2,7 @@ package com.flowerworld.models.scripts;
 
 import com.flowerworld.items.CharterItem;
 import com.flowerworld.items.RatingItem;
+import com.flowerworld.models.UserData;
 
 public class Scripts {
     public static final String ALL_MINI_SHOPS = "SELECT название, логотип FROM `магазины`";
@@ -159,5 +160,19 @@ public class Scripts {
                 "              `рейтинг` as `a2` ON (`a2`.`id` = `t`.`рейтинг`)\n" +
                 "               where t.ID in\n" +
                 "               (SELECT товар from тэги as a WHERE a.тэг = '" + tag + "');";
+    }
+
+    public static String insertUser(UserData userData) {
+        return "INSERT INTO `пользователи` (`ID`, `ФИО`, `пароль`, `почта`, `телефон`) " +
+                "VALUES (NULL, '" +
+                userData.getFullName() + "', '" +
+                userData.getPassword() + "', '" +
+                userData.getEmail() + "', '" +
+                userData.getPhone() + "');";
+    }
+
+    public static String checkEmail(String email) {
+        return "SELECT * FROM `пользователи` WHERE `пользователи`.`почта` = '" +
+                email + "';";
     }
 }

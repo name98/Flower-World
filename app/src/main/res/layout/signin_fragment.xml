@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appColorWhite"
     android:clickable="true"
     android:focusable="true">
+
     <FrameLayout
+        android:id="@+id/sign_in_fragment_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:id="@+id/sign_in_fragment_top">
+        android:layout_alignParentTop="true">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="match_parent"
             android:layout_height="100dp"
             app:backgroundImage="@drawable/sign_in_dec_1" />
+
         <TextView
             style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/century"
             android:gravity="center_horizontal"
             android:text="@string/registration"
-            android:fontFamily="@font/century"
             android:textColor="@color/appColorWhite"
-            android:textSize="35sp"/>
+            android:textSize="35sp" />
     </FrameLayout>
 
     <LinearLayout
@@ -34,29 +37,42 @@
         android:layout_below="@id/sign_in_fragment_top"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/sign_in_fragment_error_message_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:text="@string/first_name"
-            style="@style/FW_MHeadline"/>
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="9dp"
+            android:textColor="@color/red"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="Пароли должны содержать не менее восьми символов, в том числе не менее 1 буквы и 1 цифры." />
+
+        <TextView
+            style="@style/FW_MHeadline"
+            android:layout_marginStart="50dp"
+            android:text="@string/first_name" />
 
         <EditText
             android:id="@+id/sing_in_fragment_first_name"
+            style="@style/general_enter_text"
             android:hint="@string/example_first_name"
-            android:inputType="text"
-            style="@style/general_enter_text"/>
+            android:inputType="text" />
 
         <TextView
+            style="@style/FW_MHeadline"
             android:layout_marginStart="50dp"
-            android:text="@string/second_name"
-            style="@style/FW_MHeadline"/>
+            android:text="@string/second_name" />
 
         <EditText
             android:id="@+id/sing_in_fragment_second_name"
+            style="@style/general_enter_text"
             android:hint="@string/example_second_name"
-            android:inputType="text"
-            style="@style/general_enter_text"/>
+            android:inputType="text" />
 
         <TextView
             style="@style/FW_MHeadline"
@@ -65,9 +81,9 @@
 
         <EditText
             android:id="@+id/sing_in_fragment_patr_name"
+            style="@style/general_enter_text"
             android:hint="@string/example_patr_name"
-            android:inputType="text"
-            style="@style/general_enter_text"/>
+            android:inputType="text" />
 
         <TextView
             style="@style/FW_MHeadline"
@@ -79,7 +95,7 @@
             style="@style/general_enter_text"
             android:layout_marginHorizontal="50dp"
             android:hint="@string/example_email"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress" />
 
         <TextView
             style="@style/FW_MHeadline"
@@ -91,7 +107,7 @@
             style="@style/general_enter_text"
             android:layout_marginHorizontal="50dp"
             android:hint="+7"
-            android:inputType="phone"/>
+            android:inputType="phone" />
 
         <TextView
             style="@style/FW_MHeadline"
@@ -126,17 +142,17 @@
             android:visibility="gone" />
 
         <Button
-            android:id="@+id/loginFragmentEnterBt"
+            android:id="@+id/sign_in_fragment_add_new_user_button"
             android:layout_width="wrap_content"
-            android:paddingHorizontal="18dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_styles"
-            android:text="@string/create_user"
-            android:textSize="16sp"
-            android:fontFamily="@font/century"
-            android:textColor="@color/appColorWhite"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_styles"
+            android:fontFamily="@font/century"
+            android:paddingHorizontal="18dp"
+            android:text="@string/create_user"
+            android:textColor="@color/appColorWhite"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -144,8 +160,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/log_in"
-            android:textColor="@color/grey"
-            android:focusable="true" />
+            android:textColor="@color/grey" />
     </LinearLayout>
 </RelativeLayout>

@@ -39,6 +39,7 @@ public class Router {
     public final static String LOGIN_FRAGMENT_TAG = "login_fragment";
     public final static String SEARCH_FRAGMENT_EDIT_MODE = "search_fragment_edit_mode";
     public final static String GRID_SEARCHES_FRAGMENT_TAG = "grid_searches_fragment";
+    public final static String SIGN_IN_FRAGMENT_TAG = "grid_searches_fragment";
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -277,5 +278,15 @@ public class Router {
                 .add(R.id.activity_fragment_contaner, searchFragmentEditMode, SEARCH_FRAGMENT_EDIT_MODE)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public static void addSignInFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        SignInFragment signInFragment = SignInFragment.newInstance();
+        manager.beginTransaction()
+                .add(R.id.activity_fragment_contaner, signInFragment, SIGN_IN_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+
     }
 }

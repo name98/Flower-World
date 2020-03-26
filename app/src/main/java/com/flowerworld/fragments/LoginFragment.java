@@ -44,6 +44,13 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
     private void setViews() {
         View view = getView();
         assert view != null;
+        TextView signInTextView = view.findViewById(R.id.login_fragment_open_sign_in_fragment_text_view);
+        signInTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Router.addSignInFragment(getActivity());
+            }
+        });
         final Button enter = view.findViewById(R.id.loginFragmentEnterBt);
         enter.setEnabled(false);
         final EditText email = view.findViewById(R.id.log_in_fragment_email);

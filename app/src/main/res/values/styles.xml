@@ -105,7 +105,7 @@
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ems">10</item>
-        <item name="android:fontFamily">@font/roboto_condensed_regular"</item>
+        <item name="android:fontFamily">@font/roboto_condensed_regular</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:scrollHorizontally">true</item>
         <item name="android:background">@drawable/border_radius_background</item>

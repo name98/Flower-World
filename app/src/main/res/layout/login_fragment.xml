@@ -74,18 +74,20 @@
             android:paddingHorizontal="18dp"
             android:textSize="16sp"
             android:fontFamily="@font/century"
-
             android:background="@drawable/button_styles"
             android:text="@string/log_in_bt"
             android:textColor="@color/appColorWhite" />
 
         <TextView
+            android:id="@+id/login_fragment_open_sign_in_fragment_text_view"
             android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:clickable="true"
             android:text="@string/registration"
-            android:textColor="@color/grey" />
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:textColor="@color/grey"
+            android:focusable="true" />
     </LinearLayout>
 </RelativeLayout>

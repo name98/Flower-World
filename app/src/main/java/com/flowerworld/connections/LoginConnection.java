@@ -24,9 +24,11 @@ public class LoginConnection {
                 Message msg  = Message.obtain();
                 UserItem user = getUser(email , userPassword);
                 if (user == null) {
+                    msg.what = 1;
                     msg.arg1 = 0;
                 }
                 else {
+                    msg.what = 2;
                     msg.arg1 = 1;
                     msg.obj = user;
                 }

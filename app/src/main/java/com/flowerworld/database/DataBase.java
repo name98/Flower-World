@@ -2,10 +2,8 @@ package com.flowerworld.database;
 
 import android.util.Log;
 
-import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.DataMethod;
 import com.flowerworld.items.AboutOrderItem;
-import com.flowerworld.items.AboutOrderModel;
 import com.flowerworld.items.CommentItem;
 import com.flowerworld.items.FlowerImagesItem;
 import com.flowerworld.items.FlowerItem;
@@ -20,6 +18,7 @@ import com.flowerworld.items.ShopItem;
 import com.flowerworld.items.UserItem;
 import com.flowerworld.links.UrlLinks;
 import com.flowerworld.methods.Methods;
+import com.flowerworld.models.UserData;
 import com.flowerworld.models.scripts.Scripts;
 
 import org.json.JSONArray;
@@ -423,7 +422,7 @@ public class DataBase {
         ArrayList<SearchItem> temp = new ArrayList<>();
         JSONArray array1 = getJSONArrayByScript(Scripts.getLikeTagByName(text));
         try {
-            for(int i =0 ;i < array1.length();i++) {
+            for (int i = 0; i < array1.length(); i++) {
                 JSONObject object = array1.getJSONObject(i);
                 SearchItem item = new SearchItem();
                 item.setId(object.getInt("id"));
@@ -436,7 +435,7 @@ public class DataBase {
         }
         JSONArray array = getJSONArrayByScript(Scripts.getLikeProductsByName(text));
         try {
-            for(int i =0 ;i < array.length();i++) {
+            for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
                 SearchItem item = new SearchItem();
                 item.setId(object.getInt("ID"));
@@ -478,5 +477,15 @@ public class DataBase {
         }
         return temp;
 
+    }
+
+    public static boolean insertUserData(UserData userData) {
+        JSONArray array = getJSONArrayByScript(Scripts.checkEmail(userData.getEmail()));
+        if (array == null || array.length() == 0) {
+            insertFromScript(Scripts.insertUser(userData));
+            return true;
+        } else {
+            return false;
+        }
     }
 }
