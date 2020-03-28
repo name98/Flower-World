@@ -24,6 +24,8 @@ import com.flowerworld.connections.LoginConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.UserItem;
 
+import java.util.Objects;
+
 public class LoginFragment extends Fragment implements FragmentSetDataInterface {
     private Handler handler;
 
@@ -44,6 +46,8 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
     private void setViews() {
         View view = getView();
         assert view != null;
+        final TextView emailTextView= view.findViewById(R.id.login_fragment_email_head_text_view);
+        final TextView passwordTextView= view.findViewById(R.id.login_fragment_password_head_text_view);
         TextView signInTextView = view.findViewById(R.id.login_fragment_open_sign_in_fragment_text_view);
         signInTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +58,28 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
         final Button enter = view.findViewById(R.id.loginFragmentEnterBt);
         enter.setEnabled(false);
         final EditText email = view.findViewById(R.id.log_in_fragment_email);
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    emailTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    emailTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+
+
         final EditText pass = view.findViewById(R.id.log_in_fragment_password);
+        pass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    passwordTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    passwordTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -113,7 +138,7 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
     }
 
     private void setErrorDialog() {
-        TextView errorAuthTextView = getView().findViewById(R.id.login_fragment_error_auth_text_view);
+        TextView errorAuthTextView = Objects.requireNonNull(getView()).findViewById(R.id.login_fragment_error_auth_text_view);
         errorAuthTextView.setVisibility(View.VISIBLE);
 
     }
@@ -121,7 +146,7 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
     private void setDatabase(UserItem userItem) {
         DataBaseHelper helper = new DataBaseHelper(getContext());
         helper.add(userItem);
-        getActivity().recreate();
+        Objects.requireNonNull(getActivity()).recreate();
         Router.removeFragmentByTag(getActivity(), Router.LOGIN_FRAGMENT_TAG);
     }
 
@@ -131,7 +156,7 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
 
     @Override
     public void onDestroy() {
-        ((MainActivity) getActivity()).backPressed();
+        ((MainActivity) Objects.requireNonNull(getActivity())).backPressed();
         super.onDestroy();
 
     }

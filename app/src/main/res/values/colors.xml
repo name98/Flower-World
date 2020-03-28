@@ -24,5 +24,10 @@
     <color name="light_blue">#4C85DB</color>
     <color name="light_light_grey">#EDE7F6</color>
     <color name="grey_text">#808080</color>
-
+    <color name="text_dark">#323643</color>
+    <color name="text_light_grey">#C5CCD6</color>
+    <color name="text_dark_grey">#9BA3B3</color>
+    <color name="active_red">#F3534A</color>
+    <color name="dark_green">#0CC5B7</color>
+    <color name="light_green">#29D890</color>
 </resources>

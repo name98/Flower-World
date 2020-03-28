@@ -1,42 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appColorWhite"
-    android:clickable="true">
-    <FrameLayout
-        android:layout_width="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:windowSoftInputMode="stateHidden"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/sign_in_fragment_top">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            app:backgroundImage="@drawable/sign_in_dec_1" />
-        <TextView
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal"
-            android:text="@string/log_in"
-            android:fontFamily="@font/century"
-            android:textColor="@color/appColorWhite"
-            android:textSize="35sp"/>
-    </FrameLayout>
-
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/roboto_bold"
+        android:gravity="center_horizontal"
+        android:text="@string/log_in"
+        android:textColor="@color/text_dark"
+        android:textSize="25sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/email"
+            android:id="@+id/login_fragment_email_head_text_view"
             style="@style/FW_MHeadline"
-            android:layout_marginStart="50dp" />
+            android:layout_marginStart="50dp"
+            android:text="@string/email" />
 
         <EditText
             android:id="@+id/log_in_fragment_email"
@@ -44,10 +40,12 @@
             android:layout_marginHorizontal="50dp"
             android:hint="@string/example_email"
             android:inputType="textEmailAddress" />
+
         <TextView
+            android:id="@+id/login_fragment_password_head_text_view"
             style="@style/FW_MHeadline"
-            android:text="@string/password"
-            android:layout_marginStart="50dp"/>
+            android:layout_marginStart="50dp"
+            android:text="@string/password" />
 
         <EditText
             android:id="@+id/log_in_fragment_password"
@@ -57,37 +55,40 @@
 
         <TextView
             android:id="@+id/login_fragment_error_auth_text_view"
-            style="@style/Subtitle1"
+            style="@style/FW_MHeadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/error_auth"
-            android:textColor="@color/red"
-            android:visibility="gone" />
+            android:textColor="@color/active_red"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/loginFragmentEnterBt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:paddingHorizontal="18dp"
-            android:textSize="16sp"
-            android:fontFamily="@font/century"
             android:background="@drawable/button_styles"
+            android:fontFamily="@font/roboto"
+            android:textAllCaps="false"
+            android:paddingHorizontal="18dp"
             android:text="@string/log_in_bt"
-            android:textColor="@color/appColorWhite" />
+            android:textColor="@color/appColorWhite"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/login_fragment_open_sign_in_fragment_text_view"
-            android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
             android:clickable="true"
-            android:text="@string/registration"
-            android:fontFamily="@font/roboto_condensed_regular"
-            android:textColor="@color/grey"
-            android:focusable="true" />
+            android:focusable="true"
+            android:fontFamily="@font/roboto"
+            android:text="@string/go_registration"
+            android:textColor="@color/text_dark_grey" />
     </LinearLayout>
 </RelativeLayout>

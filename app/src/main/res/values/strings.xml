@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Flower world</string>
+    <string name="app_name">Flower World</string>
     <string name="reciever">Получатель:</string>
     <string name="timeAndDate">Когда:</string>
     <string name="pay">Сумма:</string>
@@ -28,14 +28,16 @@
     <string name="rated_products">Отзывы</string>
     <string name="exit">Выход</string>
     <string name="error_auth">Неверный логин или пароль</string>
+    <string name="go_registration"><u>Регистрация</u></string>
     <string name="registration">Регистрация</string>
     <string name="enter_text">Введите текст</string>
     <string name="search">Поиск</string>
     <string name="cancel">Отменить</string>
     <string name="log_in">Авторизация</string>
+    <string name="go_log_in"><u>Авторизация</u></string>
     <string name="email">Email</string>
     <string name="password">Пароль</string>
-    <string name="log_in_bt">войти</string>
+    <string name="log_in_bt">Войти</string>
     <string name="first_name">Имя *</string>
     <string name="example_first_name">Иван</string>
     <string name="second_name">Фамилия *</string>
@@ -47,5 +49,5 @@
     <string name="repeat_new_password">Повтор нового пароля *</string>
     <string name="new_email">Адрес эл. почты *</string>
     <string name="example_email">abc@example.com</string>
-    <string name="create_user">Создать</string>
+    <string name="create_user">Зарегистрироваться</string>
 </resources>

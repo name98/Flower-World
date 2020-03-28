@@ -52,6 +52,7 @@ public class SignInFragment extends Fragment implements FragmentSetDataInterface
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setHandler();
         createViews();
+        setListeners();
     }
 
     private boolean isCorrectValues() {
@@ -96,11 +97,13 @@ public class SignInFragment extends Fragment implements FragmentSetDataInterface
         View parent = getView();
         assert parent != null;
         EditText emailEditText = parent.findViewById(R.id.sign_in_fragment_email);
-        //boolean isValid = EmailValidator.getInstance().isValid(emailEditText.getText().toString());
-        //if (!isValid)
-          //  showErrorMessage(ERROR_EMAIL);
-        //return isValid;
-        return true;
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(emailEditText.getText().toString());
+        boolean isValid = m.matches();
+        if (!isValid)
+            showErrorMessage(ERROR_EMAIL);
+        return m.matches();
     }
 
     private boolean isCorrectPassword() {
@@ -123,6 +126,7 @@ public class SignInFragment extends Fragment implements FragmentSetDataInterface
     private void createViews() {
         View parent = getView();
         assert parent != null;
+        TextView goToLogin = parent.findViewById(R.id.sign_fragment_go_to_login_text_view);
         TextView errorTextView = parent.findViewById(R.id.sign_in_fragment_error_message_text_view);
         EditText firstNameEditText = parent.findViewById(R.id.sing_in_fragment_first_name);
         EditText secondNameEditText = parent.findViewById(R.id.sing_in_fragment_second_name);
@@ -144,6 +148,12 @@ public class SignInFragment extends Fragment implements FragmentSetDataInterface
         assert imm != null;
         imm.showSoftInput(firstNameEditText, InputMethodManager.SHOW_IMPLICIT);
         setButtonListener();
+        goToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Router.removeFragmentByTag(getContext(), Router.SIGN_IN_FRAGMENT_TAG);
+            }
+        });
     }
 
     private void setButtonListener() {
@@ -265,5 +275,91 @@ public class SignInFragment extends Fragment implements FragmentSetDataInterface
             System.out.println("Password is valid.");
         }
         return valid;
+    }
+
+    private void setListeners() {
+        View parent = getView();
+        assert parent != null;
+        final EditText firstNameEditText = parent.findViewById(R.id.sing_in_fragment_first_name);
+        EditText secondNameEditText = parent.findViewById(R.id.sing_in_fragment_second_name);
+        EditText patNameEditText = parent.findViewById(R.id.sing_in_fragment_patr_name);
+        EditText telephoneEditText = parent.findViewById(R.id.sign_in_fragment_telephone);
+        EditText emailEditText = parent.findViewById(R.id.sign_in_fragment_email);
+        EditText passwordEditText = parent.findViewById(R.id.sign_in_password);
+        EditText repeatPasswordEditText = parent.findViewById(R.id.sign_in_fragment_repeat_password);
+
+        final TextView firstNameTextView = parent.findViewById(R.id.sign_in_fragment_head_fname_text_view);
+        final TextView secondNameTextView = parent.findViewById(R.id.sign_in_fragment_head_sname_text_view);
+        final TextView patNameTextView = parent.findViewById(R.id.sign_in_fragment_head_pname_text_view);
+        final TextView emailTextView = parent.findViewById(R.id.sign_in_fragment_head_email_text_view);
+        final TextView phoneTextView = parent.findViewById(R.id.sign_in_fragment_head_phone_text_view);
+        final TextView passwordTextView = parent.findViewById(R.id.sign_in_fragment_head_password_text_view);
+        final TextView rpasswordTextView = parent.findViewById(R.id.sign_in_fragment_head_rpassword_text_view);
+        firstNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    firstNameTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    firstNameTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+        secondNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    secondNameTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    secondNameTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+        patNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    patNameTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    patNameTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+        emailEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    emailTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    emailTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+        telephoneEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    phoneTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    phoneTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+        passwordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    passwordTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    passwordTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+        repeatPasswordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                    rpasswordTextView.setTextColor(getResources().getColor(R.color.active_red));
+                else
+                    rpasswordTextView.setTextColor(getResources().getColor(R.color.text_light_grey));
+            }
+        });
+
+
+
     }
 }
