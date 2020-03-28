@@ -50,4 +50,6 @@
     <string name="new_email">Адрес эл. почты *</string>
     <string name="example_email">abc@example.com</string>
     <string name="create_user">Зарегистрироваться</string>
+    <string name="flower_shop">Цветочный магазин</string>
+    <string name="welcome">Добро пожаловать!</string>
 </resources>

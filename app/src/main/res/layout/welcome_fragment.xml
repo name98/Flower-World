@@ -1,25 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_rowWeight="2"
+    android:layout_rowWeight="10"
+    android:weightSum="10"
     android:background="@color/appColorWhite">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/dark_green"
+            android:textSize="45sp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/flower_shop"
+            android:fontFamily="@font/roboto"
+            android:textSize="20sp"
+            android:textColor="@color/text_light_grey"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            app:backgroundImage="@drawable/logo_shadow3"
+            android:layout_gravity="center"/>
+    </FrameLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/welcome"
         android:fontFamily="@font/roboto_bold"
-        android:textSize="40sp"
+        android:textSize="20sp"
+        android:textColor="@color/text_dark"
         android:gravity="center"
-        android:layout_weight="1" />
-    <TextView
+        android:layout_weight="1"/>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Цветочный магазин"
-        android:fontFamily="@font/roboto"
-        android:textSize="20sp"
+        android:orientation="vertical"
+        android:layout_weight="3"
         android:gravity="center"
-        android:layout_weight="2"/>
+        android:weightSum="2"
+        >
+
+        <Button
+            android:id="@+id/welcome_fragment_login_button"
+            android:layout_width="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_styles"
+            android:fontFamily="@font/roboto"
+            android:textAllCaps="false"
+            android:text="@string/log_in"
+            android:textColor="@color/appColorWhite"
+            android:textSize="16sp"/>
+        <Button
+            android:id="@+id/welcome_fragment_sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/test_dr"
+            android:fontFamily="@font/roboto"
+            android:textAllCaps="false"
+            android:text="@string/create_user"
+            android:textColor="@color/text_dark"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+
+
+
+
+
 
 </LinearLayout>
