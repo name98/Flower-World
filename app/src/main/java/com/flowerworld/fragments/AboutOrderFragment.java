@@ -70,9 +70,9 @@ public class AboutOrderFragment extends Fragment implements FragmentSetDataInter
     private void setProductViews(FlowerItem product) {
         View fragmentView = this.getView();
         assert fragmentView != null;
-        TextView productName = fragmentView.findViewById(R.id.flowerNameMini);
+        TextView productName = fragmentView.findViewById(R.id.flower_item_home_fragment_product_title_text_view);
         RatingBar productRating = fragmentView.findViewById(R.id.flowerRatingBarMini);
-        TextView productPrice = fragmentView.findViewById(R.id.flowerPriceMini);
+        TextView productPrice = fragmentView.findViewById(R.id.flower_item_home_fragment_product_price_text_view);
         SimpleDraweeView productImage = fragmentView.findViewById(R.id.flowerPictureMini);
         productName.setText(product.getName());
         productPrice.setText(product.getPrice());

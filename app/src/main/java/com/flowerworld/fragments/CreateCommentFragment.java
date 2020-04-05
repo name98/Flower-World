@@ -219,6 +219,9 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
                                 Router.removeFragmentByTag(getContext(), Router.PROGRESS_FRAGMENT_TAG);
                                 Router.removeCreateCommentFragment(getContext());
                                 Router.reloadProductFragment(getContext());
+                                MainFragment parentFragment = (MainFragment) Router.getFragmentByTag(getContext(), Router.MAIN_FRAGMENT_TAG);
+                                if (parentFragment != null)
+                                    ((SettingsFragment) ChildRouter.getFragmentByTag(parentFragment, ChildRouter.SETTINGS_FRAGMENT_TAG)).reloadValues();
                             }
                         });
         AlertDialog alert = builder.create();

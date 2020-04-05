@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,9 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.fragments.Router;
 import com.flowerworld.items.FlowerItem;
@@ -43,7 +40,7 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
     @NonNull
     @Override
     public FlowerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flower_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flower_item_home_fragment,parent,false);
         return new FlowerItemViewHolder(view);
     }
 
@@ -81,12 +78,12 @@ public class FlowerItemAdapter extends RecyclerView.Adapter<FlowerItemAdapter.Fl
         }
 
         private void setProductName(String name) {
-            TextView productName = itemView.findViewById(R.id.flowerNameMini);
+            TextView productName = itemView.findViewById(R.id.flower_item_home_fragment_product_title_text_view);
             productName.setText(name);
         }
 
         private void setProductPrice(String price) {
-            TextView productPrice = itemView.findViewById(R.id.flowerPriceMini);
+            TextView productPrice = itemView.findViewById(R.id.flower_item_home_fragment_product_price_text_view);
             productPrice.setText(Methods.formatRuble(price));
         }
 

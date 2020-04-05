@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.flowerworld.connections.DataMethod;
 import com.flowerworld.items.AboutOrderItem;
+import com.flowerworld.items.CharterItem;
 import com.flowerworld.items.CommentItem;
 import com.flowerworld.items.FlowerImagesItem;
 import com.flowerworld.items.FlowerItem;
@@ -32,6 +33,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class DataBase {
@@ -57,7 +60,7 @@ public class DataBase {
         }
     }
 
-    static void insertFromScript(String script) {
+    public static void insertFromScript(String script) {
         try {
             String data = URLEncoder.encode("script", "UTF-8") + "=" + URLEncoder.encode(script, "UTF-8");
             URL url = new URL(UrlLinks.FROM_SCRIPT_Insert);
@@ -71,15 +74,21 @@ public class DataBase {
 
             BufferedReader reader = new BufferedReader(new
                     InputStreamReader(conn.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            line = reader.readLine();
+            sb.append(line);
+            System.out.println(sb.toString() + "ksjdksjdkjksjdkf");
 
 
-        } catch (Exception e) {
-
+        } catch (Exception ignored) {
+            System.out.println(ignored.toString() + "errrrrrrr");
 
         }
     }
 
     public static FlowerItem getProductById(String id) {
+        System.out.println(id + "this is");
         JSONArray array = getJSONArrayByScript(Scripts.getProductByIdScript(id));
         FlowerItem product = new FlowerItem();
         try {
@@ -95,7 +104,6 @@ public class DataBase {
             ratingItem.setTree(object.getInt("три"));
             ratingItem.setFour(object.getInt("четыре"));
             ratingItem.setFive(object.getInt("пять"));
-            System.out.println(ratingItem.getGeneralFormated() + "as");
             product.setRating(String.valueOf(ratingItem.getGeneral()));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -219,7 +227,7 @@ public class DataBase {
         return comments;
     }
 
-    public static FullShopItem getShopByName(String name) {
+    public static FullShopItem getShopByName(String name, String userId) {
         FullShopItem shop = new FullShopItem();
         ArrayList<FlowerItem> products = new ArrayList<>();
         try {
@@ -248,6 +256,14 @@ public class DataBase {
                 ratingItem.setFour(temp.getInt("четыре"));
                 ratingItem.setFive(temp.getInt("пять"));
                 products.add(new FlowerItem(nameProduct, images, String.valueOf(ratingItem.getGeneral()), price, productId));
+            }
+            for (int i = 0; i < products.size(); i++) {
+                JSONArray followArray = getJSONArrayByScript(Scripts.isFollow(userId, String.valueOf(products.get(i).getId())));
+                int fol = followArray.getJSONObject(0).getInt("follow");
+                if (fol == 0)
+                    products.get(i).setFollow(false);
+                else
+                    products.get(i).setFollow(true);
             }
             shop.setAddress(address);
             shop.setAnnotantion(annotantion);
@@ -450,7 +466,7 @@ public class DataBase {
         return temp;
     }
 
-    public static ArrayList<FlowerItem> getProductsByTag(String text) {
+    public static ArrayList<FlowerItem> getProductsByTag(String text, String userId) {
         ArrayList<FlowerItem> temp = new ArrayList<>();
         JSONArray array = getJSONArrayByScript(Scripts.getProductsItemByTag(text));
 
@@ -471,6 +487,14 @@ public class DataBase {
                 product.setRating(String.valueOf(ratingItem.getGeneral()));
                 temp.add(product);
             }
+            for (int i = 0; i < temp.size(); i++) {
+                JSONArray followArray = getJSONArrayByScript(Scripts.isFollow(userId, String.valueOf(temp.get(i).getId())));
+                System.out.println(followArray.getJSONObject(0).getInt("follow"));
+                if (followArray.getJSONObject(0).getInt("follow") == 0)
+                    temp.get(i).setFollow(false);
+                else temp.get(i).setFollow(true);
+                System.out.println("33332323233232323");
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -487,5 +511,119 @@ public class DataBase {
         } else {
             return false;
         }
+    }
+
+    public static Map<String, String> getSettingsData(String email) {
+        Map<String, String> result = new HashMap<>();
+        JSONArray activeCountArray = getJSONArrayByScript(Scripts.getActiveOrdersCount(email));
+        JSONArray completedCountArray = getJSONArrayByScript(Scripts.getCompletedOrdersCount(email));
+        JSONArray followCountArray = getJSONArrayByScript(Scripts.getFollowOrdersCount(email));
+        JSONArray commentedCountArray = getJSONArrayByScript(Scripts.getCommentedOrdersCount(email));
+        try {
+            if (activeCountArray != null && activeCountArray.length() != 0) {
+                String count = activeCountArray.getJSONObject(0).getString("active_orders");
+                result.put("active_count", count);
+            } else
+                result.put("active_count", "0");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (completedCountArray != null && completedCountArray.length() != 0) {
+                String count = completedCountArray.getJSONObject(0).getString("completed_orders");
+                result.put("completed_count", count);
+            } else
+                result.put("completed_count", "0");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (followCountArray != null && followCountArray.length() != 0) {
+                String count = followCountArray.getJSONObject(0).getString("follow_orders");
+                result.put("follow_count", count);
+            } else
+                result.put("follow_count", "0");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (commentedCountArray != null && commentedCountArray.length() != 0) {
+                String count = commentedCountArray.getJSONObject(0).getString("commented_orders");
+                result.put("commented_count", count);
+            } else
+                result.put("commented_count", "0");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return result;
+    }
+
+    public static ArrayList<FlowerItem> getItemsByUserFollow(String userId) {
+        JSONArray itemArray = getJSONArrayByScript(Scripts.getItemsByUserFollow(userId));
+        ArrayList<FlowerItem> items = new ArrayList<>();
+        try {
+            for (int i = 0; i < itemArray.length(); i++) {
+                JSONObject object = itemArray.getJSONObject(i);
+                FlowerItem product = new FlowerItem();
+                product.setName(object.getString("название"));
+                product.setImageUrl(Methods.strParser(object.getString("картинки"), " ").get(0));
+                product.setPrice(object.getString("цена"));
+                product.setId(object.getInt("ID"));
+                RatingItem ratingItem = new RatingItem();
+                ratingItem.setOne(object.getInt("один"));
+                ratingItem.setTwo(object.getInt("два"));
+                ratingItem.setTree(object.getInt("три"));
+                ratingItem.setFour(object.getInt("четыре"));
+                ratingItem.setFive(object.getInt("пять"));
+                product.setRating(String.valueOf(ratingItem.getGeneral()));
+                product.setFollow(true);
+                items.add(product);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return items;
+
+    }
+
+    public static void insertCharter(CharterItem charterItem) {
+        insertFromScript(Scripts.sendOrder(charterItem));
+        System.out.println(Scripts.sendOrder(charterItem));
+    }
+
+    public static ArrayList<FlowerItem> getItemsByCommented(String userId) {
+        JSONArray array = getJSONArrayByScript(Scripts.getItemsByUserCommented(userId));
+        ArrayList<FlowerItem> products = new ArrayList<>();
+        try {
+            System.out.println(array.length() + "length");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject temp = array.getJSONObject(i);
+                String nameProduct = temp.getString("название");
+                String images = Methods.strParser(temp.getString("картинки"), " ").get(0);
+                String price = temp.getString("цена");
+                int productId = temp.getInt("ID");
+                RatingItem ratingItem = new RatingItem();
+                ratingItem.setOne(temp.getInt("один"));
+                ratingItem.setTwo(temp.getInt("два"));
+                ratingItem.setTree(temp.getInt("три"));
+                ratingItem.setFour(temp.getInt("четыре"));
+                ratingItem.setFive(temp.getInt("пять"));
+                products.add(new FlowerItem(nameProduct, images, String.valueOf(ratingItem.getGeneral()), price, productId));
+            }
+            for (int i = 0; i < products.size(); i++) {
+                JSONArray followArray = getJSONArrayByScript(Scripts.isFollow(userId, String.valueOf(products.get(i).getId())));
+                int fol = followArray.getJSONObject(0).getInt("follow");
+                if (fol == 0)
+                    products.get(i).setFollow(false);
+                else
+                    products.get(i).setFollow(true);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return products;
     }
 }

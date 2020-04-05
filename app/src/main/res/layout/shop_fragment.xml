@@ -65,42 +65,42 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/Subtitle1"
+                style="@style/product_item_price"
                 android:text="@string/shop_adress" />
 
             <TextView
                 android:id="@+id/shopPageAddress"
 
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp" />
 
             <TextView
-                style="@style/Subtitle1"
+                style="@style/product_item_price"
                 android:layout_marginTop="20dp"
                 android:text="@string/delivery" />
 
             <TextView
                 android:id="@+id/shopPageUslDost"
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_width="match_parent"
                 android:layout_marginStart="30dp"
 
                 android:layout_marginTop="15dp" />
 
             <TextView
-                style="@style/Subtitle1"
+                style="@style/product_item_price"
                 android:layout_marginTop="15dp"
                 android:text="@string/description" />
 
             <TextView
                 android:id="@+id/shopPageAnnotation"
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="5dp" />
 
             <TextView
-                style="@style/Subtitle1"
+                style="@style/product_item_price"
                 android:layout_marginBottom="20dp"
                 android:text="@string/products" />
 

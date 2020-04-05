@@ -22,8 +22,8 @@
     <string name="delivery">Условия доставки</string>
     <string name="products">Товыры</string>
     <string name="orders">Покупки</string>
-    <string name="active_orders">Активные</string>
-    <string name="no_active_orders">Купленные товары</string>
+    <string name="active_orders">Активные заказы</string>
+    <string name="completed_orders">Завершенные заказы</string>
     <string name="follow_products">Избранные</string>
     <string name="rated_products">Отзывы</string>
     <string name="exit">Выход</string>
@@ -52,4 +52,16 @@
     <string name="create_user">Зарегистрироваться</string>
     <string name="flower_shop">Цветочный магазин</string>
     <string name="welcome">Добро пожаловать!</string>
+    <string name="main_menu">Главная</string>
+    <string name="search_menu">Найти</string>
+    <string name="user_menu">Аккаунт</string>
+    <string name="often_find">Чаще всего ищут:</string>
+    <string name="about_us">О Нас</string>
+    <string name="product">Товар: </string>
+    <string name="order_from">Заказ от </string>
+    <string name="order_state">Статус: </string>
+    <string name="order_id">#</string>
+    <string name="empty">Здесь пока ничего нет</string>
+    <string name="version">Версия: 1.0</string>
+    <string name="author_name">Автор: Юсупов М.</string>
 </resources>

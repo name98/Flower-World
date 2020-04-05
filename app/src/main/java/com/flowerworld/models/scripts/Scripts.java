@@ -175,4 +175,53 @@ public class Scripts {
         return "SELECT * FROM `пользователи` WHERE `пользователи`.`почта` = '" +
                 email + "';";
     }
+
+    public static String getActiveOrdersCount(String email) {
+        return "SELECT COUNT(*) as active_orders FROM `заказы` as z " +
+                "WHERE z.`статус`!='доставлено' AND z.`пользователь` = " +
+                "(SELECT `ID` FROM `пользователи` as p WHERE p.`почта` = '" + email + "');";
+    }
+
+    public static String getCompletedOrdersCount(String email) {
+        return "SELECT COUNT(*) as completed_orders FROM `заказы` as z " +
+                "WHERE z.`статус`='доставлено' AND z.`пользователь` = " +
+                "(SELECT `ID` FROM `пользователи` as p WHERE p.`почта` = '" + email + "');";
+    }
+
+    public static String getFollowOrdersCount(String email) {
+        return "SELECT COUNT(*) as follow_orders FROM `избранное` as f " +
+                "WHERE f.`id_user` = " +
+                "(SELECT p.`ID` FROM `пользователи` as p WHERE p.`почта`= '" + email + "');";
+    }
+
+    public static String getCommentedOrdersCount(String email) {
+        return "SELECT COUNT(*) as commented_orders FROM `отзывы` as r " +
+                "WHERE r.`id_пользователь`= (" +
+                "SELECT p.`ID` FROM `пользователи` as p WHERE p.`почта`= '" + email + "');";
+    }
+
+    public static String isFollow(String userId, String goodId) {
+        return "SELECT count(*) as follow FROM `избранное` as f WHERE f.`id_user`=" + userId + " AND f.`id_good` = " + goodId + ";";
+    }
+
+    public static String inserFollow(String userId, String goodId) {
+        return "INSERT INTO `избранное`(`id_user`, `id_good`) VALUES (" + userId + "," + goodId + ")";
+    }
+
+    public static String deleteFolllow(String userId, String goodId) {
+        return "DELETE FROM `избранное` WHERE `id_user` = " + userId + " AND `id_good` = " + goodId + ";";
+    }
+
+    public static String getItemsByUserFollow(String userId) {
+        return "SELECT " +
+                "g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена   FROM" +
+                " `товары` as `g`  LEFT JOIN    `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`) " +
+                "WHERE g.ID in (SELECT `id_good` FROM `избранное` WHERE `id_user` = " + userId + ");";
+    }
+
+    public static String getItemsByUserCommented(String userId) {
+        return "SELECT g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена   FROM\n" +
+                "`товары` as `g`  LEFT JOIN    `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`) \n" +
+                "WHERE g.ID in (SELECT `id_товар` FROM `отзывы` WHERE `id_пользователь` = " + userId + ");";
+    }
 }

@@ -3,7 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appColorWhite">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:rowCount="2"
+        android:columnCount="6"
+        android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            app:cardBackgroundColor="@color/appColorWhite">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -20,18 +42,11 @@
 
                 android:background="@color/colorPrimary">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="50dp">
 
-                    <include layout="@layout/shop_item" />
-                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/person_fragment_user_name_text_view"
-                    style="@style/Subtitle1"
+                    style="@style/product_item_price"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="200dp"
                     android:textSize="25sp"
@@ -39,7 +54,7 @@
 
                 <TextView
                     android:id="@+id/person_fragment_user_email_text_view"
-                    style="@style/Subtitle1"
+                    style="@style/product_item_price"
                     android:layout_below="@id/person_fragment_user_name_text_view"
                     android:layout_centerHorizontal="true"
                     tools:text="Почта" />
@@ -47,7 +62,7 @@
             </RelativeLayout>
 
             <TextView
-                style="@style/Subtitle1"
+                style="@style/product_item_price"
                 android:layout_marginBottom="15dp"
                 android:text="@string/orders" />
 
@@ -74,7 +89,7 @@
                 android:background="@color/appColorWhite"
                 android:gravity="left|center_vertical"
                 android:paddingStart="20dp"
-                android:text="@string/no_active_orders"
+                android:text="@string/completed_orders"
                 android:textSize="15sp" />
 
             <View
@@ -86,7 +101,7 @@
 
             <TextView
                 android:id="@+id/gggggg"
-                style="@style/Subtitle1"
+                style="@style/product_item_price"
                 android:layout_marginBottom="15dp"
                 android:text="Профиль" />
 

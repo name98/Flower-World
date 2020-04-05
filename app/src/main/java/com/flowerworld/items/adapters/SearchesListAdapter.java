@@ -3,6 +3,7 @@ package com.flowerworld.items.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,7 +54,7 @@ public class SearchesListAdapter extends RecyclerView.Adapter<SearchesListAdapte
         }
 
         private void setListener(final String tag) {
-            inquiryTextView.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Router.addSearchFragmentEditMode(itemView.getContext(), tag);

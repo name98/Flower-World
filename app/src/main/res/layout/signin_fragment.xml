@@ -18,15 +18,11 @@
 
         <TextView
             android:id="@+id/sign_in_fragment_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
+            style="@style/headline"
             android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/registration"
-            android:textColor="@color/text_dark"
-            android:textSize="25sp" />
+            android:layout_marginBottom="50dp"
+            android:text="@string/registration"/>
 
         <TextView
             android:id="@+id/sign_in_fragment_error_message_text_view"
@@ -128,7 +124,7 @@
 
         <TextView
             android:id="@+id/login_fragment_error_auth_text_view"
-            style="@style/Subtitle1"
+            style="@style/product_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -139,30 +135,18 @@
         <Button
             android:id="@+id/sign_in_fragment_add_new_user_button"
             android:layout_width="match_parent"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="30dp"
+            android:layout_marginEnd="50dp"
             android:background="@drawable/button_styles"
             android:fontFamily="@font/roboto"
-            android:textAllCaps="false"
             android:paddingHorizontal="18dp"
             android:text="@string/create_user"
+            android:textAllCaps="false"
             android:textColor="@color/appColorWhite"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/sign_fragment_go_to_login_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/go_log_in"
-            android:textColor="@color/text_dark_grey"/>
+            android:textSize="16sp" />
     </LinearLayout>
-
 </ScrollView>

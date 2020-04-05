@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="15dp"
+    android:orientation="vertical">
 
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
     <TextView
-        android:text="@string/shops"
-        style="@style/Subtitle1"
         android:id="@+id/shopsText"
-        />
+        style="@style/headline_recycle_views"
+        android:layout_marginStart="15dp"
+        android:text="@string/shops" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shops_items_recycle_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/shops_items_recycle_view"
-        android:orientation="horizontal"/>
-    </LinearLayout>
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="7dp"
+        android:clipToPadding="false"/>
+</LinearLayout>
 
-</RelativeLayout>

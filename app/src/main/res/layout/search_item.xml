@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:layout_marginHorizontal="10dp">
+    android:layout_marginHorizontal="10dp"
+    android:id="@+id/search_item_pane_liner_layout">
     <ImageView
         android:layout_width="25sp"
         android:layout_height="match_parent"

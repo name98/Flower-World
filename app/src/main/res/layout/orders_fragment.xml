@@ -3,15 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/appColorWhite"
     android:clickable="true"
     android:focusable="true">
 
     <include layout="@layout/toolbar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ordersFragmentRV"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:maxLines="1"
+                android:autoSizeTextType="uniform"
+                android:id="@+id/orders_fragment_title_text_view"
+                style="@style/headline"
+                tools:text="Завершенные заказы"
+                android:textSize="25sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="10dp"
+                android:clipToPadding="true"
+                android:id="@+id/ordersFragmentRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/orders_fragment_title_text_view"
+                android:paddingBottom="20dp"/>
+
+
+
+        </RelativeLayout>
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/orders_fragment_empty_relative_layout"
+        android:layout_width="match_parent"
+        android:background="@color/appColorWhite"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:visibility="gone">
+
+    <include
+        layout="@layout/empty_layout"/>
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

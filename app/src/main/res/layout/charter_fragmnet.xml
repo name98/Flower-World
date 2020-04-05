@@ -34,7 +34,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_marginStart="10dp"
                 android:text="@string/address" />
 
@@ -53,7 +53,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_marginStart="10dp"
                 android:text="@string/reciever" />
 
@@ -72,13 +72,13 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_marginStart="10dp"
                 android:text="@string/date" />
 
             <TextView
                 android:id="@+id/orderDate"
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:textColor="@color/appColorWhite"
                 android:background="@drawable/rounded_background_blue"
                 android:layout_marginHorizontal="10dp" />
@@ -93,14 +93,14 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_marginStart="10dp"
                 android:text="@string/time" />
 
             <TextView
                 android:id="@+id/orderTime"
                 android:background="@drawable/rounded_background_blue"
-                style="@style/Body1"
+                style="@style/product_item_title"
                 android:layout_marginHorizontal="10dp"
                 tools:text="12/12/12"
                 android:textColor="@color/appColorWhite"

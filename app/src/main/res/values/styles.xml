@@ -43,26 +43,35 @@
 
     </style>
 
-    <style name="Body1">
-        <item name="android:fontFamily">@font/prose</item>
-        <item name="android:textSize">18sp</item>
-
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:textColor">@color/text</item>
+    <style name="product_item_title">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text_dark</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">2</item>
+
 
 
     </style>
 
-    <style name="Subtitle1">
-        <item name="android:fontFamily">@font/alaskan</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:textColor">@color/headLine1</item>
+    <style name="product_item_price">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text_dark_grey</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="headline_recycle_views">
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:layout_marginBottom">7dp</item>
     </style>
 
     <style name="BigText">
@@ -126,6 +135,15 @@
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_light_grey</item>
+    </style>
+
+    <style name="headline">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:textColor">@color/text_dark</item>
     </style>
 </resources>
 

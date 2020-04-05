@@ -49,13 +49,6 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
         assert view != null;
         final TextView emailTextView= view.findViewById(R.id.login_fragment_email_head_text_view);
         final TextView passwordTextView= view.findViewById(R.id.login_fragment_password_head_text_view);
-        TextView signInTextView = view.findViewById(R.id.login_fragment_open_sign_in_fragment_text_view);
-        signInTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Router.addSignInFragment(getActivity());
-            }
-        });
         final Button enter = view.findViewById(R.id.loginFragmentEnterBt);
         enter.setEnabled(false);
         final EditText email = view.findViewById(R.id.log_in_fragment_email);
@@ -156,10 +149,4 @@ public class LoginFragment extends Fragment implements FragmentSetDataInterface 
         return new LoginFragment();
     }
 
-    @Override
-    public void onDestroy() {
-        ((MainActivity) Objects.requireNonNull(getActivity())).backPressed();
-        super.onDestroy();
-
-    }
 }

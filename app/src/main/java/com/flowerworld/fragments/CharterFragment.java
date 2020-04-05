@@ -196,7 +196,11 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
                 .setNegativeButton("Ок",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                MainFragment parentFragment = (MainFragment) Router.getFragmentByTag(getContext(), Router.MAIN_FRAGMENT_TAG);
+                                if (parentFragment != null)
+                                    ((SettingsFragment) ChildRouter.getFragmentByTag(parentFragment, ChildRouter.SETTINGS_FRAGMENT_TAG)).reloadValues();
                                 Router.removeFragmentByTag(getContext(), Router.CHARTER_FRAGMENT_TAG);
+
                             }
                         });
         AlertDialog alert = builder.create();

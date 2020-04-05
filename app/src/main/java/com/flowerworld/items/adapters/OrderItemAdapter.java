@@ -1,18 +1,18 @@
 package com.flowerworld.items.adapters;
 
 import android.annotation.SuppressLint;
-import android.net.Uri;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+
 import com.flowerworld.R;
 import com.flowerworld.fragments.Router;
 import com.flowerworld.items.OrderItem;
@@ -55,37 +55,17 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
         void bind(OrderItem order) {
             setViews(order);
             setListener(Integer.valueOf(order.getId()));
-            setStateColor(order.getState());
         }
 
         private void setViews(OrderItem order) {
             TextView dateTextView = itemView.findViewById(R.id.charterItemDateText);
             TextView stateTextView = itemView.findViewById(R.id.charterItemStateText);
             TextView nameProductTextView = itemView.findViewById(R.id.flowerIconName);
-            SimpleDraweeView productImageSimpleDraweeView = itemView.findViewById(R.id.flowerIconImage);
             TextView idOrderTextView = itemView.findViewById(R.id.charterItemIdOrderText);
-            nameProductTextView.setText(order.getNameProduct());
-            stateTextView.setText(order.getState());
-            dateTextView.setText(order.getDate());
-            idOrderTextView.setText(order.getId());
-            productImageSimpleDraweeView.setImageURI(Uri.parse(order.getImage()));
-        }
-
-        private void setStateColor(String state) {
-            RelativeLayout stateColorRelativeLayout = itemView.findViewById(R.id.charterItemFrameForState);
-            switch (state) {
-                case "доставлено":
-                    stateColorRelativeLayout.setBackgroundResource(R.color.positiveState);
-                    break;
-                case "ожидание":
-                    stateColorRelativeLayout.setBackgroundResource(R.color.waitState);
-                    break;
-                case "отправка":
-                    stateColorRelativeLayout.setBackgroundResource(R.color.sendState);
-                    break;
-                default:
-                    stateColorRelativeLayout.setBackgroundResource(R.color.appColorWhite);
-            }
+            nameProductTextView.setText(String.format("%s %s", itemView.getResources().getString(R.string.product), order.getNameProduct()));
+            stateTextView.setText(String.format("%s %s", itemView.getResources().getString(R.string.order_state), order.getState()));
+            dateTextView.setText(String.format("%s %s", itemView.getResources().getString(R.string.order_from), order.getDate()));
+            idOrderTextView.setText(String.format("%s %s", itemView.getResources().getString(R.string.order_id), order.getId()));
         }
 
         private void setListener(final int id) {

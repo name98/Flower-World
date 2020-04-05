@@ -81,7 +81,7 @@
                         android:rowCount="2">
 
                         <TextView
-                            style="@style/Subtitle1"
+                            style="@style/product_item_price"
                             android:text="@string/sizes" />
 
                         <LinearLayout
@@ -91,37 +91,37 @@
 
                             <TextView
                                 android:id="@+id/flowerPageSizeFlowerL"
-                                style="@style/Body1"
+                                style="@style/product_item_title"
                                 android:layout_marginStart="30dp"
                                 tools:text="20" />
 
                             <TextView
                                 android:id="@+id/flowerPageSizeFlowerH"
-                                style="@style/Body1"
+                                style="@style/product_item_title"
                                 android:layout_marginStart="30dp"
                                 tools:text="20" />
                         </LinearLayout>
 
 
                         <TextView
-                            style="@style/Subtitle1"
+                            style="@style/product_item_price"
                             android:text="@string/compound" />
 
                         <TextView
                             android:id="@+id/flowerPageSostav"
-                            style="@style/Body1"
+                            style="@style/product_item_title"
                             android:layout_marginStart="30dp"
                             tools:text="Text\nsdsd\nsdsd\n" />
                     </GridLayout>
 
                     <TextView
-                        style="@style/Subtitle1"
+                        style="@style/product_item_price"
                         android:text="@string/description" />
 
 
                     <TextView
                         android:id="@+id/flowerPageAnnotation"
-                        style="@style/Body1"
+                        style="@style/product_item_title"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
 
@@ -132,7 +132,7 @@
 Букет собран из самых свежих роз и упакован в нашу фирменную упаковку Blue от One million flowers." />
 
                     <TextView
-                        style="@style/Subtitle1"
+                        style="@style/product_item_price"
                         android:layout_marginBottom="10dp"
                         android:text="@string/Shop" />
 
@@ -173,7 +173,7 @@
 
                     <TextView
 
-                        style="@style/Subtitle1"
+                        style="@style/product_item_price"
                         android:text="@string/rates" />
 
                     <RelativeLayout

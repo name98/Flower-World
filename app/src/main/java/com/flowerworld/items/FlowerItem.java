@@ -5,6 +5,7 @@ public class FlowerItem {
     private String imageUrl;
     private String rating;
     private String price;
+    private boolean isFollow;
     private int id;
 
     public FlowerItem() {
@@ -61,5 +62,13 @@ public class FlowerItem {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
+    }
+
+    public boolean isFollow() {
+        return isFollow;
     }
 }

@@ -5,11 +5,11 @@ import androidx.fragment.app.FragmentManager;
 
 import com.flowerworld.R;
 
-class ChildRouter {
+public class ChildRouter {
 
     final static String HOME_FRAGMENT_TAG = "home_fragment";
     final static String SEARCH_FRAGMENT_TAG = "search_fragment";
-    final static String PERSON_FRAGMENT_TAG = "person_fragment";
+    public final static String SETTINGS_FRAGMENT_TAG = "settings_fragment";
     private final static int FRAGMENT_CONTAINER = R.id.main_fragment_contaner;
 
 
@@ -50,11 +50,16 @@ class ChildRouter {
                 .commit();
     }
 
-    static void addPersonFragment(Fragment fragment) {
+    static void addSettingsFragment(Fragment fragment) {
         FragmentManager childManager = fragment.getChildFragmentManager();
-        PersonFragment personFragment = PersonFragment.newInstance();
+        SettingsFragment settingsFragment = SettingsFragment.newInstance();
         childManager.beginTransaction()
-                .add(FRAGMENT_CONTAINER, personFragment, PERSON_FRAGMENT_TAG)
+                .add(FRAGMENT_CONTAINER, settingsFragment, SETTINGS_FRAGMENT_TAG)
                 .commit();
+    }
+
+    public static Fragment getFragmentByTag(Fragment parent, String tag) {
+        FragmentManager childManager = parent.getChildFragmentManager();
+        return childManager.findFragmentByTag(tag);
     }
 }

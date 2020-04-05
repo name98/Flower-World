@@ -15,19 +15,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
+import com.flowerworld.connections.FollowButton;
+import com.flowerworld.fragments.ChildRouter;
+import com.flowerworld.fragments.MainFragment;
 import com.flowerworld.fragments.Router;
+import com.flowerworld.fragments.SettingsFragment;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.methods.Methods;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import java.util.ArrayList;
 
 public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapter.FlowerItemHolder> {
 
     private ArrayList<FlowerItem> items = new ArrayList<>();
+    private String userId;
+    private boolean isFollowPage = false;
 
     public void setItems(ArrayList<FlowerItem> items) {
         this.items = items;
         notifyDataSetChanged();
+    }
+
+    public void setFollowPage(boolean followPage) {
+        isFollowPage = followPage;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @NonNull
@@ -40,7 +56,7 @@ public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapte
     @Override
     public void onBindViewHolder(@NonNull FlowerItemHolder holder, int position) {
         FlowerItem item = items.get(position);
-        holder.bind(item);
+        holder.bind(item, position);
     }
 
     @Override
@@ -54,13 +70,13 @@ public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapte
             super(itemView);
         }
 
-        void bind(FlowerItem flowerItem) {
+        void bind(FlowerItem flowerItem, int position) {
             setNameProduct(flowerItem.getName());
             setPriceProduct(flowerItem.getPrice());
             setRatingProduct(Float.valueOf(flowerItem.getRating()));
             setPaneListener(flowerItem.getId());
-            setBuyButtonListener(flowerItem.getId());
             setProductImage(flowerItem.getImageUrl());
+            setFollowListener(flowerItem.isFollow(), String.valueOf(flowerItem.getId()), position);
         }
 
         private void setNameProduct(String nameProduct) {
@@ -88,14 +104,31 @@ public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapte
             });
         }
 
-        private void setBuyButtonListener(final int idProduct) {
-            Button buyButton = itemView.findViewById(R.id.flowerItemBuyButton);
-            buyButton.setOnClickListener(new View.OnClickListener() {
+        private void setFollowListener(boolean isFollow, final String productId, final int position) {
+            System.out.println("follow_listener: " + isFollow);
+            LikeButton follow = itemView.findViewById(R.id.flower_item_follow_like_button);
+            follow.setLiked(isFollow);
+            follow.setOnLikeListener(new OnLikeListener() {
                 @Override
-                public void onClick(View v) {
-                    Router.addCharterFragment(itemView.getContext(), idProduct);
+                public void liked(LikeButton likeButton) {
+                    FollowButton.setLike(userId, productId);
+                    reloadValues();
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    FollowButton.setUnLike(userId, productId);
+                    reloadValues();
+                    if (isFollowPage) {
+                        System.out.println("position " + position);
+                        items.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, items.size());
+
+                    }
                 }
             });
+
         }
 
         private void setProductImage(String urlImage){
@@ -103,5 +136,10 @@ public class ProductsGridAdapter extends RecyclerView.Adapter<ProductsGridAdapte
             productImageSimpleDraweeView.setImageURI(Uri.parse(urlImage));
         }
 
+        private void reloadValues() {
+            MainFragment parentFragment = (MainFragment) Router.getFragmentByTag(itemView.getContext(), Router.MAIN_FRAGMENT_TAG);
+            if (parentFragment != null)
+                ((SettingsFragment) ChildRouter.getFragmentByTag(parentFragment, ChildRouter.SETTINGS_FRAGMENT_TAG)).reloadValues();
+        }
     }
 }

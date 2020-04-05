@@ -12,16 +12,16 @@ public class GridSearchesConnection {
         this.parent = parent;
     }
 
-    public void bind(String text) {
-        createThread(text);
+    public void bind(String text, String userId) {
+        createThread(text, userId);
     }
 
-    private void createThread(final String text) {
+    private void createThread(final String text, final String userId) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = Message.obtain();
-                msg.obj = DataBase.getProductsByTag(text);
+                msg.obj = DataBase.getProductsByTag(text, userId);
                 parent.sendMessage(msg);
             }
         });

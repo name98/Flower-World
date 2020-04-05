@@ -8,14 +8,10 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="56dp"
-        android:fontFamily="@font/roboto_bold"
+        style="@style/headline"
         android:text="@string/search"
-        android:textColor="@color/black"
-        android:textSize="30sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +21,8 @@
         android:id="@+id/search_fragment_popular_searches_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/search_text_pane_frame_layout"
@@ -36,14 +33,10 @@
         tools:listitem="@layout/text_item" />
 
     <TextView
+        android:layout_marginTop="15dp"
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Чаще всего ищут:"
-        android:textColor="@color/black"
-        android:textSize="25sp"
+        style="@style/headline_recycle_views"
+        android:text="@string/often_find"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/search_text_pane_frame_layout"
@@ -53,9 +46,9 @@
         android:id="@+id/search_text_pane_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/search_pane"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.941"
@@ -67,12 +60,13 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingLeft="15dp">
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-
                 android:src="@drawable/ic_search_grey" />
 
             <TextView
@@ -80,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textColor="#9999"
+                android:textColor="@color/text_dark_grey"
                 android:textSize="20sp" />
         </LinearLayout>
     </FrameLayout>

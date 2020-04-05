@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flowerworld.R;
+import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.GridSearchesConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.FlowerItem;
@@ -38,6 +39,7 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
         assert getArguments() != null;
         String tag = getArguments().getString(TAG_KEY);
         setConnection(tag);
+        System.out.println(getUserId() + "ahsdjhasjdkhasd");
     }
 
     @Override
@@ -71,7 +73,7 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
     private void setConnection(String tag) {
         GridSearchesConnection connection = new GridSearchesConnection();
         connection.setParent(this);
-        connection.bind(tag);
+        connection.bind(tag, getUserId());
     }
 
     private void setViews(ArrayList<FlowerItem> products) {
@@ -80,6 +82,7 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
         gridItemsRecycleView.setLayoutManager(gridLayout);
         ProductsGridAdapter adapter = new ProductsGridAdapter();
         adapter.setItems(products);
+        adapter.setUserId(getUserId());
         gridItemsRecycleView.setAdapter(adapter);
         setProgress(false);
     }
@@ -93,6 +96,11 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
             Router.removeFragmentByTag(parent.getContext(), Router.PROGRESS_FRAGMENT_TAG);
     }
 
+
+    private String getUserId(){
+        DataBaseHelper helper = new DataBaseHelper(getActivity());
+        return helper.get(DataBaseHelper.KEY);
+    }
 
 
 }

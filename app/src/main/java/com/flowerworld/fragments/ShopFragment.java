@@ -21,11 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flowerworld.R;
+import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.ShopConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.FullShopItem;
 
+import com.flowerworld.items.UserItem;
 import com.flowerworld.items.adapters.ProductsGridAdapter;
 
 
@@ -53,7 +55,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
         connection.setParent(this);
         assert getArguments() != null;
         String shopName = getArguments().getString(SHOP_NAME_KEY);
-        connection.bind(shopName);
+        connection.bind(shopName, getUserId());
     }
 
     private void setViews(FullShopItem shop) {
@@ -66,7 +68,6 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
         address.setText(shop.getAddress());
         annotat.setText(shop.getAnnotantion());
         uslD.setText(shop.getDelivery());
-        System.out.println(shop.getLogo());
         shopPhoto.setImageURI(Uri.parse(shop.getLogo()));
     }
 
@@ -74,7 +75,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
         RecyclerView recyclerViewGrid = Objects.requireNonNull(getView()).findViewById(R.id.shop_fragment_products_recycle_view);
         recyclerViewGrid.setLayoutManager(new GridLayoutManager(getContext(), 2));
         ProductsGridAdapter adapter = new ProductsGridAdapter();
-        System.out.println("length2" + products.size());
+        adapter.setUserId(getUserId());
         adapter.setItems(products);
         recyclerViewGrid.setAdapter(adapter);
         setProgressBar(false);
@@ -130,6 +131,11 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
                 Router.removeFragmentByTag(getContext(), Router.SHOP_FRAGMENT_TAG);
             }
         });
+    }
+
+    private String getUserId(){
+        DataBaseHelper helper = new DataBaseHelper(getContext());
+        return helper.get(DataBaseHelper.KEY);
     }
 
 

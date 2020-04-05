@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/flowerCardView"
+        android:layout_width="150dp"
+        android:layout_height="245dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="3dp"
+        app:cardMaxElevation="3dp"
+        android:layout_margin="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/flowerPictureMini"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:src="@drawable/ic_launcher_background"
+            app:retryImageScaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/flower_item_home_fragment_product_title_text_view"
+                style="@style/product_item_title"
+                android:layout_below="@id/flowerPictureMini"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:ellipsize="end"
+                tools:text="Розы" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/flower_item_home_fragment_product_price_text_view"
+                    style="@style/product_item_price"
+                    android:layout_marginBottom="3dp"
+                    tools:text="3500 руб." />
+
+                <RatingBar
+                    android:id="@+id/flowerRatingBarMini"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="true"
+                    android:max="5"
+                    android:numStars="5"
+                    android:progressTint="@color/active_red"
+                    tools:progress="5"
+                    android:scaleX=".999"
+                    android:scaleY=".999"
+                    android:transformPivotX="2dp"
+                    android:transformPivotY="2dp">
+                </RatingBar>
+            </LinearLayout>
+
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/flower_layout_progress_pane"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/appColorWhite"
+            android:visibility="visible">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/flower_item_home_fragment_picture_load_frame_layout"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:cardBackgroundColor="@color/text_light_grey"
+                app:cardElevation="0dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/flower_item_home_fragment_title_load_frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_below="@id/flower_item_home_fragment_picture_load_frame_layout"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@color/light_light_grey"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="5dp"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/flower_item_home_fragment_price_load_frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="17dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginBottom="3dp"
+                    app:cardBackgroundColor="@color/light_light_grey"
+                    app:cardElevation="0dp"
+                    app:cardCornerRadius="8dp"/>
+
+                <RatingBar
+                    android:id="@+id/flower_item_home_fragment_rate_load_rating_bar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="true"
+                    android:max="5"
+                    android:numStars="5"
+                    android:progressTint="@color/text_light_grey"
+                    android:progress="5"
+                    android:scaleX=".999"
+                    android:scaleY=".999"
+                    android:transformPivotX="2dp"
+                    android:transformPivotY="2dp">
+                </RatingBar>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

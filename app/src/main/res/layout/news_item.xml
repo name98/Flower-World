@@ -1,36 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
-        android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:textSize="22sp"
+        android:textColor="@color/text_dark"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp">
-        <TextView
-            style="@style/Subtitle1"
+        android:id="@+id/news_item_head_title_text_view"
+        tools:text="Красные розы"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"/>
 
-            android:text="HelloWorld"
-            android:id="@+id/newsTitleText"
-
-            android:layout_marginLeft="3dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="8dp"
-
-            />
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/newsImage"
-            android:layout_centerHorizontal="true"
-            app:roundedCornerRadius="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_launcher_background"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            app:retryImageScaleType="fitXY"
-
-            android:layout_below="@id/newsTitleText"/>
-    </LinearLayout>
-
-</RelativeLayout>
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/newsImage"
+        app:retryImageScaleType="fitXY"
+        app:roundedCornerRadius="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:src="@drawable/ic_launcher_background" />
+</LinearLayout>

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.view.KeyEvent;
-import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -15,9 +13,6 @@ import androidx.fragment.app.FragmentManager;
 import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.connections.DataBaseHelper;
-import com.flowerworld.connections.GridSearchesConnection;
-
-import static android.view.KeyEvent.KEYCODE_BACK;
 
 public class Router {
     private FragmentManager fragmentManager;
@@ -26,9 +21,9 @@ public class Router {
         this.fragmentManager = fragmentManager;
     }
 
-    private final static String MAIN_FRAGMENT_TAG = "main_fragment";
+    public final static String MAIN_FRAGMENT_TAG = "main_fragment";
     private final static int CONTAINER = R.id.activity_fragment_contaner;
-    final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
+    public final static String PROGRESS_FRAGMENT_TAG = "progress_fragment";
     public final static String CREATE_COMMENT_FRAGMENT_TAG = "create_comment_fragment";
     public final static String SHOP_FRAGMENT_TAG = "shop_fragment";
     public final static String PRODUCT_FRAGMENT_TAG = "product_fragment";
@@ -39,7 +34,11 @@ public class Router {
     public final static String LOGIN_FRAGMENT_TAG = "login_fragment";
     public final static String SEARCH_FRAGMENT_EDIT_MODE = "search_fragment_edit_mode";
     public final static String GRID_SEARCHES_FRAGMENT_TAG = "grid_searches_fragment";
-    public final static String SIGN_IN_FRAGMENT_TAG = "grid_searches_fragment";
+    public final static String SIGN_IN_FRAGMENT_TAG = "sign_in_fragment";
+    public final static String WELCOME_FRAGMENT_TAG = "welcome_fragment";
+    public final static String FOLLOW_PRODUCTS_TAG = "follow_products";
+    public final static String COMMENTED_PRODUCTS_TAG = "commented_products";
+    public final static String ABOUT_APP_TAG = "about_app_fragment";
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -97,32 +96,6 @@ public class Router {
         fragmentManager.beginTransaction()
                 .add(R.id.activity_fragment_contaner, charterFragment, CHARTER_FRAGMENT_TAG)
                 .addToBackStack(null)
-                .commit();
-    }
-
-    public void remove(String tag) {
-        if (isAdded(tag)) {
-            fragmentManager.beginTransaction()
-                    .remove(fragmentManager.findFragmentByTag(tag))
-                    .disallowAddToBackStack()
-                    .commit();
-            fragmentManager.popBackStack();
-        }
-    }
-
-    private boolean isAdded(String tag) {
-        if (fragmentManager.findFragmentByTag(tag) == null)
-            return false;
-        else return true;
-
-    }
-
-
-    public void reload(String tag) {
-        Fragment fragment = fragmentManager.findFragmentByTag(tag);
-        fragmentManager.beginTransaction()
-                .detach(fragment)
-                .attach(fragment)
                 .commit();
     }
 
@@ -241,7 +214,7 @@ public class Router {
                 .commit();
     }
 
-    private static void addLoginFragment(Context context) {
+    public static void addLoginFragment(Context context) {
         FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
         final LoginFragment loginFragment = LoginFragment.newInstance();
         manager.beginTransaction()
@@ -259,7 +232,7 @@ public class Router {
         int bool = cursor.getInt(0);
         if (bool > 0) {
             addMainFragment(context);
-        } else addLoginFragment(context);
+        } else addWelcomeFragment(context);
     }
 
     static void removeAllFragments(Context context) {
@@ -289,4 +262,50 @@ public class Router {
                 .commit();
 
     }
+
+    public static void addWelcomeFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        WelcomeFragment welcomeFragment = WelcomeFragment.newInstance();
+        manager.beginTransaction()
+                .add(R.id.activity_fragment_contaner, welcomeFragment, WELCOME_FRAGMENT_TAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public static void addFollowFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        FollowFragment followFragment = FollowFragment.newInstance();
+        manager.beginTransaction()
+                .add(R.id.activity_fragment_contaner, followFragment, FOLLOW_PRODUCTS_TAG)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    public static void addCommentedFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        CommentedFlowersFragment commentedFlowersFragment = CommentedFlowersFragment.newInstance();
+        manager.beginTransaction()
+                .add(R.id.activity_fragment_contaner, commentedFlowersFragment, COMMENTED_PRODUCTS_TAG)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    public static void addAboutAppFragment(Context context) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        AboutAppFragment aboutAppFragment = AboutAppFragment.newInstance();
+        manager.beginTransaction()
+                .add(R.id.activity_fragment_contaner, aboutAppFragment, ABOUT_APP_TAG)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    public static Fragment getFragmentByTag(Context context, String tag) {
+        FragmentManager manager = ((MainActivity) context).getSupportFragmentManager();
+        return manager.findFragmentByTag(tag);
+    }
+
+
 }

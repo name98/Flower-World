@@ -15,10 +15,10 @@ public class CharterConnection {
     }
 
     public void bind(int id) {
-        createThreadToReadCharer(id);
+        createThreadToReadCharter(id);
     }
 
-    private void createThreadToReadCharer(final int id) {
+    private void createThreadToReadCharter(final int id) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -38,13 +38,21 @@ public class CharterConnection {
         createThreadToSendCharter(charter);
     }
 
-    private void createThreadToSendCharter(CharterItem charter) {
-        Message msg = Message.obtain();
-        msg.obj = insertDate(charter);
-        parent.sendMessage2(msg);
+    private void createThreadToSendCharter(final CharterItem charter) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Message msg = Message.obtain();
+                msg.obj = insertDate(charter);
+                parent.sendMessage2(msg);
+            }
+        });
+        t.start();
+
     }
 
     private boolean insertDate(CharterItem charter) {
+        DataBase.insertCharter(charter);
         return true;
     }
 

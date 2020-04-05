@@ -1,7 +1,5 @@
 package com.flowerworld.items;
 
-import com.flowerworld.models.MyDate;
-
 public class CharterItem {
     private String address;
     private String receiver;
@@ -9,8 +7,6 @@ public class CharterItem {
     private String idUser;
     private String date;
     private String time;
-    private String state ="waiting";
-    private String icoUrl;
 
 
     public void setAddress(String address) {
@@ -35,14 +31,6 @@ public class CharterItem {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public void setIcoUrl(String icoUrl) {
-        this.icoUrl = icoUrl;
-    }
-
-    public void setState(String state) {
-        this.state = state;
     }
 
     public String getAddress() {
@@ -70,6 +58,6 @@ public class CharterItem {
     }
 
     public String getState() {
-        return state;
+        return "ожидание";
     }
 }

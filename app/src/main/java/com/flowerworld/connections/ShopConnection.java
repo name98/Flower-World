@@ -13,23 +13,23 @@ public class ShopConnection {
         this.parent = parent;
     }
 
-    public void bind(String shopName) {
-        createThreadToSendShop(shopName);
+    public void bind(String shopName, String userId) {
+        createThreadToSendShop(shopName, userId);
     }
 
-    private void createThreadToSendShop(final String shopName) {
+    private void createThreadToSendShop(final String shopName, final String userId) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = Message.obtain();
-                msg.obj = getShop(shopName);
+                msg.obj = getShop(shopName, userId);
                 parent.sendMessage(msg);
             }
         });
         thread.start();
     }
 
-    private FullShopItem getShop(String shopName) {
-        return DataBase.getShopByName(shopName);
+    private FullShopItem getShop(String shopName, String userId) {
+        return DataBase.getShopByName(shopName, userId);
     }
 }

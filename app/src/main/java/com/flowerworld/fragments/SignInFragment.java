@@ -25,8 +25,6 @@ import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.UserItem;
 import com.flowerworld.models.UserData;
 
-//import org.apache.commons.validator.routines.EmailValidator;
-
 import java.util.Objects;
 
 public class SignInFragment extends Fragment implements FragmentSetDataInterface {
@@ -126,7 +124,6 @@ public class SignInFragment extends Fragment implements FragmentSetDataInterface
     private void createViews() {
         View parent = getView();
         assert parent != null;
-        TextView goToLogin = parent.findViewById(R.id.sign_fragment_go_to_login_text_view);
         TextView errorTextView = parent.findViewById(R.id.sign_in_fragment_error_message_text_view);
         EditText firstNameEditText = parent.findViewById(R.id.sing_in_fragment_first_name);
         EditText secondNameEditText = parent.findViewById(R.id.sing_in_fragment_second_name);
@@ -148,12 +145,6 @@ public class SignInFragment extends Fragment implements FragmentSetDataInterface
         assert imm != null;
         imm.showSoftInput(firstNameEditText, InputMethodManager.SHOW_IMPLICIT);
         setButtonListener();
-        goToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Router.removeFragmentByTag(getContext(), Router.SIGN_IN_FRAGMENT_TAG);
-            }
-        });
     }
 
     private void setButtonListener() {

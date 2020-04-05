@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appColorWhite"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="30dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/sittings_fragment_user_name_text_view"
+            style="@style/headline"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:textSize="28sp"
+            tools:text="Петров Петр Агрович" />
+
+        <TextView
+            android:id="@+id/settings_fragment_user_email_text_view"
+            style="@style/product_item_price"
+            android:textSize="18sp"
+            tools:text="petya228@gmail.com" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/button_styles"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.79" />
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="2dp"
+        android:columnCount="2"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="2:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.7">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sittings_fragment_active_orders_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/text_dark"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/sittings_fragment_active_ico_image_view"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/active_orders"
+                    android:src="@drawable/active_orders_ico" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_active_text_view"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/sittings_fragment_active_ico_image_view"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="2"
+                    android:text="@string/active_orders"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_active_orders_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sittings_fragment_active_text_view"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/text_light_grey"
+                    tools:text="2 заказа" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sittings_fragment_completed_orders_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/sittings_fragment_completed_orders_ico_image_view"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/completed_orders"
+                    android:src="@drawable/completed_orders_ico" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_completed_orders_text_view"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/sittings_fragment_completed_orders_ico_image_view"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/completed_orders"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_completed_orders_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sittings_fragment_completed_orders_text_view"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/text_light_grey"
+                    tools:text="2 заказа" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sittings_fragment_products_with_comment_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/sittings_fragment_products_with_comment_ico_image_view"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/rated_products"
+                    android:src="@drawable/commented_orders_ico" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_products_with_comment_text_view"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/sittings_fragment_products_with_comment_ico_image_view"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="2"
+                    android:text="@string/rated_products"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_products_with_comment_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sittings_fragment_products_with_comment_text_view"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/text_light_grey"
+                    tools:text="2 заказа" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sittings_fragment_follows_orders_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="5dp"
+            app:cardCornerRadius="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/sittings_fragment_follows_ico_image_view"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/follow_products"
+                    android:src="@drawable/follow_orders_ico" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_follows_order_text_view"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@id/sittings_fragment_follows_ico_image_view"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="2"
+                    android:text="@string/follow_products"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_follows_orders_count_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sittings_fragment_follows_order_text_view"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/text_light_grey"
+                    tools:text="2 заказа" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sittings_fragment_about_app_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="5dp"
+            app:cardCornerRadius="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/sittings_fragment_about_app_ico_image_view_"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/about_us"
+                    android:src="@drawable/about_app_ico" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_about_app_text_view"
+                    android:layout_width="100dp"
+                    android:layout_height="45dp"
+                    android:layout_below="@id/sittings_fragment_about_app_ico_image_view_"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="2"
+                    android:text="@string/about_us"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sittings_fragment_logout_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="5dp"
+            app:cardMaxElevation="5dp"
+            app:cardCornerRadius="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/sittings_fragment_logout_ico_image_view"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/exit"
+                    android:src="@drawable/logout_ico" />
+
+                <TextView
+                    android:id="@+id/sittings_fragment_logout_text_view"
+                    android:layout_width="100dp"
+                    android:layout_height="34dp"
+                    android:layout_below="@id/sittings_fragment_logout_ico_image_view"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto"
+                    android:maxLines="2"
+                    android:text="@string/exit"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

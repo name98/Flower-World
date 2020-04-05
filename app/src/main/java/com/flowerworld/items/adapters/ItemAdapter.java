@@ -6,11 +6,14 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import androidx.viewpager2.widget.ViewPager2;
 
 
@@ -22,6 +25,7 @@ import com.flowerworld.items.NewsItem;
 import com.flowerworld.items.ShopItem;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<Item> itemArrayList = new ArrayList<>();
@@ -56,7 +60,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case 1:
-                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_pager_news, parent, false);
+                View view2 = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_recycle_view, parent, false);
                 return new NewsHolder(view2);
             case 2:
                 View view3 = LayoutInflater.from(parent.getContext()).inflate(R.layout.shops_recycle_view, parent, false);
@@ -150,7 +154,6 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext(),
                     LinearLayoutManager.HORIZONTAL, false);
             productsRecycleView.setLayoutManager(manager);
-            productsRecycleView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         }
 
         private void setItemCount() {
@@ -162,6 +165,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     LinearLayoutManager.HORIZONTAL, false);
             productsRecycleView.setLayoutManager(manager);
             productsRecycleView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+
         }
 
         @SuppressLint("HandlerLeak")
@@ -191,10 +195,32 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         private void setNewsItems(ArrayList<NewsItem> news) {
-            ViewPager2 newsItemsViewPager2 = itemView.findViewById(R.id.newsViewPager2);
+            final RecyclerView newsRecycleView = itemView.findViewById(R.id.news_recycle_view);
             NewsItemAdapter adapter = new NewsItemAdapter();
             adapter.setNewsItems(news);
-            newsItemsViewPager2.setAdapter(adapter);
+            newsRecycleView.setAdapter(adapter);
+            newsRecycleView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), RecyclerView.HORIZONTAL, false));
+            SnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(newsRecycleView);
+            RecyclerView indicatorsRecycleView = itemView.findViewById(R.id.news_indicator_recycle_view);
+            final IndicatorAdapter indicatorAdapter = new IndicatorAdapter();
+            indicatorAdapter.setParam(0, news.size());
+            indicatorsRecycleView.setAdapter(indicatorAdapter);
+            indicatorsRecycleView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), RecyclerView.HORIZONTAL, false));
+            newsRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    System.out.println("POSITION: " + ((LinearLayoutManager) Objects
+                                .requireNonNull(newsRecycleView.getLayoutManager()))
+                                .findFirstVisibleItemPosition());
+
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        indicatorAdapter.setActive(((LinearLayoutManager) Objects
+                                .requireNonNull(newsRecycleView.getLayoutManager()))
+                                .findFirstVisibleItemPosition());
+                }
+            });
         }
     }
 
@@ -209,14 +235,13 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         private void setShopsItems(ArrayList<ShopItem> shops) {
-            RecyclerView shopsItems = itemView.findViewById(R.id.shops_items_recycle_view);
+            RecyclerView shopsRecycleView = itemView.findViewById(R.id.shops_items_recycle_view);
             ShopItemAdapter adapter = new ShopItemAdapter();
             adapter.setShopItems(shops);
             LinearLayoutManager manager = new LinearLayoutManager(itemView.getContext(),
                     LinearLayoutManager.HORIZONTAL, false);
-            shopsItems.setLayoutManager(manager);
-            shopsItems.setAdapter(adapter);
-            shopsItems.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+            shopsRecycleView.setLayoutManager(manager);
+            shopsRecycleView.setAdapter(adapter);
         }
     }
 }

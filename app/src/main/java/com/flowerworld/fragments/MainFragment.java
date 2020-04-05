@@ -35,9 +35,9 @@ public class MainFragment extends Fragment {
 
     private void addChildFragments() {
         ChildRouter.addSearchFragment(this);
-        ChildRouter.addPersonFragment(this);
+        ChildRouter.addSettingsFragment(this);
         ChildRouter.addHomeFragment(this);
-        ChildRouter.hideFragment(this, ChildRouter.PERSON_FRAGMENT_TAG);
+        ChildRouter.hideFragment(this, ChildRouter.SETTINGS_FRAGMENT_TAG);
         ChildRouter.hideFragment(this, ChildRouter.SEARCH_FRAGMENT_TAG);
     }
 
@@ -50,17 +50,17 @@ public class MainFragment extends Fragment {
                 switch (menuItem.getItemId()) {
                     case R.id.home_item:
                         ChildRouter.showFragment(fragment, ChildRouter.HOME_FRAGMENT_TAG);
-                        ChildRouter.hideFragment(fragment, ChildRouter.PERSON_FRAGMENT_TAG);
+                        ChildRouter.hideFragment(fragment, ChildRouter.SETTINGS_FRAGMENT_TAG);
                         ChildRouter.hideFragment(fragment, ChildRouter.SEARCH_FRAGMENT_TAG);
                         return true;
                     case R.id.person_item:
                         ChildRouter.hideFragment(fragment, ChildRouter.HOME_FRAGMENT_TAG);
-                        ChildRouter.showFragment(fragment, ChildRouter.PERSON_FRAGMENT_TAG);
+                        ChildRouter.showFragment(fragment, ChildRouter.SETTINGS_FRAGMENT_TAG);
                         ChildRouter.hideFragment(fragment, ChildRouter.SEARCH_FRAGMENT_TAG);
                         return true;
                     case R.id.search_item:
                         ChildRouter.hideFragment(fragment, ChildRouter.HOME_FRAGMENT_TAG);
-                        ChildRouter.hideFragment(fragment, ChildRouter.PERSON_FRAGMENT_TAG);
+                        ChildRouter.hideFragment(fragment, ChildRouter.SETTINGS_FRAGMENT_TAG);
                         ChildRouter.showFragment(fragment, ChildRouter.SEARCH_FRAGMENT_TAG);
                         return true;
                     default:

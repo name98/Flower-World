@@ -7,6 +7,8 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -46,7 +48,8 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
         setHandler();
         assert getArguments() != null;
         boolean isCompleted = getArguments().getBoolean(IS_COMPLETED_KEY);
-        setToolbar(isCompleted);
+        setToolbar();
+        setTitle(isCompleted);
         DataBaseHelper helper = new DataBaseHelper(getContext());
         String userId = helper.getId();
         OrderConnection connection = new OrderConnection();
@@ -81,27 +84,30 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
     private void setViews(ArrayList<OrderItem> orders) {
         View view = getView();
         assert view != null;
-        RecyclerView recyclerView = view.findViewById(R.id.ordersFragmentRV);
-        LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(manager);
-        OrderItemAdapter adapter = new OrderItemAdapter();
-        adapter.setOrders(orders);
-        recyclerView.setAdapter(adapter);
+        if (orders.size() == 0) {
+            RelativeLayout emptyRelativeLayout = view.findViewById(R.id.orders_fragment_empty_relative_layout);
+            emptyRelativeLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            RecyclerView recyclerView = view.findViewById(R.id.ordersFragmentRV);
+            LinearLayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+            recyclerView.setLayoutManager(manager);
+            OrderItemAdapter adapter = new OrderItemAdapter();
+            adapter.setOrders(orders);
+            recyclerView.setAdapter(adapter);
+        }
         Router.removeFragmentByTag(getContext(), Router.PROGRESS_FRAGMENT_TAG);
     }
 
-    private void setToolbar(boolean isCompleted) {
+    private void setToolbar() {
         Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
         assert parentActivity != null;
         parentActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = parentActivity.getSupportActionBar();
+        actionBar.setTitle("");
         assert actionBar != null;
-        if (isCompleted)
-            actionBar.setTitle("Выполненные заказы");
-        else
-            actionBar.setTitle("Активные заказы");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +115,15 @@ public class OrdersFragment extends Fragment implements FragmentSetDataInterface
             }
         });
     }
+    private void setTitle(boolean isCompleted) {
+        TextView tittle = Objects.requireNonNull(getView()).findViewById(R.id.orders_fragment_title_text_view);
+        if (!isCompleted)
+            tittle.setText("Активные заказы");
+        else
+            tittle.setText("Завершенные заказы");
+    }
+
+
 
 
 }

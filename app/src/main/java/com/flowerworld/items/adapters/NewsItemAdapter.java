@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.flowerworld.MainActivity;
 import com.flowerworld.R;
 import com.flowerworld.fragments.Router;
 import com.flowerworld.items.NewsItem;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
 public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsItemHolder> {
     private ArrayList<NewsItem> newsItems = new ArrayList<>();
 
-    public void setNewsItems(ArrayList<NewsItem> newsItems) {
+    void setNewsItems(ArrayList<NewsItem> newsItems) {
         this.newsItems = newsItems;
         notifyDataSetChanged();
     }
@@ -55,7 +53,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsIt
         SimpleDraweeView newImage;
         NewsItemHolder(@NonNull View itemView) {
             super(itemView);
-            newsTitleText=itemView.findViewById(R.id.newsTitleText);
+            newsTitleText=itemView.findViewById(R.id.news_item_head_title_text_view);
             newImage=itemView.findViewById(R.id.newsImage);
         }
         void setImage(NewsItem newsItem){

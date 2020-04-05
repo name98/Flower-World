@@ -9,7 +9,7 @@
         android:layout_height="100dp"
         android:id="@+id/flowerIconImage"/>
     <TextView
-        style="@style/Body1"
+        style="@style/product_item_title"
         android:text="Название"
         android:layout_marginTop="0dp"
         android:layout_marginLeft="20dp"
