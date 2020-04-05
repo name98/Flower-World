@@ -27,7 +27,7 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsIt
     @NonNull
     @Override
     public NewsItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item, parent, false);
         return new NewsItemHolder(view);
     }
 
@@ -48,19 +48,22 @@ public class NewsItemAdapter extends RecyclerView.Adapter<NewsItemAdapter.NewsIt
         return newsItems.size();
     }
 
-    class NewsItemHolder extends RecyclerView.ViewHolder{
+    class NewsItemHolder extends RecyclerView.ViewHolder {
         TextView newsTitleText;
         SimpleDraweeView newImage;
+
         NewsItemHolder(@NonNull View itemView) {
             super(itemView);
-            newsTitleText=itemView.findViewById(R.id.news_item_head_title_text_view);
-            newImage=itemView.findViewById(R.id.newsImage);
+            newsTitleText = itemView.findViewById(R.id.news_item_head_title_text_view);
+            newImage = itemView.findViewById(R.id.newsImage);
         }
-        void setImage(NewsItem newsItem){
+
+        void setImage(NewsItem newsItem) {
             String uri = newsItem.getUrlImage();
             newImage.setImageURI(Uri.parse(uri));
         }
-        void setTitle(NewsItem newsItem){
+
+        void setTitle(NewsItem newsItem) {
             newsTitleText.setText(newsItem.getTitleNews());
         }
     }

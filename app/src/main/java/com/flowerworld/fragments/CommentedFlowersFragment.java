@@ -20,10 +20,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flowerworld.R;
-import com.flowerworld.connections.CommentConnection;
 import com.flowerworld.connections.CommentedConnection;
 import com.flowerworld.connections.DataBaseHelper;
-import com.flowerworld.connections.FolllowConnection;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.FlowerItem;
 import com.flowerworld.items.adapters.ProductsGridAdapter;
@@ -47,6 +45,7 @@ public class CommentedFlowersFragment extends Fragment implements FragmentSetDat
         getData();
         setTitle();
         setToolbar();
+
     }
 
 

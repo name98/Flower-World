@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.grid_fragment, container, false);
+        return inflater.inflate(R.layout.grid_searches_fragment, container, false);
     }
 
     @Override
@@ -77,7 +78,7 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
     }
 
     private void setViews(ArrayList<FlowerItem> products) {
-        RecyclerView gridItemsRecycleView = getView().findViewById(R.id.grid_fragment_product_list_recycle_view);
+        RecyclerView gridItemsRecycleView = getView().findViewById(R.id.grid_searches_fragment_products_recycle_view);
         GridLayoutManager gridLayout = (new GridLayoutManager(getContext(), 2));
         gridItemsRecycleView.setLayoutManager(gridLayout);
         ProductsGridAdapter adapter = new ProductsGridAdapter();
@@ -100,6 +101,11 @@ public class GridSearchesFragment extends Fragment implements FragmentSetDataInt
     private String getUserId(){
         DataBaseHelper helper = new DataBaseHelper(getActivity());
         return helper.get(DataBaseHelper.KEY);
+    }
+
+    private void goneViews() {
+        View parent = getView();
+        View layout = parent.findViewById(R.layout.toolbar);
     }
 
 

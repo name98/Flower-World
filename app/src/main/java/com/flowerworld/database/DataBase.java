@@ -111,6 +111,35 @@ public class DataBase {
         return product;
     }
 
+
+    public static FlowerItem getProductById(String id, String userId) {
+        System.out.println(id + "this is");
+        JSONArray array = getJSONArrayByScript(Scripts.getProductByIdScript(id, userId));
+        FlowerItem product = new FlowerItem();
+        try {
+            assert array != null;
+            JSONObject object = array.getJSONObject(0);
+            product.setName(object.getString("название"));
+            product.setImageUrl(Methods.strParser(object.getString("картинки"), " ").get(0));
+            product.setPrice(object.getString("цена"));
+            product.setId(Integer.valueOf(id));
+            RatingItem ratingItem = new RatingItem();
+            ratingItem.setOne(object.getInt("один"));
+            ratingItem.setTwo(object.getInt("два"));
+            ratingItem.setTree(object.getInt("три"));
+            ratingItem.setFour(object.getInt("четыре"));
+            ratingItem.setFive(object.getInt("пять"));
+            int follow = object.getInt("follow");
+            if (follow==0)
+                product.setFollow(false);
+            else product.setFollow(true);
+            product.setRating(String.valueOf(ratingItem.getGeneral()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
     public static ArrayList<NewsItem> getNewsArray() {
         JSONArray array = getJSONArrayByScript(Scripts.allData("news"));
         ArrayList<NewsItem> news = new ArrayList<>();
@@ -241,7 +270,7 @@ public class DataBase {
                     jsonObject.getString("внутри_МКАДа") + "\n" +
                     jsonObject.getString("за_МКАДом");
             String annotantion = jsonObject.getString("описание");
-            JSONArray array = getJSONArrayByScript(Scripts.flowerItemByShop(name));
+            JSONArray array = getJSONArrayByScript(Scripts.flowerItemByShop(name, userId));
             System.out.println(array.length() + "length");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject temp = array.getJSONObject(i);
@@ -254,16 +283,12 @@ public class DataBase {
                 ratingItem.setTwo(temp.getInt("два"));
                 ratingItem.setTree(temp.getInt("три"));
                 ratingItem.setFour(temp.getInt("четыре"));
+                int fol;
+                fol = temp.getInt("follow");
+                boolean follow;
+                follow = fol != 0;
                 ratingItem.setFive(temp.getInt("пять"));
-                products.add(new FlowerItem(nameProduct, images, String.valueOf(ratingItem.getGeneral()), price, productId));
-            }
-            for (int i = 0; i < products.size(); i++) {
-                JSONArray followArray = getJSONArrayByScript(Scripts.isFollow(userId, String.valueOf(products.get(i).getId())));
-                int fol = followArray.getJSONObject(0).getInt("follow");
-                if (fol == 0)
-                    products.get(i).setFollow(false);
-                else
-                    products.get(i).setFollow(true);
+                products.add(new FlowerItem(nameProduct, images, String.valueOf(ratingItem.getGeneral()), price, productId, follow));
             }
             shop.setAddress(address);
             shop.setAnnotantion(annotantion);
@@ -468,7 +493,7 @@ public class DataBase {
 
     public static ArrayList<FlowerItem> getProductsByTag(String text, String userId) {
         ArrayList<FlowerItem> temp = new ArrayList<>();
-        JSONArray array = getJSONArrayByScript(Scripts.getProductsItemByTag(text));
+        JSONArray array = getJSONArrayByScript(Scripts.getProductsItemByTag(text, userId));
 
         try {
             for (int i = 0; i < array.length(); i++) {
@@ -485,15 +510,10 @@ public class DataBase {
                 ratingItem.setFour(object.getInt("четыре"));
                 ratingItem.setFive(object.getInt("пять"));
                 product.setRating(String.valueOf(ratingItem.getGeneral()));
+                int fol = object.getInt("follow");
+                boolean follow = fol != 0;
+                product.setFollow(follow);
                 temp.add(product);
-            }
-            for (int i = 0; i < temp.size(); i++) {
-                JSONArray followArray = getJSONArrayByScript(Scripts.isFollow(userId, String.valueOf(temp.get(i).getId())));
-                System.out.println(followArray.getJSONObject(0).getInt("follow"));
-                if (followArray.getJSONObject(0).getInt("follow") == 0)
-                    temp.get(i).setFollow(false);
-                else temp.get(i).setFollow(true);
-                System.out.println("33332323233232323");
             }
 
         } catch (JSONException e) {
@@ -611,15 +631,10 @@ public class DataBase {
                 ratingItem.setTree(temp.getInt("три"));
                 ratingItem.setFour(temp.getInt("четыре"));
                 ratingItem.setFive(temp.getInt("пять"));
-                products.add(new FlowerItem(nameProduct, images, String.valueOf(ratingItem.getGeneral()), price, productId));
-            }
-            for (int i = 0; i < products.size(); i++) {
-                JSONArray followArray = getJSONArrayByScript(Scripts.isFollow(userId, String.valueOf(products.get(i).getId())));
-                int fol = followArray.getJSONObject(0).getInt("follow");
-                if (fol == 0)
-                    products.get(i).setFollow(false);
-                else
-                    products.get(i).setFollow(true);
+                int fol = temp.getInt("follow");
+                boolean follow = fol != 0;
+
+                products.add(new FlowerItem(nameProduct, images, String.valueOf(ratingItem.getGeneral()), price, productId, follow));
             }
         } catch (JSONException e) {
             e.printStackTrace();

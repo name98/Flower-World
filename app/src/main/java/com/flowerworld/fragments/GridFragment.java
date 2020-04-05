@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.flowerworld.R;
 
+import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.GridConnection;
 
 import com.flowerworld.items.FlowerItem;
@@ -51,6 +53,8 @@ public class GridFragment extends Fragment {
         assert getArguments() != null;
         String ids = getArguments().getString(KEY_FOR_IDS);
         bind(ids);
+        String title = getArguments().getString(KEY_FOR_TITLE);
+        setTitle(title);
     }
 
     @SuppressLint("HandlerLeak")
@@ -75,11 +79,12 @@ public class GridFragment extends Fragment {
     }
 
     private void setProductItems(ArrayList<FlowerItem> products) {
-        RecyclerView gridItemsRecycleView = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_product_list_recycle_view);
+        RecyclerView gridItemsRecycleView = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_products_recycle_view);
         GridLayoutManager gridLayout = (new GridLayoutManager(getContext(), 2));
         gridItemsRecycleView.setLayoutManager(gridLayout);
         ProductsGridAdapter adapter = new ProductsGridAdapter();
         adapter.setItems(products);
+        adapter.setUserId(getUserId());
         gridItemsRecycleView.setAdapter(adapter);
         setVisibilityProgressBar(false);
     }
@@ -91,7 +96,7 @@ public class GridFragment extends Fragment {
     private void bind(String ids) {
         setHandler();
         GridConnection connection = new GridConnection(this);
-        connection.bind(ids);
+        connection.bind(ids, getUserId());
     }
 
     private void setVisibilityProgressBar(boolean visibility) {
@@ -102,8 +107,6 @@ public class GridFragment extends Fragment {
     }
 
     private void setToolBar() {
-        assert getArguments() != null;
-        String title = getArguments().getString(KEY_FOR_TITLE);
         Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
@@ -111,12 +114,22 @@ public class GridFragment extends Fragment {
         parentActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = parentActivity.getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle(title);
+        toolbar.setTitle("");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Router.removeFragmentByTag(getContext(), Router.GRID_FRAGMENT_TAG);
             }
         });
+    }
+
+    private void setTitle(String title) {
+        TextView titleTextView = Objects.requireNonNull(getView()).findViewById(R.id.grid_fragment_title_text_view);
+        titleTextView.setText(title);
+    }
+
+    private String getUserId(){
+        DataBaseHelper helper = new DataBaseHelper(getActivity());
+        return helper.get(DataBaseHelper.KEY);
     }
 }

@@ -16,25 +16,25 @@ public class GridConnection {
         this.parent = parent;
     }
 
-    public void bind(String ids) {
-        createThreadForProductItems(ids);
+    public void bind(String ids, String userId) {
+        createThreadForProductItems(ids, userId);
     }
 
-    private ArrayList<FlowerItem> getProductItemsArray(String ids) {
+    private ArrayList<FlowerItem> getProductItemsArray(String ids, String userId) {
         ArrayList<String> idsArray = Methods.strParser(ids, " ");
         ArrayList<FlowerItem> temp = new ArrayList<>();
         for (int i = 0; i < idsArray.size(); i++) {
-            temp.add(DataBase.getProductById(idsArray.get(i)));
+            temp.add(DataBase.getProductById(idsArray.get(i), userId));
         }
         return temp;
     }
 
-    private void createThreadForProductItems(final String ids) {
+    private void createThreadForProductItems(final String ids, final String userId) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = Message.obtain();
-                msg.obj = getProductItemsArray(ids);
+                msg.obj = getProductItemsArray(ids, userId);
                 parent.sendMessage(msg);
             }
         });

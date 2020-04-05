@@ -17,16 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flowerworld.R;
 import com.flowerworld.connections.DataBaseHelper;
 import com.flowerworld.connections.FolllowConnection;
-import com.flowerworld.fragments.Router;
 import com.flowerworld.interfaces.FragmentSetDataInterface;
 import com.flowerworld.items.FlowerItem;
-import com.flowerworld.items.adapters.OrderItemAdapter;
 import com.flowerworld.items.adapters.ProductsGridAdapter;
 
 import java.util.ArrayList;

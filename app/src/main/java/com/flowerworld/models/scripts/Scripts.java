@@ -7,20 +7,28 @@ import com.flowerworld.models.UserData;
 public class Scripts {
     public static final String ALL_MINI_SHOPS = "SELECT название, логотип FROM `магазины`";
 
-    public static String getProductByIdScript(String id) {
+    public static String getProductByIdScript(String id, String userId) {
         return "SELECT\n" +
-                "    a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена\n" +
-                "FROM\n" +
-                "    `товары` as `g`\n" +
-
-                "LEFT JOIN\n" +
-                "    `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`) WHERE g.ID=" + id + ";";
+                "a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId +") as follow\n" +
+                "FROM   `товары` as `g`\n" +
+                "LEFT JOIN  `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`)\n" +
+                "WHERE g.ID=" + id + ";";
 
     }
 
-    public static String flowerItemByShop(String id) {
+    public static String getProductByIdScript(String id) {
         return "SELECT\n" +
-                "        g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена\n" +
+                "a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена\n" +
+                "FROM   `товары` as `g`\n" +
+                "LEFT JOIN  `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`)\n" +
+                "WHERE g.ID=" + id + ";";
+
+    }
+
+
+    public static String flowerItemByShop(String id, String userId) {
+        return "SELECT\n" +
+                "        g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId +") as follow\n" +
                 "    FROM\n" +
                 "        `товары` as `g`\n" +
                 "    LEFT JOIN\n" +
@@ -155,8 +163,9 @@ public class Scripts {
         return "SELECT DISTINCT LCASE(t.тэг) as тэг, t.id FROM тэги as t where t.тэг LIKE '%" + tagName + "%' GROUP by (t.тэг) LIMIT 4;";
     }
 
-    public static String getProductsItemByTag(String tag) {
-        return "SELECT DISTINCT a2.один, a2.два, a2.три, a2.четыре, a2.пять, t.картинки, t.название, t.цена, t.ID FROM товары as t LEFT JOIN\n" +
+    public static String getProductsItemByTag(String tag, String userId) {
+        return "SELECT DISTINCT a2.один, a2.два, a2.три, a2.четыре, a2.пять, t.картинки, t.название, t.цена, t.ID, (select COUNT(*) from `избранное` as `f` where f.id_good=t.ID AND f.id_user = " + userId +") as follow\n" +
+                " FROM товары as t LEFT JOIN\n" +
                 "              `рейтинг` as `a2` ON (`a2`.`id` = `t`.`рейтинг`)\n" +
                 "               where t.ID in\n" +
                 "               (SELECT товар from тэги as a WHERE a.тэг = '" + tag + "');";
@@ -220,7 +229,8 @@ public class Scripts {
     }
 
     public static String getItemsByUserCommented(String userId) {
-        return "SELECT g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена   FROM\n" +
+        return "SELECT g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId +") as follow\n" +
+                "FROM\n" +
                 "`товары` as `g`  LEFT JOIN    `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`) \n" +
                 "WHERE g.ID in (SELECT `id_товар` FROM `отзывы` WHERE `id_пользователь` = " + userId + ");";
     }

@@ -19,6 +19,15 @@ public class FlowerItem {
         this.id = id;
     }
 
+    public FlowerItem(String name, String imageUrl, String rating, String price, int id, boolean isFollow) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.rating = rating;
+        this.price = price;
+        this.id = id;
+        this.isFollow = isFollow;
+    }
+
     public void setRating(String rating) {
         this.rating = rating;
     }
