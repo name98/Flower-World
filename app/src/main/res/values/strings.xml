@@ -14,7 +14,7 @@
     <string name="description">Описание</string>
     <string name="Shop">Магазин</string>
     <string name="rates">Отзывы</string>
-    <string name="to_rate">Оставить отыз</string>
+    <string name="to_rate"><u>Оставить отзыв</u></string>
     <string name="address">Куда:</string>
     <string name="date">Дата:</string>
     <string name="time">Время:</string>
@@ -64,4 +64,5 @@
     <string name="empty">Здесь пока ничего нет</string>
     <string name="version">Версия: 1.0</string>
     <string name="author_name">Автор: Юсупов М.</string>
+    <string name="new_order">Новый заказ</string>
 </resources>

@@ -190,10 +190,10 @@ public class DataBase {
         return shops;
     }
 
-    public static FullProductItem getFullProduct(int id) {
+    public static FullProductItem getFullProduct(int id, String userId) {
         FullProductItem product = new FullProductItem();
         try {
-            JSONObject object = Objects.requireNonNull(getJSONArrayByScript(Scripts.fullData(String.valueOf(id)))).getJSONObject(0);
+            JSONObject object = Objects.requireNonNull(getJSONArrayByScript(Scripts.fullData(String.valueOf(id), userId))).getJSONObject(0);
             product.setName(object.getString("название"));
             product.setShopLogo(object.getString("логотип"));
             product.setShopName(object.getString("магазин"));
@@ -225,6 +225,8 @@ public class DataBase {
             product.setPrice(object.getString("цена"));
             product.setId(String.valueOf(id));
             product.setNumRaters(String.valueOf(ratingItem.getNumberOfRates()));
+            boolean isFollow = object.getString("follow").equals("1");
+            product.setFollow(isFollow);
 
         } catch (JSONException e) {
             e.printStackTrace();

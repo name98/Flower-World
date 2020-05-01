@@ -9,7 +9,7 @@ public class Scripts {
 
     public static String getProductByIdScript(String id, String userId) {
         return "SELECT\n" +
-                "a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId +") as follow\n" +
+                "a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId + ") as follow\n" +
                 "FROM   `товары` as `g`\n" +
                 "LEFT JOIN  `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`)\n" +
                 "WHERE g.ID=" + id + ";";
@@ -25,10 +25,9 @@ public class Scripts {
 
     }
 
-
     public static String flowerItemByShop(String id, String userId) {
         return "SELECT\n" +
-                "        g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId +") as follow\n" +
+                "        g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId + ") as follow\n" +
                 "    FROM\n" +
                 "        `товары` as `g`\n" +
                 "    LEFT JOIN\n" +
@@ -42,9 +41,9 @@ public class Scripts {
         return "SELECT * FROM " + table + ";";
     }
 
-    public static String fullData(String id) {
+    public static String fullData(String id, String userId) {
         return "SELECT g.ID, g.название, g.цена, g.картинки, \n" +
-                "a1.название `магазин`, a1.логотип, a2.один, \n" +
+                "a1.название `магазин`, a1.логотип, a2.один, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId + ") as follow, \n" +
                 "a2.два, a2.три, a2.четыре, a2.пять, a2.рейтинг,\n" +
                 "a3.длина, a3.ширина, a3.описание, a3.состав\n" +
                 "FROM\n" +
@@ -164,7 +163,7 @@ public class Scripts {
     }
 
     public static String getProductsItemByTag(String tag, String userId) {
-        return "SELECT DISTINCT a2.один, a2.два, a2.три, a2.четыре, a2.пять, t.картинки, t.название, t.цена, t.ID, (select COUNT(*) from `избранное` as `f` where f.id_good=t.ID AND f.id_user = " + userId +") as follow\n" +
+        return "SELECT DISTINCT a2.один, a2.два, a2.три, a2.четыре, a2.пять, t.картинки, t.название, t.цена, t.ID, (select COUNT(*) from `избранное` as `f` where f.id_good=t.ID AND f.id_user = " + userId + ") as follow\n" +
                 " FROM товары as t LEFT JOIN\n" +
                 "              `рейтинг` as `a2` ON (`a2`.`id` = `t`.`рейтинг`)\n" +
                 "               where t.ID in\n" +
@@ -229,7 +228,7 @@ public class Scripts {
     }
 
     public static String getItemsByUserCommented(String userId) {
-        return "SELECT g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId +") as follow\n" +
+        return "SELECT g.ID, a2.один, a2.два, a2.три, a2.четыре, a2.пять, картинки, g.название, цена, (select COUNT(*) from `избранное` as `f` where f.id_good=g.ID AND f.id_user = " + userId + ") as follow\n" +
                 "FROM\n" +
                 "`товары` as `g`  LEFT JOIN    `рейтинг` as `a2` ON (`a2`.`id` = `g`.`рейтинг`) \n" +
                 "WHERE g.ID in (SELECT `id_товар` FROM `отзывы` WHERE `id_пользователь` = " + userId + ");";

@@ -1,70 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/appColorWhite"
-    android:id="@+id/commentItemRL">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/appColorWhite"
+    app:cardCornerRadius="15dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:layout_marginBottom="15dp">
 
-    <TextView
-        android:id="@+id/commentItemCommentTextView"
-        style="@style/BigText"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:id="@+id/commentItemRL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/commentItemDateTextView"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
-        tools:text="На самсунге А7 не работает шазам,не знаю что произошло. Делала как обычно, нажимала на значок, а он не реагирует, показывает, что активен,но на самом деле нет((( Два раза удаляла, и бесполезно! Что делать, мне очень нравится это приложение, я много песен с помощью этого приложения нашла" />
+        android:padding="10dp">
 
-    <RatingBar
-        android:id="@+id/commentItemRatingBar"
-        style="@style/Widget.AppCompat.RatingBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/commentItemCommentHeadline"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:isIndicator="true"
-        android:max="5"
-        android:numStars="5"
-        android:progressTint="@color/green" />
+        <TextView
+            android:id="@+id/commentItemCommentTextView"
+            style="@style/paragraph_shop_fragment"
+            android:layout_below="@id/commentItemDateTextView"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginTop="15dp"
+            tools:text="На самсунге А7 не работает шазам,не знаю что произошло. Делала как обычно, нажимала на значок, а он не реагирует, показывает, что активен,но на самом деле нет((( Два раза удаляла, и бесполезно! Что делать, мне очень нравится это приложение, я много песен с помощью этого приложения нашла" />
 
-    <TextView
-        android:id="@+id/commentItemCommentHeadline"
-        style="@style/MyHeadline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        tools:text="Отлично" />
+        <RatingBar
+            android:id="@+id/commentItemRatingBar"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/commentItemCommentHeadline"
+            android:layout_marginTop="5dp"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:progressTint="@color/green" />
 
-    <TextView
-        android:id="@+id/commentItemAuthorTextView"
-        style="@style/HeadlineThinItalic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        tools:text="Анна" />
+        <TextView
+            android:id="@+id/commentItemCommentHeadline"
+            style="@style/paragraph_shop_fragment"
+            android:layout_marginStart="0dp"
+            android:textColor="@color/text_dark"
+            android:textStyle="bold"
+            tools:text="Отлично" />
 
-    <TextView
-        android:id="@+id/commentItemDateTextView"
-        style="@style/BigTextSmallSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/commentItemAuthorTextView"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        tools:text="26 нояб. 2019 г." />
+        <TextView
+            android:id="@+id/commentItemAuthorTextView"
+            style="@style/paragraph_shop_fragment"
+            android:layout_alignParentEnd="true"
+            android:textStyle="italic"
+            tools:text="Анна" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/commentItemCommentTextView"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/lightGrey" />
+        <TextView
+            android:id="@+id/commentItemDateTextView"
+            style="@style/paragraph_shop_fragment"
+            android:textSize="14sp"
+            android:layout_below="@id/commentItemAuthorTextView"
+            android:layout_alignParentEnd="true"
+            tools:text="26 нояб. 2019 г." />
 
 
-</RelativeLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

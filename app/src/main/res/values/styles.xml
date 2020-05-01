@@ -52,7 +52,6 @@
         <item name="android:maxLines">2</item>
 
 
-
     </style>
 
     <style name="product_item_price">
@@ -79,14 +78,17 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/grey</item>
     </style>
+
     <style name="BigTextSmallSize" parent="BigText">
         <item name="android:textSize">15sp</item>
     </style>
+
     <style name="MyHeadline">
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
     <style name="HeadlineThinItalic">
         <item name="android:fontFamily">@font/roboto_thin</item>
         <item name="android:textSize">20sp</item>
@@ -110,7 +112,7 @@
         <item name="android:progressTint">@color/colorPrimary</item>
     </style>
 
-    <style name="general_enter_text" >
+    <style name="general_enter_text">
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ems">10</item>
@@ -144,6 +146,27 @@
         <item name="android:fontFamily">@font/roboto_bold</item>
         <item name="android:textSize">35sp</item>
         <item name="android:textColor">@color/text_dark</item>
+    </style>
+
+    <style name="title_shop_fragment">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/text_dark</item>
+    </style>
+
+    <style name="paragraph_shop_fragment">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/text_dark_grey</item>
     </style>
 </resources>
 

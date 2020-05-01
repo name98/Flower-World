@@ -85,7 +85,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
             setViewsChangeMode(comment);
         else
             setViewsCreateMode();
-        setToolbar(comment.isMy());
+        setToolbar();
         setRatingBarListener();
         Router.removeProgressFragment(getContext());
 
@@ -101,7 +101,8 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         commentEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(commentEditText, InputMethodManager.SHOW_IMPLICIT);
-
+        TextView titleTextView = view.findViewById(R.id.create_comment_fragment_title_text_view);
+        titleTextView.setText("Создать отзыв");
     }
 
     private void setButton (boolean isCreateMode, final int oldRate) {
@@ -164,6 +165,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         View view = getView();
         assert view != null;
         EditText commentEditText = view.findViewById(R.id.createCommentEnterText);
+        TextView titleTextView = view.findViewById(R.id.create_comment_fragment_title_text_view);
         commentEditText.setText(comment.getComment());
         commentEditText.requestFocus();
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -174,6 +176,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         rated.setRating(comment.getRate());
         TextView textRate = view.findViewById(R.id.createCommentResultRateTextView);
         textRate.setText(getResultTextRate(comment.getRate()));
+        titleTextView.setText("Изменить отзыв");
     }
 
 
@@ -246,7 +249,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         handlerForSendComment.sendMessage(msg);
     }
 
-    private void setToolbar(boolean isChangeMode) {
+    private void setToolbar() {
         Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
@@ -254,10 +257,7 @@ public class CreateCommentFragment extends Fragment implements CommentFragmentDa
         parentActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = parentActivity.getSupportActionBar();
         assert actionBar != null;
-        if (isChangeMode)
-            actionBar.setTitle("Изменить отзыв");
-        else
-            actionBar.setTitle("Написать отзыв");
+        actionBar.setTitle("");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

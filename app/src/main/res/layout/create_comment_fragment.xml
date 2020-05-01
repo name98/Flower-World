@@ -17,18 +17,43 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <EditText
-            android:id="@+id/createCommentEnterText"
+        <TextView
+            android:id="@+id/create_comment_fragment_title_text_view"
+            style="@style/headline"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:textSize="25sp"
+            tools:text="Завершенные заказы" />
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/appColorWhite"
-            android:elevation="2dp"
-            android:fontFamily="@font/roboto_light"
-            android:gravity="start"
-            android:hint="@string/enterText"
-            android:maxHeight="230dp"
-            android:padding="8dp" />
+            android:layout_margin="15dp"
+            app:cardBackgroundColor="@color/appColorWhite"
+            app:cardCornerRadius="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <EditText
+                    android:id="@+id/createCommentEnterText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appColorWhite"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="start"
+                    android:hint="@string/enterText"
+                    android:maxHeight="230dp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
 
         <RatingBar
             android:id="@+id/createCommentRating"
@@ -45,7 +70,7 @@
 
         <TextView
             android:id="@+id/createCommentResultRateTextView"
-            style="@style/MyHeadline"
+            style="@style/headline_recycle_views"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -53,17 +78,33 @@
             tools:text="Хорошо" />
     </LinearLayout>
 
-
-    <Button
-        android:id="@+id/createCommentSendCommentButton"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
-        android:background="@drawable/button_styles"
-        android:fontFamily="@font/roboto_bold"
-        android:text="@string/sendComment"
-        android:textColor="@color/appColorWhite"
-        android:textStyle="bold" />
+        app:cardBackgroundColor="@color/appColorWhite"
+        app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/createCommentSendCommentButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/button_styles"
+                android:fontFamily="@font/rubik"
+                android:text="@string/sendComment"
+                android:textAllCaps="false"
+                android:textColor="@color/appColorWhite"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

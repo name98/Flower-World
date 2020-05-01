@@ -90,9 +90,7 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
         assert view != null;
         TextView dateTextView = view.findViewById(R.id.orderDate);
         TextView timeTextView = view.findViewById(R.id.orderTime);
-        SimpleDraweeView productImageSimpleDV = view.findViewById(R.id.flowerIconImage);
-        TextView productNameTextView = view.findViewById(R.id.flowerIconName);
-        productImageSimpleDV.setImageURI(Uri.parse(product.getImageUrl()));
+        TextView productNameTextView = view.findViewById(R.id.charter_fragment_good_title);
         productNameTextView.setText(product.getName());
         Date nowDate = new Date();
         Calendar calendar;
@@ -228,7 +226,7 @@ public class CharterFragment extends Fragment implements FragmentSetTwoMessage {
         parentActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = parentActivity.getSupportActionBar();
         assert actionBar != null;
-        actionBar.setTitle("Новый заказ");
+        actionBar.setTitle("");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

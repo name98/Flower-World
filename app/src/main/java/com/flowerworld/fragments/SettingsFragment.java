@@ -25,8 +25,8 @@ import com.flowerworld.items.UserItem;
 import java.util.Map;
 
 public class SettingsFragment extends Fragment implements FragmentSetDataInterface {
-    private Handler handler;
 
+    private Handler handler;
 
     @Nullable
     @Override
@@ -165,5 +165,15 @@ public class SettingsFragment extends Fragment implements FragmentSetDataInterfa
     public void reloadValues() {
         initUserAndLoadData();
         System.out.println("hsakjdhasjkdhjasdk");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

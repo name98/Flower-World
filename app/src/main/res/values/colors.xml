@@ -30,4 +30,6 @@
     <color name="active_red">#F3534A</color>
     <color name="dark_green">#0CC5B7</color>
     <color name="light_green">#29D890</color>
+    <color name="my_orange">#C87137</color>
+    <color name="my_orange_active">#FA9629</color>
 </resources>

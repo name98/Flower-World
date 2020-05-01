@@ -16,6 +16,15 @@ public class FullProductItem {
     private String sumRate;
     private String numRaters;
     private String price;
+    private boolean isFollow;
+
+    public boolean isFollow() {
+        return isFollow;
+    }
+
+    public void setFollow(boolean follow) {
+        isFollow = follow;
+    }
 
     public String getName() {
         return name;

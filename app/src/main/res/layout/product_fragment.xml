@@ -24,18 +24,12 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
-
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/flowerPageViewP"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 app:layout_collapseMode="parallax" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/collapsing_toolbar_layout_title_background" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/flower_fragment_toolbar"
@@ -48,8 +42,6 @@
                 app:layout_scrollFlags="scroll|enterAlways" />
 
 
-
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -57,20 +49,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/hsagdhgasdhj"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/product_fragment_product_name_text_view"
+                            style="@style/headline_recycle_views"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:autoSizeTextType="uniform"
+                            android:maxLines="2"
+                            tools:text="Name" />
+
+
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        style="@style/title_shop_fragment"
+                        android:text="@string/description" />
+
+                    <TextView
+                        android:id="@+id/flowerPageAnnotation"
+                        style="@style/paragraph_shop_fragment"
+                        tools:text="Благодаря своему крупному соцветию, роскошному виду, приятной на ощупь поверхности и уникальному аромату розы Ред Наоми пользуются большой популярностью среди ведущих цветочных дизайнеров.
+
+Прекрасный букет из 35 роз Ред Наоми станет замечательным подарком Вашему любимому человеку!
+
+Букет собран из самых свежих роз и упакован в нашу фирменную упаковку Blue от One million flowers." />
 
                     <GridLayout
                         android:layout_width="wrap_content"
@@ -81,7 +109,8 @@
                         android:rowCount="2">
 
                         <TextView
-                            style="@style/product_item_price"
+                            style="@style/title_shop_fragment"
+                            android:layout_marginTop="5dp"
                             android:text="@string/sizes" />
 
                         <LinearLayout
@@ -91,56 +120,40 @@
 
                             <TextView
                                 android:id="@+id/flowerPageSizeFlowerL"
-                                style="@style/product_item_title"
+                                style="@style/paragraph_shop_fragment"
                                 android:layout_marginStart="30dp"
                                 tools:text="20" />
 
                             <TextView
                                 android:id="@+id/flowerPageSizeFlowerH"
-                                style="@style/product_item_title"
+                                style="@style/paragraph_shop_fragment"
                                 android:layout_marginStart="30dp"
                                 tools:text="20" />
                         </LinearLayout>
 
 
                         <TextView
-                            style="@style/product_item_price"
+                            style="@style/title_shop_fragment"
+                            android:layout_marginTop="5dp"
                             android:text="@string/compound" />
 
                         <TextView
                             android:id="@+id/flowerPageSostav"
-                            style="@style/product_item_title"
+                            style="@style/paragraph_shop_fragment"
                             android:layout_marginStart="30dp"
                             tools:text="Text\nsdsd\nsdsd\n" />
                     </GridLayout>
 
-                    <TextView
-                        style="@style/product_item_price"
-                        android:text="@string/description" />
-
 
                     <TextView
-                        android:id="@+id/flowerPageAnnotation"
-                        style="@style/product_item_title"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-
-                        tools:text="Благодаря своему крупному соцветию, роскошному виду, приятной на ощупь поверхности и уникальному аромату розы Ред Наоми пользуются большой популярностью среди ведущих цветочных дизайнеров.
-
-Прекрасный букет из 35 роз Ред Наоми станет замечательным подарком Вашему любимому человеку!
-
-Букет собран из самых свежих роз и упакован в нашу фирменную упаковку Blue от One million flowers." />
-
-                    <TextView
-                        style="@style/product_item_price"
-                        android:layout_marginBottom="10dp"
+                        style="@style/title_shop_fragment"
                         android:text="@string/Shop" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/flowerPageGoToShop"
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:layout_margin="10dp"
+                        android:layout_margin="15dp"
                         app:cardBackgroundColor="#fff"
                         app:cardCornerRadius="10dp">
 
@@ -170,10 +183,18 @@
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@drawable/button_styles"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp"/>
 
                     <TextView
 
-                        style="@style/product_item_price"
+                        style="@style/title_shop_fragment"
                         android:text="@string/rates" />
 
                     <RelativeLayout
@@ -324,73 +345,80 @@
                     </RelativeLayout>
 
                     <Button
+                        style="@style/Widget.AppCompat.Button.Borderless"
                         android:id="@+id/flowerPageOpenChangeFragmentButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:background="@drawable/border_colored"
                         android:text="@string/to_rate"
-                        android:textColor="@color/green"
+                        android:textColor="@color/my_orange"
                         tools:targetApi="o" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/flowerPageRecView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="85dp"
+                        android:clipToPadding="false"/>
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="70dp"/>
+
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
         </FrameLayout>
 
 
-
-
     </RelativeLayout>
-    <FrameLayout
+
+    <androidx.cardview.widget.CardView
 
         android:id="@+id/flowerPageFrmL"
-        android:elevation="5dp"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/appColorWhite"
-        >
-        <RelativeLayout
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/appColorWhite"
-            android:elevation="3dp">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/flowerPagePriceTextV"
-                style="@style/Headline1"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="50dp"
-                tools:text="3200 руб." />
+            <Button
+                android:background="@color/my_orange_active"
+                android:id="@+id/product_fragment_follow_button"
+                android:layout_marginTop="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:layout_weight="1"
+                tools:text="3200 руб."
+                android:textSize="15sp"
+                android:textColor="@color/appColorWhite"/>
 
             <Button
                 android:id="@+id/flowerPageBuyBt"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="50dp"
-                android:background="@drawable/button_styles"
-                android:bottomRightRadius="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/buy_bt_style_nradius"
+                android:bottomRightRadius="0dp"
                 android:fontFamily="@font/rubik"
-                android:text="@string/buy"
+                android:maxLines="2"
+                tools:text="kupit \nza 1200 rub"
+                android:textAllCaps="false"
                 android:textColor="@color/appColorWhite"
-                android:textSize="20sp" />
 
-        </RelativeLayout>
-    </FrameLayout>
+                android:textSize="15sp" />
 
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

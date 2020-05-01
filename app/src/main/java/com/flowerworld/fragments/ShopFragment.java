@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -64,7 +65,9 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
         TextView address = view.findViewById(R.id.shopPageAddress);
         TextView annotat = view.findViewById(R.id.shopPageAnnotation);
         TextView uslD = view.findViewById(R.id.shopPageUslDost);
-        SimpleDraweeView shopPhoto =view.findViewById(R.id.shopItemImg);
+        SimpleDraweeView shopPhoto = view.findViewById(R.id.shop_fragment_logo_sdv);
+        TextView fragmentTitleTextView = view.findViewById(R.id.shop_fragment_title_text_view);
+        fragmentTitleTextView.setText(shop.getId());
         address.setText(shop.getAddress());
         annotat.setText(shop.getAnnotantion());
         uslD.setText(shop.getDelivery());
@@ -83,7 +86,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
 
     public static ShopFragment newInstance(String shopName) {
         Bundle args = new Bundle();
-        args.putString(SHOP_NAME_KEY,shopName);
+        args.putString(SHOP_NAME_KEY, shopName);
         ShopFragment fragment = new ShopFragment();
         fragment.setArguments(args);
         return fragment;
@@ -97,7 +100,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     private void bind(FullShopItem shop) {
         setViews(shop);
         setGridProducts(shop.getItems());
-        setToolbar(shop.getId());
+        setToolbar();
     }
 
     @SuppressLint("HandlerLeak")
@@ -112,19 +115,21 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
     }
 
     private void setProgressBar(boolean isProgress) {
-        if(isProgress)
+        if (isProgress)
             Router.addProgressFragment(getContext());
         else
             Router.removeProgressFragment(getContext());
     }
 
-    private void setToolbar(String title) {
-        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.shop_fragment_toolbar);
+    private void setToolbar() {
+        Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
         assert parentActivity != null;
         parentActivity.setSupportActionBar(toolbar);
-        toolbar.setTitle(title);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
+        ActionBar actionBar = parentActivity.getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setTitle("");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +138,7 @@ public class ShopFragment extends Fragment implements FragmentSetDataInterface {
         });
     }
 
-    private String getUserId(){
+    private String getUserId() {
         DataBaseHelper helper = new DataBaseHelper(getContext());
         return helper.get(DataBaseHelper.KEY);
     }

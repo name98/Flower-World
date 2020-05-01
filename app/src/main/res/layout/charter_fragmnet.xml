@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/appColorWhite">
-    <include layout="@layout/toolbar"/>
+
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:id="@+id/charterFragmentLinLay"
@@ -15,73 +16,120 @@
         android:clickable="true"
         android:focusable="true"
         android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
+        <TextView
+            style="@style/headline"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:textSize="28sp"
+            android:text="@string/new_order" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp">
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/appColorWhite"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
 
-            <include
-                layout="@layout/flower_icon"
-                android:gravity="center_horizontal" />
-        </FrameLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="7dp">
+
+                <TextView
+                    android:id="@+id/charter_fragment_good_title"
+                    style="@style/headline_recycle_views"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:autoSizeTextType="uniform"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textSize="17sp"
+                    tools:text="Малинка" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
-                style="@style/product_item_title"
-                android:layout_marginStart="10dp"
+                style="@style/paragraph_shop_fragment"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/address" />
 
             <EditText
                 android:id="@+id/orderAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp" />
+                android:layout_height="25dp"
+                android:background="@drawable/search_pane"
+                android:paddingStart="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
-                style="@style/product_item_title"
-                android:layout_marginStart="10dp"
+                style="@style/paragraph_shop_fragment"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/reciever" />
 
             <EditText
                 android:id="@+id/orderReceiver"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp" />
+                android:layout_height="25dp"
+                android:background="@drawable/search_pane"
+                android:paddingStart="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:textSize="15sp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
-                style="@style/product_item_title"
-                android:layout_marginStart="10dp"
+                style="@style/paragraph_shop_fragment"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/date" />
 
             <TextView
                 android:id="@+id/orderDate"
                 style="@style/product_item_title"
-                android:textColor="@color/appColorWhite"
+                android:layout_marginHorizontal="10dp"
                 android:background="@drawable/rounded_background_blue"
-                android:layout_marginHorizontal="10dp" />
+                android:padding="3dp"
+                android:textColor="@color/appColorWhite"
+                tools:text="12/12/12"  />
 
 
         </LinearLayout>
@@ -89,41 +137,55 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
-                style="@style/product_item_title"
-                android:layout_marginStart="10dp"
+                style="@style/paragraph_shop_fragment"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/time" />
 
             <TextView
                 android:id="@+id/orderTime"
-                android:background="@drawable/rounded_background_blue"
                 style="@style/product_item_title"
                 android:layout_marginHorizontal="10dp"
-                tools:text="12/12/12"
+                android:background="@drawable/rounded_background_blue"
+                android:padding="3dp"
                 android:textColor="@color/appColorWhite"
-                android:padding="3dp" />
+                tools:text="12/12/12" />
 
 
         </LinearLayout>
 
 
-
-
-
     </LinearLayout>
-    <Button
-        android:id="@+id/orderGo"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="25dp"
-        android:background="@drawable/button_styles"
-        android:bottomRightRadius="20dp"
-        android:fontFamily="@font/rubik"
-        android:text="@string/buy"
-        android:textColor="#fff"
-        android:textSize="20sp" />
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:cardBackgroundColor="@color/appColorWhite"
+        app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/orderGo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_styles"
+                android:fontFamily="@font/rubik"
+                android:text="@string/buy"
+                android:textAllCaps="false"
+                android:textColor="@color/appColorWhite"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

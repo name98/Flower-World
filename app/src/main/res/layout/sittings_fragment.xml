@@ -25,13 +25,13 @@
             android:autoSizeTextType="uniform"
             android:maxLines="1"
             android:textSize="28sp"
-            tools:text="Петров Петр Агрович" />
+            tools:text="Фамилия Имя Отчество" />
 
         <TextView
             android:id="@+id/settings_fragment_user_email_text_view"
             style="@style/product_item_price"
             android:textSize="18sp"
-            tools:text="petya228@gmail.com" />
+            tools:text="эл. адрес" />
 
 
     </LinearLayout>

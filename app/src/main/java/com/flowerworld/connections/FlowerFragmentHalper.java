@@ -27,42 +27,7 @@ public class FlowerFragmentHalper {
     private String prices;
 
 
-    public FlowerFragmentHalper(String id){
-        try {
-            JSONObject flower = new DataMethod().fromScript(Scripts.fullData(id)).getJSONObject(0);
-            name = flower.getString("название");
 
-            shopLogo = flower.getString("логотип");
-            shopName = flower.getString("магазин");
-            sizeL = flower.getString("длина");
-            sizeH = flower.getString("ширина");
-            compound = flower.getString("состав");
-            annotation = flower.getString("описание");
-            ArrayList<String> temp = Methods.strParser(flower.getString("картинки")," ");
-            for (int i=0;i<temp.size();i++){
-                items.add(new FlowerImagesItem(temp.get(i)));
-            }
-            numberOfRates.add(flower.getInt("один"));
-            numberOfRates.add(flower.getInt("два"));
-            numberOfRates.add(flower.getInt("три"));
-            numberOfRates.add(flower.getInt("четыре"));
-            numberOfRates.add(flower.getInt("пять"));
-            sumRate = flower.getDouble("рейтинг");
-            this.id=id;
-            int max = 0;
-            for (int i=0; i<5;i++){
-                max +=numberOfRates.get(i);
-            }
-            numRaters = String.valueOf(max);
-            prices = flower.getString("цена");
-
-        }
-        catch (Exception e){
-            Log.d("FlowerFragmentHalper: ", e.toString());
-        }
-
-
-    }
 
     public String getName() {
         return name;

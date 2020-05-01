@@ -18,21 +18,21 @@ public class ProductConnection {
     }
 
     public void bind(int id, int myId) {
-        createThreadToSendProduct(id);
+        createThreadToSendProduct(id, String.valueOf(myId));
         createThreadToSendComments(id,String.valueOf(myId));
 
     }
 
-    private FullProductItem getProduct (int id) {
-        return DataBase.getFullProduct(id);
+    private FullProductItem getProduct (int id, String userId) {
+        return DataBase.getFullProduct(id, userId);
     }
 
-    private void createThreadToSendProduct(final int id) {
+    private void createThreadToSendProduct(final int id, final String userId) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Message msg = Message.obtain();
-                msg.obj = getProduct(id);
+                msg.obj = getProduct(id, userId);
                 parent.sendMessageForSetProduct(msg);
             }
         });

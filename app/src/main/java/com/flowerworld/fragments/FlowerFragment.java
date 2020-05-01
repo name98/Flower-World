@@ -27,6 +27,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import com.flowerworld.R;
 import com.flowerworld.connections.DataBaseHelper;
+import com.flowerworld.connections.FollowButton;
 import com.flowerworld.connections.ProductConnection;
 import com.flowerworld.interfaces.ProductGetData;
 import com.flowerworld.items.CommentItem;
@@ -37,6 +38,8 @@ import com.flowerworld.items.adapters.CommentItemAdapter;
 import com.flowerworld.items.adapters.FlowerImageItemAdapter;
 import com.flowerworld.methods.Methods;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 
 import java.util.ArrayList;
@@ -45,8 +48,8 @@ import java.util.Objects;
 
 public class FlowerFragment extends Fragment implements ProductGetData {
     private final static String PRODUCT_ID_KEY = "product_id";
-    private Handler handlerSetProduct;
     private Handler handlerSetComment;
+    private Handler handlerSetProduct;
 
     @Nullable
     @Override
@@ -59,14 +62,12 @@ public class FlowerFragment extends Fragment implements ProductGetData {
 
         super.onViewCreated(view, savedInstanceState);
         Router.addProgressFragment(getContext());
-        DataBaseHelper helper = new DataBaseHelper(getContext());
-        assert getArguments() != null;
         int productId = getArguments().getInt(PRODUCT_ID_KEY);
         setProductHandler();
         setCommentHandler();
         ProductConnection connection = new ProductConnection();
         connection.setParent(this);
-        connection.bind(productId,Integer.valueOf(helper.getId()));
+        connection.bind(productId,Integer.valueOf(getUserId()));
     }
 
     static FlowerFragment newInstance(int id) {
@@ -93,20 +94,23 @@ public class FlowerFragment extends Fragment implements ProductGetData {
     private void setTextViews(FullProductItem product) {
         View view = getView();
         assert view != null;
-        TextView priceTextView = view.findViewById(R.id.flowerPagePriceTextV);
+        Button priceTextView = view.findViewById(R.id.flowerPageBuyBt);
         TextView descriptionTextView = view.findViewById(R.id.flowerPageAnnotation);
         TextView heightProductTextView = view.findViewById(R.id.flowerPageSizeFlowerH);
         TextView widthProductTextView = view.findViewById(R.id.flowerPageSizeFlowerL);
         TextView compoundTextView = view.findViewById(R.id.flowerPageSostav);
         TextView ratingProductTextView = view.findViewById(R.id.flowerPageTextForRatingB);
         TextView shopName = view.findViewById(R.id.flowerPageShop);
-        priceTextView.setText(Methods.formatRuble(product.getPrice()));
+        TextView productTitleTextView= view.findViewById(R.id.product_fragment_product_name_text_view);
+        productTitleTextView.setText(product.getName());
+        priceTextView.setText("Купить\n" + Methods.formatRuble(product.getPrice()));
         descriptionTextView.setText(product.getAnnotation());
         heightProductTextView.setText(product.getSizeH());
         widthProductTextView.setText(product.getSizeL());
         compoundTextView.setText(product.getCompound());
         ratingProductTextView.setText(product.getSumRate());
         shopName.setText(product.getShopName());
+        setLikeButton(product.isFollow(), product.getId());
     }
 
     private void setViewPager2(ArrayList<FlowerImagesItem> images) {
@@ -223,7 +227,7 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         setShop(product.getShopLogo());
         setProductRate(product);
         setCardListener(product.getShopName());
-        setToolbar(product.getName());
+        setToolbar();
     }
 
     private void setCardListener(final String shopName) {
@@ -236,12 +240,12 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         });
     }
 
-    private void setToolbar(String title) {
+    private void setToolbar() {
         Toolbar toolbar = Objects.requireNonNull(getView()).findViewById(R.id.flower_fragment_toolbar);
         AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
         assert parentActivity != null;
         parentActivity.setSupportActionBar(toolbar);
-        toolbar.setTitle(title);
+        toolbar.setTitle("");
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,4 +257,48 @@ public class FlowerFragment extends Fragment implements ProductGetData {
         collapsingToolbar.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
         collapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.appColorWhite));
     }
+
+    private void setLikeButton(boolean isFollow, final String productId) {
+        final String userId = getUserId();
+        final Button follow = Objects.requireNonNull(getView()).findViewById(R.id.product_fragment_follow_button);
+        setButtonFollow(isFollow);
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean wasFollow = follow.getText().equals("Отложено");
+                setButtonFollow(!wasFollow);
+
+                if(wasFollow){
+                    FollowButton.setUnLike(userId, productId);
+                }
+                else
+                    FollowButton.setLike(userId, productId);
+                reloadValues();
+
+            }
+        });
+    }
+    private void reloadValues() {
+        MainFragment parentFragment = (MainFragment) Router.getFragmentByTag(getContext(), Router.MAIN_FRAGMENT_TAG);
+        if (parentFragment != null)
+            ((SettingsFragment) ChildRouter.getFragmentByTag(parentFragment, ChildRouter.SETTINGS_FRAGMENT_TAG)).reloadValues();
+    }
+
+    private String getUserId() {
+        DataBaseHelper helper = new DataBaseHelper(getContext());
+        return helper.get(DataBaseHelper.KEY);
+    }
+
+    private void setButtonFollow(boolean isFollow){
+        Button follow = Objects.requireNonNull(getView()).findViewById(R.id.product_fragment_follow_button);
+        if (isFollow){
+            follow.setText("Отложено");
+            follow.setBackgroundColor(getResources().getColor(R.color.my_orange_active));
+        }
+        else {
+            follow.setText("Отложить");
+            follow.setBackgroundColor(getResources().getColor(R.color.my_orange));
+        }
+    }
+
 }
